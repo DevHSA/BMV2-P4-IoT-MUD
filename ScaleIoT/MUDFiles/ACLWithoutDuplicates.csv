@@ -1,0 +1,16 @@
+,sEth,dEth,typEth,Source,Destination,proto,sPort,dPort,priority,action
+0,*,*,0x0800,*,*,17,*,67,*,forward
+1,*,*,0x0800,*,*,17,*,53,*,forward
+2,9e:8d:de:80:29:28,*,0x0800,*,ota.awair.is,6,*,443,*,forward
+3,9e:8d:de:80:29:28,*,0x0800,*,timeserver.awair.is,6,*,443,*,forward
+4,9e:8d:de:80:29:28,ff:ff:ff:ff:ff:ff,0x0800,*,255.255.255.255/32,17,*,67,*,forward
+5,9e:8d:de:80:29:28,*,0x0800,*,messaging.awair.is,6,*,8883,*,forward
+6,9e:8d:de:80:29:28,*,0x0800,*,8.8.8.8/32,17,*,53,*,forward
+7,*,9e:8d:de:80:29:28,0x0800,messaging.awair.is,*,6,8883,*,*,forward
+8,*,*,0x0800,*,*,17,53,*,*,forward
+9,*,9e:8d:de:80:29:28,0x0800,timeserver.awair.is,*,6,443,*,*,forward
+10,*,*,0x0800,*,*,17,67,*,*,forward
+11,*,9e:8d:de:80:29:28,0x0800,8.8.8.8/32,*,17,53,*,*,forward
+12,*,9e:8d:de:80:29:28,0x0800,ota.awair.is,*,6,443,*,*,forward
+13,*,*,0x888e,*,*,*,*,*,*,forward
+14,*,*,0x0006,*,*,*,*,*,*,forward

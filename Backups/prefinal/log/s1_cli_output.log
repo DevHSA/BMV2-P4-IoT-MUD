@@ -1,0 +1,234 @@
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Adding entry to exact match table sMAC_exact
+match key:           EXACT-94:16:3e:3b:41:cf
+action:              store_state_sMAC
+runtime data:        00:00:01
+Entry has been added with handle 0
+RuntimeCmd: Adding entry to exact match table dMAC_default
+match key:           EXACT-00:00:01
+action:              store_state_dMAC_default
+runtime data:        00:00:01
+Entry has been added with handle 0
+RuntimeCmd: Adding entry to exact match table typEth_exact
+match key:           EXACT-00:00:01	EXACT-08:00
+action:              store_state_typEth
+runtime data:        00:00:01
+Entry has been added with handle 0
+RuntimeCmd: Adding entry to exact match table proto_exact
+match key:           EXACT-00:00:01	EXACT-06
+action:              store_state_proto
+runtime data:        00:00:01
+Entry has been added with handle 0
+RuntimeCmd: Adding entry to exact match table sPort_default
+match key:           EXACT-00:00:01
+action:              store_state_sPort_default
+runtime data:        00:00:01
+Entry has been added with handle 0
+RuntimeCmd: Adding entry to exact match table dPort_exact
+match key:           EXACT-00:00:01	EXACT-01:bb
+action:              store_state_dPort
+runtime data:        00:00:01
+Entry has been added with handle 0
+RuntimeCmd: Adding entry to exact match table srcIP_default
+match key:           EXACT-00:00:01
+action:              store_state_srcIP_default
+runtime data:        00:00:01
+Entry has been added with handle 0
+RuntimeCmd: Adding entry to exact match table dstIP_exact
+match key:           EXACT-00:00:01	EXACT-23:cb:86:fb
+action:              store_state_dstIP
+runtime data:        00:00:01
+Entry has been added with handle 0
+RuntimeCmd: Adding entry to exact match table final
+match key:           EXACT-00:00:01
+action:              forward
+runtime data:        00:01:0a:00:01:02	00:02
+Entry has been added with handle 0
+RuntimeCmd: Adding entry to exact match table dstIP_exact
+match key:           EXACT-00:00:01	EXACT-22:69:31:ea
+action:              store_state_dstIP
+runtime data:        00:00:02
+Entry has been added with handle 1
+RuntimeCmd: Adding entry to exact match table final
+match key:           EXACT-00:00:02
+action:              forward
+runtime data:        00:01:0a:00:01:02	00:02
+Entry has been added with handle 1
+RuntimeCmd: Adding entry to exact match table sMAC_default
+match key:           EXACT-00:00:00
+action:              store_state_sMAC_default1
+runtime data:        00:00:02
+Entry has been added with handle 0
+RuntimeCmd: Adding entry to exact match table dMAC_exact
+match key:           EXACT-00:00:02	EXACT-94:16:3e:3b:41:cf
+action:              store_state_dMAC
+runtime data:        00:00:02
+Entry has been added with handle 0
+RuntimeCmd: Adding entry to exact match table typEth_exact
+match key:           EXACT-00:00:02	EXACT-08:00
+action:              store_state_typEth
+runtime data:        00:00:02
+Entry has been added with handle 1
+RuntimeCmd: Adding entry to exact match table proto_exact
+match key:           EXACT-00:00:02	EXACT-06
+action:              store_state_proto
+runtime data:        00:00:02
+Entry has been added with handle 1
+RuntimeCmd: Adding entry to exact match table sPort_exact
+match key:           EXACT-00:00:02	EXACT-22:b3
+action:              store_state_sPort
+runtime data:        00:00:02
+Entry has been added with handle 0
+RuntimeCmd: Adding entry to exact match table dPort_default
+match key:           EXACT-00:00:02
+action:              store_state_dPort_default
+runtime data:        00:00:02
+Entry has been added with handle 0
+RuntimeCmd: Adding entry to exact match table srcIP_exact
+match key:           EXACT-00:00:02	EXACT-23:c5:52:27
+action:              store_state_srcIP
+runtime data:        00:00:02
+Entry has been added with handle 0
+RuntimeCmd: Adding entry to exact match table dstIP_default
+match key:           EXACT-00:00:02
+action:              store_state_dstIP_default
+runtime data:        00:00:03
+Entry has been added with handle 0
+RuntimeCmd: Adding entry to exact match table final
+match key:           EXACT-00:00:03
+action:              forward
+runtime data:        00:01:0a:00:01:02	00:02
+Entry has been added with handle 2
+RuntimeCmd: Adding entry to exact match table dMAC_default
+match key:           EXACT-00:00:02
+action:              store_state_dMAC_default
+runtime data:        00:00:03
+Entry has been added with handle 1
+RuntimeCmd: Adding entry to exact match table typEth_exact
+match key:           EXACT-00:00:03	EXACT-08:00
+action:              store_state_typEth
+runtime data:        00:00:03
+Entry has been added with handle 2
+RuntimeCmd: Adding entry to exact match table proto_exact
+match key:           EXACT-00:00:03	EXACT-11
+action:              store_state_proto
+runtime data:        00:00:03
+Entry has been added with handle 2
+RuntimeCmd: Adding entry to exact match table sPort_exact
+match key:           EXACT-00:00:03	EXACT-00:35
+action:              store_state_sPort
+runtime data:        00:00:03
+Entry has been added with handle 1
+RuntimeCmd: Adding entry to exact match table dPort_default
+match key:           EXACT-00:00:03
+action:              store_state_dPort_default
+runtime data:        00:00:03
+Entry has been added with handle 1
+RuntimeCmd: Adding entry to exact match table srcIP_default
+match key:           EXACT-00:00:03
+action:              store_state_srcIP_default
+runtime data:        00:00:03
+Entry has been added with handle 1
+RuntimeCmd: Adding entry to exact match table dstIP_default
+match key:           EXACT-00:00:03
+action:              store_state_dstIP_default
+runtime data:        00:00:04
+Entry has been added with handle 1
+RuntimeCmd: Adding entry to exact match table final
+match key:           EXACT-00:00:04
+action:              forward
+runtime data:        00:01:0a:00:01:02	00:02
+Entry has been added with handle 3
+RuntimeCmd: Adding entry to exact match table sMAC_exact
+match key:           EXACT-94:16:3e:52:38:03
+action:              store_state_sMAC
+runtime data:        00:00:03
+Entry has been added with handle 1
+RuntimeCmd: Adding entry to exact match table dMAC_default
+match key:           EXACT-00:00:03
+action:              store_state_dMAC_default
+runtime data:        00:00:04
+Entry has been added with handle 2
+RuntimeCmd: Adding entry to exact match table typEth_exact
+match key:           EXACT-00:00:04	EXACT-08:00
+action:              store_state_typEth
+runtime data:        00:00:04
+Entry has been added with handle 3
+RuntimeCmd: Adding entry to exact match table proto_exact
+match key:           EXACT-00:00:04	EXACT-06
+action:              store_state_proto
+runtime data:        00:00:04
+Entry has been added with handle 3
+RuntimeCmd: Adding entry to exact match table sPort_default
+match key:           EXACT-00:00:04
+action:              store_state_sPort_default
+runtime data:        00:00:04
+Entry has been added with handle 1
+RuntimeCmd: Adding entry to exact match table dPort_exact
+match key:           EXACT-00:00:04	EXACT-01:bb
+action:              store_state_dPort
+runtime data:        00:00:04
+Entry has been added with handle 1
+RuntimeCmd: Adding entry to exact match table srcIP_default
+match key:           EXACT-00:00:04
+action:              store_state_srcIP_default
+runtime data:        00:00:04
+Entry has been added with handle 2
+RuntimeCmd: Adding entry to exact match table dstIP_exact
+match key:           EXACT-00:00:04	EXACT-48:15:c3:52
+action:              store_state_dstIP
+runtime data:        00:00:05
+Entry has been added with handle 2
+RuntimeCmd: Adding entry to exact match table final
+match key:           EXACT-00:00:05
+action:              forward
+runtime data:        00:01:0a:00:01:02	00:02
+Entry has been added with handle 4
+RuntimeCmd: Adding entry to exact match table dstIP_exact
+match key:           EXACT-00:00:04	EXACT-b0:20:63:f6
+action:              store_state_dstIP
+runtime data:        00:00:06
+Entry has been added with handle 3
+RuntimeCmd: Adding entry to exact match table final
+match key:           EXACT-00:00:06
+action:              forward
+runtime data:        00:01:0a:00:01:02	00:02
+Entry has been added with handle 5
+RuntimeCmd: Adding entry to exact match table typEth_default
+match key:           EXACT-00:00:03
+action:              store_state_typEth_default
+runtime data:        00:00:05
+Entry has been added with handle 0
+RuntimeCmd: Adding entry to exact match table proto_default
+match key:           EXACT-00:00:05
+action:              store_state_proto_default
+runtime data:        00:00:05
+Entry has been added with handle 0
+RuntimeCmd: Adding entry to exact match table sPort_default
+match key:           EXACT-00:00:05
+action:              store_state_sPort_default
+runtime data:        00:00:05
+Entry has been added with handle 2
+RuntimeCmd: Adding entry to exact match table dPort_default
+match key:           EXACT-00:00:05
+action:              store_state_dPort_default
+runtime data:        00:00:05
+Entry has been added with handle 2
+RuntimeCmd: Adding entry to exact match table srcIP_default
+match key:           EXACT-00:00:05
+action:              store_state_srcIP_default
+runtime data:        00:00:05
+Entry has been added with handle 3
+RuntimeCmd: Adding entry to exact match table dstIP_default
+match key:           EXACT-00:00:05
+action:              store_state_dstIP_default
+runtime data:        00:00:07
+Entry has been added with handle 2
+RuntimeCmd: Adding entry to exact match table final
+match key:           EXACT-00:00:07
+action:              drop
+runtime data:        
+Entry has been added with handle 6
+RuntimeCmd: 
