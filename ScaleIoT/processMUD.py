@@ -31,8 +31,8 @@ def getSourceDestination(data):
 #Main Function
 def readMUDFile(pathName):
     print("INSIDE READMUDFILE")
-    os.chdir("/home/p4/IoTMUD/ScaleIoT/MUDFiles/")
-    files=os.listdir("/home/p4/IoTMUD/ScaleIoT/MUDFiles/")
+    os.chdir("/home/p4/BMV2-P4-IoT-MUD/ScaleIoT/MUDFiles/")
+    files=os.listdir("/home/p4/BMV2-P4-IoT-MUD/ScaleIoT/MUDFiles/")
     data = []
     df = None
 
