@@ -117,7 +117,7 @@ class SwitchConnection(object):
 
             # url = 'http://127.0.0.1:443/' + name
 
-            path = "/home/p4/BMV2-P4-IoT-MUD/ScaleIoT/MUDFiles/"
+            path = "/home/p4/BMV2-P4-IoT-MUD/ScaleIoT/MUDFiles/"#please make changes in the file path according to local system
             url = cleanURL
             r = requests.get(url, allow_redirects=True)
             a = path + name + '_file.json'
@@ -133,7 +133,7 @@ class SwitchConnection(object):
             save = path + 'pub-key.pem'
             open(save, 'wb').write(t.content)
 
-            try:
+            try: #please make changes in the file path according to local system
             	subprocess.check_output(["openssl", "dgst" ,"-sha256", "-verify" ,"/home/p4/BMV2-P4-IoT-MUD/MUDserver/webapp/signaturetest/keys/pub-key.pem", "-signature" , b, a]).decode("utf-8")
             	print("Verification successful, please check the folder")
             except subprocess.CalledProcessError as e:
