@@ -7,15 +7,10 @@ from time import sleep
 import grpc
 
 # Import P4Runtime lib from parent utils dir
-# Probably there's a better way of doing this.
-sys.path.append(
-    os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                 './utils/'))
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)),'./utils/'))
 import p4runtime_lib.bmv2
 import p4runtime_lib.helper
 from p4runtime_lib.switch import ShutdownAllSwitchConnections
-
-
 
 SWITCH_TO_HOST_PORT = 1
 SWITCH_TO_SWITCH_PORT = 2
@@ -238,6 +233,7 @@ if __name__ == '__main__':
                         default='./build/scaleIoT.json')
     args = parser.parse_args()
 
+    #displaying the error messages    
     if not os.path.exists(args.p4info):
         parser.print_help()
         print("\np4info file not found: %s\nHave you run 'make'?" % args.p4info)
