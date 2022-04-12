@@ -31,7 +31,7 @@ import sys
 # print(sys.path)
 
 ##Not at all a good practice
-sys.path.append("/home/p4/IoTMUD/ScaleIoT/")
+sys.path.append("/home/p4/BMV2-P4-IoT-MUD/ScaleIoT/")
 # print(sys.path)
 
 #Our Solution Imports

@@ -66,17 +66,25 @@ def addSwitchCommand(addedNodeArray, addedStateArray, levelHeaders, s1):
             command = ''
             convertedValue = ''
 
-            #Logic to convert to Hex values
-            if addedNodeArray[i] == '*': #if * then dont touch it. it is taken care of below
-                convertedValue = addedNodeArray[i]
-            elif levelHeaders[i] == 'sMAC' or levelHeaders[i] == 'dMAC':
+#             #Logic to convert to Hex values
+#             if addedNodeArray[i] == '*': #if * then dont touch it. it is taken care of below
+#                 convertedValue = addedNodeArray[i]
+#             elif levelHeaders[i] == 'sMAC' or levelHeaders[i] == 'dMAC':
+# #                 octet = addedNodeArray[i].split(':')
+# #                 convertedValue = '0x'+octet[0]+octet[1]+octet[2]+octet[3]+octet[4]+octet[5]
+#                 convertedValue = str(addedNodeArray[i])
+#             elif levelHeaders[i] == 'srcIP' or levelHeaders[i] == 'dstIP':
+# #                 octet = addedNodeArray[i].split('.')
+# #                 convertedValue = '0x'+''.join((hex(int(i))[2:] for i in octet))
+#                 convertedValue = str(addedNodeArray[i])
+#             else:
+#                 convertedValue = addedNodeArray[i]
+
+            if levelHeaders[i] in ('sMAC', 'dMAC', 'srcIP', 'dstIP') and addedNodeArray[i] != '*':
 #                 octet = addedNodeArray[i].split(':')
 #                 convertedValue = '0x'+octet[0]+octet[1]+octet[2]+octet[3]+octet[4]+octet[5]
                 convertedValue = str(addedNodeArray[i])
-            elif levelHeaders[i] == 'srcIP' or levelHeaders[i] == 'dstIP':
-#                 octet = addedNodeArray[i].split('.')
-#                 convertedValue = '0x'+''.join((hex(int(i))[2:] for i in octet))
-                convertedValue = str(addedNodeArray[i])
+
             else:
                 convertedValue = addedNodeArray[i]
 
@@ -88,7 +96,8 @@ def addSwitchCommand(addedNodeArray, addedStateArray, levelHeaders, s1):
                     command='table_add '+levelHeaders[i]+'_exact'+' store_state_'+levelHeaders[i]+' '+convertedValue+' => '+addedStateArray[i+1]
 
                 #if it is to be added in the default table
-                elif addedNodeArray[i]=="*":
+                # elif addedNodeArray[i]=="*":
+                else:
                     command='table_add '+levelHeaders[i]+'_default'+' store_state_'+levelHeaders[i]+'_default1'+' 0 => '+addedStateArray[i+1]
 
             #Handle Last Level addition (Add only currState,val)
@@ -109,7 +118,7 @@ def addSwitchCommand(addedNodeArray, addedStateArray, levelHeaders, s1):
                     command='table_add '+levelHeaders[i]+'_exact'+' store_state_'+levelHeaders[i]+' '+ addedStateArray[i]+' '+convertedValue+' => '+addedStateArray[i+1]
 
                 #if it is to be added in the default table
-                elif addedNodeArray[i]=="*":
+                else:
                     command='table_add '+levelHeaders[i]+'_default'+' store_state_'+levelHeaders[i]+'_default '+ addedStateArray[i]+' => '+addedStateArray[i+1]
 
             #Whatever the command is, it needs to be outputed on a file stream
