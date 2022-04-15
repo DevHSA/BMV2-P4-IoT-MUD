@@ -24,22 +24,14 @@ import subprocess
 import os
 import sys
 
-# print("STUB")
-# print(os.getcwd())
-
-
-# print(sys.path)
 
 ##Not at all a good practice
 sys.path.append("/home/p4/BMV2-P4-IoT-MUD/ScaleIoT/")
-# print(sys.path)
 
 #Our Solution Imports
 from processMUD import readMUDFile
 from resolve import resolve
 from decisiontree import convertDT
-
-
 
 
 import grpc
@@ -48,11 +40,10 @@ from p4.v1 import p4runtime_pb2, p4runtime_pb2_grpc
 
 MSG_LOG_MAX_LEN = 1024
 
-# List of all active connections
+# List containing all active connections
 connections = []
 
-
-
+#function to shutdown all switch connections
 def ShutdownAllSwitchConnections():
     for c in connections:
         c.shutdown()
@@ -83,81 +74,62 @@ class SwitchConnection(object):
         self.requests_stream.close()
         self.stream_msg_resp.cancel()
 
+    
     #Custom function to handle packet-in
-
     def PacketIn(self,s1, **kwargs):
-        print("Inside Packet in Function")
+
         for item in self.stream_msg_resp:
-            print("Inside Loop of PacketIn")
-            # print(type(item))
-            # print(item)
-            # print(item.WhichOneof("update"))
-            # print(item.packet.payload)
-            var = item.packet.payload
-            pktstr = var.decode("utf-8",'backslashreplace')
-            # print(type(pktstr))
-            # print(pktstr)
-            # splitString = list(pktstr.split(" "))
-            ind = pktstr.find("http")
+            
+            packetpayload = item.packet.payload
 
-            # splitString = (pktstr.split(" "))
-            #
-            #
-            # uncleanURL = splitString[-1]
-            # print(uncleanURL)
-            # uncleanURList = list(uncleanURL.split("\"))
-            cleanURL = pktstr[ind:-4]
+            #now converting payload from bytes to string
+            packetstring = packetpayload.decode("utf-8",'backslashreplace')
+           
+            ind = packetstring.find("http") #finding index of http in the packet
 
-            print(cleanURL)
+            cleanURL = packetstring[ind:-4]#URL after removing the trailing characters
 
-            #get names
-            nameList = cleanURL.split("/")
-            name = nameList[-1]
-            # name = input("Enter name of the device\n")
+            #extracting the words from cleanURL, where the last word in the list is the MUDfile name
+            wordList = cleanURL.split("/")
+            MUDfilename = wordList[-1]
+    
+            rootpath = "/home/p4/BMV2-P4-IoT-MUD/ScaleIoT/MUDFiles/"
 
-            # url = 'http://127.0.0.1:443/' + name
+            #for Raw MUD file
+            rawMUDurl = 'http://127.0.0.1:443/' + MUDfilename
+            rawRequest = requests.get(rawMUDurl, allow_redirects=True)
+            rawMUDfile = rootpath + MUDfilename + '_file.json'
+            open(rawMUDfile , 'wb').write(rawRequest.content)
 
-            path = "/home/p4/BMV2-P4-IoT-MUD/ScaleIoT/MUDFiles/"
-            url = cleanURL
-            r = requests.get(url, allow_redirects=True)
-            a = path + name + '_file.json'
-            open(a , 'wb').write(r.content)
+            #for Signed MUD file
+            signedMUDurl = 'http://127.0.0.1:443/sign' + MUDfilename
+            signatureRequest = requests.get(signedMUDurl, allow_redirects=True)
+            signedMUDfile = rootpath + MUDfilename + '_signfile.json'
+            open(signedMUDfile, 'wb').write(signatureRequest.content)
 
-            url2 = 'http://127.0.0.1:443/sign' + name
-            b = path + name + '_signfile.json'
-            s = requests.get(url2, allow_redirects=True)
-            open(b, 'wb').write(s.content)
-
-            url3 = 'http://127.0.0.1:443/pub-key.pem'
-            t = requests.get(url3, allow_redirects=True)
-            save = path + 'pub-key.pem'
-            open(save, 'wb').write(t.content)
+            #for public key
+            publickeyurl = 'http://127.0.0.1:443/pub-key.pem'
+            publickeyRequest = requests.get(publickeyurl, allow_redirects=True)
+            publickeyfile = rootpath + 'pub-key.pem'
+            open(publickeyfile, 'wb').write(publickeyRequest.content)
 
             try:
-            	subprocess.check_output(["openssl", "dgst" ,"-sha256", "-verify" ,"/home/p4/BMV2-P4-IoT-MUD/MUDserver/webapp/signaturetest/keys/pub-key.pem", "-signature" , b, a]).decode("utf-8")
-            	print("Verification successful, please check the folder")
-            except subprocess.CalledProcessError as e:
-            	print((e.output).decode("utf-8"))
-            	# os.remove(a)
-            	# os.remove(b)
-            	# os.remove('pub-key.pem')
 
-            # print("REACHED")
+                #verifying the signed file and raw file using the public key
+            	subprocess.check_output(["openssl", "dgst" ,"-sha256", "-verify" ,"/home/p4/BMV2-P4-IoT-MUD/ScaleIoT/MUDFiles/pub-key.pem", "-signature" , signedMUDfile, rawMUDfile]).decode("utf-8")
 
-            pureACL = readMUDFile(a)
+            except subprocess.CalledProcessError as error:
+
+            	print((error.output).decode("utf-8"))
+                #removing the downloaded MUD files as the signature is not verified
+            	os.remove(rawMUDfile)
+            	os.remove(signedMUDfile)
+            	os.remove('pub-key.pem')
+
+            pureACL = readMUDFile(rawMUDfile)
             resolvedACL = resolve(pureACL)
-            print(resolvedACL)
+
             convertDT(resolvedACL, s1)
-
-
-
-
-
-            # if item.WhichOneof("update") is "packet":
-            #     print("Recieved Packet In")
-            #     for meta in item.packet.metadata:
-            #         print(meta.metadata_id, meta.value)
-            #     return item # just one
 
     def MasterArbitrationUpdate(self, dry_run=False, **kwargs):
         request = p4runtime_pb2.StreamMessageRequest()
