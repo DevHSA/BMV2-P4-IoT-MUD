@@ -5,6 +5,7 @@ fileserver = Flask(__name__)
 @fileserver.route('/<path:name>', methods=['GET', 'POST']) #get URL that contains IoT device name
 #format of URL is 127.0.0.1:443/device_name
 
+
 def downloadFile (name):#function that fetches and sends the desired MUD files
 
     filepath = "mudfs-dir/" + name + ".json" 
