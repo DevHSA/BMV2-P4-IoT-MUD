@@ -1,0 +1,6 @@
+#MUD Server Ignores
+MUDserver/webapp/__pycache__/*
+
+#ScaleIoT Ignores
+ScaleIoT/__pycache__/*
+ScaleIoT/MUDFiles/*
