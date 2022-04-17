@@ -146,6 +146,7 @@ class SwitchConnection(object):
 
             pureACL = readMUDFile(a)
             resolvedACL = resolve(pureACL)
+            print("RESOLVED ACL>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>..")
             print(resolvedACL)
             convertDT(resolvedACL, s1)
 

@@ -130,11 +130,14 @@ def addSwitchCommand(addedNodeArray, addedStateArray, levelHeaders, s1):
 
 def convertDT(data, s1):
 
+    print("S1>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>..")
+    print(s1)
+    print(type(s1))
     #Read the ACL Add Dataset
     # data = pd.read_csv(pathPrefix + "GeneratedDatasetACL" + pathSuffix, dtype=str)
 
     levelHeaders = data.columns
-
+    print(data.columns)
 
     #[['typEth', 'proto', 'sPort', 'dPort', 'srcIP', 'dstIP', 'sMAC', 'dMAC', 'action']]
     #['typEth', 'proto', 'sPort', 'dPort', 'sMAC', 'dMAC', 'srcIP', 'dstIP', 'action']
