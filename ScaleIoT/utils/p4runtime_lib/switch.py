@@ -74,17 +74,17 @@ class SwitchConnection(object):
         self.requests_stream.close()
         self.stream_msg_resp.cancel()
 
-    
+
     #Custom function to handle packet-in
     def PacketIn(self,s1, **kwargs):
 
         for item in self.stream_msg_resp:
-            
+
             packetpayload = item.packet.payload
 
             #now converting payload from bytes to string
             packetstring = packetpayload.decode("utf-8",'backslashreplace')
-           
+
             ind = packetstring.find("http") #finding index of http in the packet
 
             cleanURL = packetstring[ind:-4]#URL after removing the trailing characters
@@ -92,7 +92,7 @@ class SwitchConnection(object):
             #extracting the words from cleanURL, where the last word in the list is the MUDfile name
             wordList = cleanURL.split("/")
             MUDfilename = wordList[-1]
-    
+
             rootpath = "/home/p4/BMV2-P4-IoT-MUD/ScaleIoT/MUDFiles/"
 
             #for Raw MUD file
@@ -114,24 +114,6 @@ class SwitchConnection(object):
             open(publickeyfile, 'wb').write(publickeyRequest.content)
 
             try:
-<<<<<<< HEAD
-            	subprocess.check_output(["openssl", "dgst" ,"-sha256", "-verify" ,"/home/p4/BMV2-P4-IoT-MUD/MUDserver/webapp/signaturetest/keys/pub-key.pem", "-signature" , b, a]).decode("utf-8")
-            	print("Verification successful, please check the folder")
-            except subprocess.CalledProcessError as e:
-            	print((e.output).decode("utf-8"))
-            	# os.remove(a)
-            	# os.remove(b)
-            	# os.remove('pub-key.pem')
-
-            # print("REACHED")
-
-            pureACL = readMUDFile(a)
-            resolvedACL = resolve(pureACL)
-            print("RESOLVED ACL>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>..")
-            print(resolvedACL)
-            convertDT(resolvedACL, s1)
-=======
->>>>>>> 8e874ed227f06980028a0c346819cb21eedff03b
 
                 #verifying the signed file and raw file using the public key
             	subprocess.check_output(["openssl", "dgst" ,"-sha256", "-verify" ,"/home/p4/BMV2-P4-IoT-MUD/ScaleIoT/MUDFiles/pub-key.pem", "-signature" , signedMUDfile, rawMUDfile]).decode("utf-8")
