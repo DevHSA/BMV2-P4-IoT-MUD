@@ -12,9 +12,6 @@ import random
 # reqPath = currPath + "/JSON/"
 ##****************************************************##
 
-
-## UNFORTUNATELY FORCED TO USE ABSOULTE PATHS DUE TO INTERACTIVE SHELL.
-
 #Utility Function 1
 def getSourceDestination(data):
     if 'dnsname' in str(data):
@@ -36,9 +33,9 @@ def readMUDFile(pathName):
     data = []
     df = None
 
-    print(pathName)
+    # print(pathName)
 
-    print(files)
+    # print(files)
 
     with open(pathName) as f:
         df = json.load(f)
@@ -48,7 +45,7 @@ def readMUDFile(pathName):
     # print(data)
     # print(type(data))
 
-    print("Reached End")
+    # print("Reached End")
 
     final_list = []
     for i in range(len(data)):
@@ -83,39 +80,46 @@ def readMUDFile(pathName):
                     final_row['srcIP'] = '*'
                     final_row['dstIP'] = '*'
                     final_row['proto'] = '*'
+
                 if 'ipv4' in str(ace['matches']):
                     source, dest, proto = getSourceDestination(ace['matches']['ipv4'])
                     if proto in [1,6,17] :
                         final_row['typEth']='0x0800'
+
                 if 'icmp' in str(ace['matches']):
                     final_row['type'] = ace['matches']['icmp'].get('type', '*')
                     final_row['code'] = ace['matches']['icmp'].get('code', '*')
                 else:
                     final_row['type'] = '*'
                     final_row['code'] = '*'
+
                 if 'source-port' in str(ace['matches']):
                     final_row['sPort'] = ace['matches']['udp']['source-port'].get('port', '*') if 'udp' in str(ace['matches']) else ace['matches']['tcp']['source-port'].get('port', '*')
                 else:
                     final_row['sPort'] = '*'
+
                 if 'destination-port' in str(ace['matches']):
                     final_row['dPort'] = ace['matches']['udp']['destination-port'].get('port', '*') if 'udp' in str(ace['matches']) else ace['matches']['tcp']['destination-port'].get('port', '*')
                 else:
                     final_row['dPort'] = '*'
+
                 final_row['priority'] = '*'
                 final_row['action'] = 'forward' if ace['actions'].get('forwarding', '') == 'accept' else '*'
+
                 if final_row['srcIP'] == '*' and final_row['dstIP'] != '*':
                     final_row['sMAC'] = '9e:8d:de:80:29:28'
+
                 if final_row['dstIP'] == '*' and final_row['srcIP'] != '*':
                     final_row['dMAC'] = '9e:8d:de:80:29:28'
                 final_list.append(final_row)
 
     df = pd.DataFrame(final_list)
     df.head()
-    print(df)
+    # print(df)
 
 
-    print("Reached End")
-    print(df.shape)
+    # print("Reached End")
+    # print(df.shape)
     columns = ['sMAC','dMAC','typEth','srcIP','dstIP','proto','sPort','dPort','action']
     df1 = df[columns]
 
@@ -124,8 +128,8 @@ def readMUDFile(pathName):
     for column in columns:
         df2[column] = df2[column].fillna('*')
 
-
-    print(df2)
+    # print(df2)
+    
     return df2
 
     # df2.to_csv('ACLWithoutDuplicates.csv')
