@@ -28,7 +28,7 @@ def domainResolver(domainName):
             ip = ipaddress.ip_address(domainName)
             return domainName
         except ValueError: #If not an IP address, then resolve. Store and return the same
-            print(domainName)
+            # print(domainName)
             try: #If successfully resolved
                 resolvedDomains[domainName] = socket.gethostbyname(domainName)
                 return resolvedDomains[domainName]
