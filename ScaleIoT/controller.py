@@ -194,28 +194,6 @@ def main(p4info_file_path, bmv2_file_path):
 
         readTableRules(p4info_helper, s1)
 
-        # Write the rules that tunnel traffic from h1 to h2
-        # writeTunnelRules(p4info_helper, ingress_sw=s1, egress_sw=s2, tunnel_id=100,
-        #                  dst_eth_addr="08:00:00:00:02:22", dst_ip_addr="10.0.2.2")
-        #
-        # # Write the rules that tunnel traffic from h2 to h1
-        # writeTunnelRules(p4info_helper, ingress_sw=s2, egress_sw=s1, tunnel_id=200,
-        #                  dst_eth_addr="08:00:00:00:01:11", dst_ip_addr="10.0.1.1")
-
-        # TODO Uncomment the following two lines to read table entries from s1 and s2
-        # readTableRules(p4info_helper, s1)
-        # readTableRules(p4info_helper, s2)
-
-        # Print the tunnel counters every 2 seconds
-        # while True:
-        #     sleep(2)
-        #     print('\n----- Reading tunnel counters -----')
-        #     printCounter(p4info_helper, s1, "MyIngress.ingressTunnelCounter", 100)
-        #     printCounter(p4info_helper, s2, "MyIngress.egressTunnelCounter", 100)
-        #     printCounter(p4info_helper, s2, "MyIngress.ingressTunnelCounter", 200)
-        #     printCounter(p4info_helper, s1, "MyIngress.egressTunnelCounter", 200)
-
-
         s1.PacketIn(s1)
 
 
