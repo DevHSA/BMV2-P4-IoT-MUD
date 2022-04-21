@@ -114,6 +114,8 @@ parser MyParser(packet_in packet,
                 out headers hdr,
                 inout metadata meta,
                 inout standard_metadata_t standard_metadata) {
+
+
     state start {
 
         packet.extract(hdr.ethernet);
@@ -288,10 +290,11 @@ table sMAC_exact{
 
              //}
     }
-     size = 1024;
-   default_action =store_state_sMAC_default(0);
+    size = 1024;
+    default_action =store_state_sMAC_default(0);
 
 }
+
 table sMAC_default{
     key= {
         meta.state_default:exact;
@@ -308,8 +311,6 @@ table dMAC_exact{
     key= {
         meta.state_smac:exact;
         hdr.ethernet.dEth:exact;
-
-
     }
 
 actions = {
@@ -339,6 +340,7 @@ actions = {
     size = 1024;
     default_action =drop();
 }
+
 table typEth_exact{
     key= {
         meta.state_dmac:exact;

@@ -57,6 +57,9 @@ def checkIfPresentAndReturn(valueToCheck, neighborList):
 #FUNCTION TO ADD RULES and SEND CORRESPONDING SWITCH COMMANDS
 def addSwitchCommand(addedNodeArray, addedStateArray, levelHeaders, s1):
 
+    print("addSwitchCommand>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>..")
+    print(s1)
+    print(type(s1))
     #for every addition, generate a corresponding switch command
     for i in range(0,9):
 
@@ -65,6 +68,11 @@ def addSwitchCommand(addedNodeArray, addedStateArray, levelHeaders, s1):
 
             command = ''
             convertedValue = ''
+
+            tableName = ''
+            matchFields = {}
+            actionName = ""
+            actionParams = {}
 
             #Logic to convert to Hex values
             if addedNodeArray[i] == '*': #if * then dont touch it. it is taken care of below
@@ -85,6 +93,11 @@ def addSwitchCommand(addedNodeArray, addedStateArray, levelHeaders, s1):
 #                 print("Entered 0")
                 #if it is to be added in the exact table
                 if addedNodeArray[i]!="*":
+                    tableName = levelHeaders[i] + '_exact'
+                    actionName = 'store_state_'+levelHeaders[i]
+                    matchFields = convertedValue
+                    actionParams = addedStateArray[i+1]
+
                     command='table_add '+levelHeaders[i]+'_exact'+' store_state_'+levelHeaders[i]+' '+convertedValue+' => '+addedStateArray[i+1]
 
                 #if it is to be added in the default table
@@ -114,6 +127,21 @@ def addSwitchCommand(addedNodeArray, addedStateArray, levelHeaders, s1):
 
             #Whatever the command is, it needs to be outputed on a file stream
 
+            #In the end we send one commands
+
+            table_entry = p4info_helper.buildTableEntry(
+                table_name="MyIngress.ipv4_lpm",
+                match_fields={
+                    "hdr.ipv4.srcAddr": ("0.0.0.0", 32)
+                },
+                action_name="MyIngress.dhcp_forward",
+                action_params={
+                    "port": 510,
+                }
+            )
+
+
+
             table_entry = p4info_helper.buildTableEntry(
                 table_name="MyIngress.ipv4_lpm",
                 match_fields={
@@ -139,8 +167,8 @@ def convertDT(data, s1):
     levelHeaders = data.columns
     print(data.columns)
 
-    #[['typEth', 'proto', 'sPort', 'dPort', 'srcIP', 'dstIP', 'sMAC', 'dMAC', 'action']]
-    #['typEth', 'proto', 'sPort', 'dPort', 'sMAC', 'dMAC', 'srcIP', 'dstIP', 'action']
+    #newDf = data[['typEth', 'proto', 'sPort', 'dPort', 'srcIP', 'dstIP', 'sMAC', 'dMAC', 'action']]
+    #levelHeaders = ['typEth', 'proto', 'sPort', 'dPort', 'sMAC', 'dMAC', 'srcIP', 'dstIP', 'action']
 
     newDf = data[['typEth', 'proto', 'sPort', 'dPort', 'srcIP', 'dstIP', 'sMAC', 'dMAC', 'action']]
     levelHeaders = ['typEth', 'proto', 'sPort', 'dPort', 'srcIP', 'dstIP', 'sMAC', 'dMAC', 'action']
@@ -170,6 +198,7 @@ def convertDT(data, s1):
             #In case of fresh insertion
             if len(neighborList) == 0 and currentNode !='Null': #For the rest of the Levels
                 levelCounters[iter] = levelCounters[iter] + 1
+            #Optimization: and isPresent == False to be added. Test and add
             elif len(neighborList) != 0 and currentNode !='Null': #No increment of state when that level is populated
                 state = neighborList[0].split('=')[0]
             elif currentNode == 'Null' and isPresent == False: #For First Level
@@ -200,8 +229,9 @@ def convertDT(data, s1):
                 addedStateArray[iter] = str(state)
 
 
-        print(addedNodeArray)
-        print(addedStateArray)
+        addSwitchCommand(addedNodeArray, addedStateArray, levelHeaders, s1)
+        # print(addedNodeArray)
+        # print(addedStateArray)
 
 
     #             #Keep track of the size
