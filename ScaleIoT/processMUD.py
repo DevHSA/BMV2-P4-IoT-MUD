@@ -28,7 +28,7 @@ def getSourceDestination(data):
 #Main Function
 def readMUDFile(pathName):
     print("INSIDE READMUDFILE")
-    os.chdir("/home/p4/BMV2-P4-IoT-MUD/ScaleIoT/MUDFiles/")
+    # os.chdir("/home/p4/BMV2-P4-IoT-MUD/ScaleIoT/MUDFiles/")
     files=os.listdir("/home/p4/BMV2-P4-IoT-MUD/ScaleIoT/MUDFiles/")
     data = []
     df = None
@@ -37,9 +37,14 @@ def readMUDFile(pathName):
 
     # print(files)
 
-    with open(pathName) as f:
-        df = json.load(f)
-        data.append(df)
+    # with open(pathName) as f:
+    #     df = json.load(f)
+    #     data.append(df)
+
+    f = open(pathName)
+    df = json.load(f)
+    data.append(df)
+    f.close()
 
     # print(df)
     # print(data)
@@ -129,7 +134,7 @@ def readMUDFile(pathName):
         df2[column] = df2[column].fillna('*')
 
     # print(df2)
-    
+
     return df2
 
     # df2.to_csv('ACLWithoutDuplicates.csv')

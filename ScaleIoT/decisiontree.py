@@ -55,13 +55,12 @@ def checkIfPresentAndReturn(valueToCheck, neighborList):
     return False
 
 #FUNCTION TO ADD RULES and SEND CORRESPONDING SWITCH COMMANDS
-def addSwitchCommand(addedNodeArray, addedStateArray, levelHeaders, s1):
+def addSwitchCommand(addedNodeArray, addedStateArray, levelHeaders, p4info_helper, s1, readTableRules):
 
     print("addSwitchCommand>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>..")
-    print(s1)
-    print(type(s1))
+
     #for every addition, generate a corresponding switch command
-    for i in range(0,9):
+    for i in range(0,8):
 
         #Check if the node is to be added with the help of stub values X and -1
         if addedNodeArray[i]!='X' and addedStateArray[i]!='-1':
@@ -127,36 +126,9 @@ def addSwitchCommand(addedNodeArray, addedStateArray, levelHeaders, s1):
 
             #Whatever the command is, it needs to be outputed on a file stream
 
-            #In the end we send one commands
-
-            table_entry = p4info_helper.buildTableEntry(
-                table_name="MyIngress.ipv4_lpm",
-                match_fields={
-                    "hdr.ipv4.srcAddr": ("0.0.0.0", 32)
-                },
-                action_name="MyIngress.dhcp_forward",
-                action_params={
-                    "port": 510,
-                }
-            )
 
 
-
-            table_entry = p4info_helper.buildTableEntry(
-                table_name="MyIngress.ipv4_lpm",
-                match_fields={
-                    "hdr.ipv4.srcAddr": ("0.0.0.0", 32)
-                },
-                action_name="MyIngress.dhcp_forward",
-                action_params={
-                    "port": 510,
-                })
-            s1.WriteTableEntry(table_entry)
-
-            file.write("%s\n" % command)
-
-
-def convertDT(data, s1):
+def convertDT(data, p4info_helper, s1, readTableRules):
 
     print("S1>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>..")
     print(s1)
@@ -170,8 +142,8 @@ def convertDT(data, s1):
     #newDf = data[['typEth', 'proto', 'sPort', 'dPort', 'srcIP', 'dstIP', 'sMAC', 'dMAC', 'action']]
     #levelHeaders = ['typEth', 'proto', 'sPort', 'dPort', 'sMAC', 'dMAC', 'srcIP', 'dstIP', 'action']
 
-    newDf = data[['typEth', 'proto', 'sPort', 'dPort', 'srcIP', 'dstIP', 'sMAC', 'dMAC', 'action']]
-    levelHeaders = ['typEth', 'proto', 'sPort', 'dPort', 'srcIP', 'dstIP', 'sMAC', 'dMAC', 'action']
+    newDf = data[['sMAC', 'dMAC', 'typEth', 'proto', 'sPort', 'dPort', 'srcIP', 'dstIP',  'action']]
+    levelHeaders = ['sMAC', 'dMAC', 'typEth', 'proto', 'sPort', 'dPort', 'srcIP', 'dstIP',  'action']
 
 
     for index,row in newDf.iterrows():
@@ -229,7 +201,18 @@ def convertDT(data, s1):
                 addedStateArray[iter] = str(state)
 
 
-        addSwitchCommand(addedNodeArray, addedStateArray, levelHeaders, s1)
+        # table_entry = p4info_helper.buildTableEntry(
+        #     table_name="MyIngress.ipv4_lpm",
+        #     match_fields={
+        #         "hdr.ipv4.srcAddr": ("0.0.0.1", 32)
+        #     },
+        #     action_name="MyIngress.dhcp_forward",
+        #     action_params={
+        #         "port": 510,
+        #     })
+        # s1.WriteTableEntry(table_entry)
+
+        addSwitchCommand(addedNodeArray, addedStateArray, levelHeaders, p4info_helper, s1, readTableRules)
         # print(addedNodeArray)
         # print(addedStateArray)
 
@@ -252,30 +235,6 @@ def convertDT(data, s1):
     #                 noOfNodesSep[default] = noOfNodesSep[default] + 1;
     #             else:
     #                 noOfNodesSep[exact] = noOfNodesSep[exact] + 1;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # ##Conf Variables. (to be changed in different environment)
 # pathPrefix = "D:/PHD/RESEARCH/IOT-MUD-New/modules/3.ControlPlane/" #Change to base path of script

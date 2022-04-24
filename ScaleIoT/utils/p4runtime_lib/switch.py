@@ -76,7 +76,10 @@ class SwitchConnection(object):
 
 
     #Custom function to handle packet-in
-    def PacketIn(self,s1, **kwargs):
+    def PacketIn(self, p4info_helper, s1, readTableRules, **kwargs):
+
+        print("Installed ingress tunnel rule on %s" % s1.name)
+        readTableRules(p4info_helper, s1)
 
         for item in self.stream_msg_resp:
 
@@ -129,7 +132,197 @@ class SwitchConnection(object):
             pureACL = readMUDFile(rawMUDfile)
             resolvedACL = resolve(pureACL)
 
-            convertDT(resolvedACL, s1)
+
+            ##sETH TABLE ENTRY
+            table_entry = p4info_helper.buildTableEntry(
+                table_name="MyIngress.sMAC_exact",
+                match_fields={
+                    "hdr.ethernet.sEth": "11:44:20:00:00:11"
+                },
+                action_name="MyIngress.ns_exact",
+                action_params={
+                    "next_state": 4,
+                })
+            s1.WriteTableEntry(table_entry)
+            table_entry = p4info_helper.buildTableEntry(
+                table_name="MyIngress.sMAC_default",
+                match_fields={
+                    "meta.stub_current_state_value": 1
+                },
+                action_name="MyIngress.ns_default",
+                action_params={
+                    "next_state": 4,
+                })
+            s1.WriteTableEntry(table_entry)
+
+            ##dETH TABLE ENTRY
+            table_entry = p4info_helper.buildTableEntry(
+                table_name="MyIngress.dMAC_exact",
+                match_fields={
+                    "meta.current_state": 1,
+                    "hdr.ethernet.dEth": "11:44:20:00:00:11"
+                },
+                action_name="MyIngress.ns_exact",
+                action_params={
+                    "next_state": 8,
+                })
+            s1.WriteTableEntry(table_entry)
+            table_entry = p4info_helper.buildTableEntry(
+                table_name="MyIngress.dMAC_default",
+                match_fields={
+                    "meta.current_state": 1
+                },
+                action_name="MyIngress.ns_default",
+                action_params={
+                    "next_state": 9,
+                })
+            s1.WriteTableEntry(table_entry)
+
+            ##typEth TABLE ENTRY
+            table_entry = p4info_helper.buildTableEntry(
+                table_name="MyIngress.typEth_exact",
+                match_fields={
+                    "meta.current_state": 1,
+                    "hdr.ethernet.typeEth": 0x0800
+                },
+                action_name="MyIngress.ns_exact",
+                action_params={
+                    "next_state": 10,
+                })
+            s1.WriteTableEntry(table_entry)
+            table_entry = p4info_helper.buildTableEntry(
+                table_name="MyIngress.typEth_default",
+                match_fields={
+                    "meta.current_state": 1
+                },
+                action_name="MyIngress.ns_default",
+                action_params={
+                    "next_state": 11,
+                })
+            s1.WriteTableEntry(table_entry)
+
+            ##protocol TABLE ENTRY
+            table_entry = p4info_helper.buildTableEntry(
+                table_name="MyIngress.proto_exact",
+                match_fields={
+                    "meta.current_state": 1,
+                    "hdr.ipv4.protocol": 17
+                },
+                action_name="MyIngress.ns_exact",
+                action_params={
+                    "next_state": 13,
+                })
+            s1.WriteTableEntry(table_entry)
+            table_entry = p4info_helper.buildTableEntry(
+                table_name="MyIngress.proto_default",
+                match_fields={
+                    "meta.current_state": 1
+                },
+                action_name="MyIngress.ns_default",
+                action_params={
+                    "next_state": 14,
+                })
+            s1.WriteTableEntry(table_entry)
+
+            ##sPORT TABLE ENTRY
+            table_entry = p4info_helper.buildTableEntry(
+                table_name="MyIngress.sPort_exact",
+                match_fields={
+                    "meta.current_state": 1,
+                    "meta.sport": 443
+                },
+                action_name="MyIngress.ns_exact",
+                action_params={
+                    "next_state": 16,
+                })
+            s1.WriteTableEntry(table_entry)
+            table_entry = p4info_helper.buildTableEntry(
+                table_name="MyIngress.sPort_default",
+                match_fields={
+                    "meta.current_state": 1
+                },
+                action_name="MyIngress.ns_default",
+                action_params={
+                    "next_state": 17,
+                })
+            s1.WriteTableEntry(table_entry)
+
+            ##sPORT TABLE ENTRY
+            table_entry = p4info_helper.buildTableEntry(
+                table_name="MyIngress.dPort_exact",
+                match_fields={
+                    "meta.current_state": 1,
+                    "meta.dport": 443
+                },
+                action_name="MyIngress.ns_exact",
+                action_params={
+                    "next_state": 16,
+                })
+            s1.WriteTableEntry(table_entry)
+            table_entry = p4info_helper.buildTableEntry(
+                table_name="MyIngress.dPort_default",
+                match_fields={
+                    "meta.current_state": 1
+                },
+                action_name="MyIngress.ns_default",
+                action_params={
+                    "next_state": 17,
+                })
+            s1.WriteTableEntry(table_entry)
+
+            ##sIP TABLE ENTRY
+            table_entry = p4info_helper.buildTableEntry(
+                table_name="MyIngress.srcIP_exact",
+                match_fields={
+                    "meta.current_state": 1,
+                    "hdr.ipv4.srcAddr": "55.65.55.33"
+                },
+                action_name="MyIngress.ns_exact",
+                action_params={
+                    "next_state": 120,
+                })
+            s1.WriteTableEntry(table_entry)
+            table_entry = p4info_helper.buildTableEntry(
+                table_name="MyIngress.srcIP_default",
+                match_fields={
+                    "meta.current_state": 1
+                },
+                action_name="MyIngress.ns_default",
+                action_params={
+                    "next_state": 290,
+                })
+            s1.WriteTableEntry(table_entry)
+
+            ##dIP TABLE ENTRY
+            table_entry = p4info_helper.buildTableEntry(
+                table_name="MyIngress.dstIP_exact",
+                match_fields={
+                    "meta.current_state": 1,
+                    "hdr.ipv4.dstAddr": "55.65.55.11"
+                },
+                action_name="MyIngress.forward",
+                action_params={
+                    "dstAddr": "08:00:00:00:02:22",
+                    "switchPort": 2
+                })
+            s1.WriteTableEntry(table_entry)
+            table_entry = p4info_helper.buildTableEntry(
+                table_name="MyIngress.dstIP_default",
+                match_fields={
+                    "meta.current_state": 1
+                },
+                action_name="MyIngress.forward",
+                action_params={
+                    "dstAddr": "08:00:00:00:02:22",
+                    "switchPort": 2
+                })
+            s1.WriteTableEntry(table_entry)
+
+
+
+            readTableRules(p4info_helper, s1)
+
+            convertDT(resolvedACL, p4info_helper, s1, readTableRules)
 
     def MasterArbitrationUpdate(self, dry_run=False, **kwargs):
         request = p4runtime_pb2.StreamMessageRequest()
@@ -174,6 +367,7 @@ class SwitchConnection(object):
             print("P4Runtime Write:", request)
         else:
             self.client_stub.Write(request)
+
 
     def ReadTableEntries(self, table_id=None, dry_run=False):
         request = p4runtime_pb2.ReadRequest()

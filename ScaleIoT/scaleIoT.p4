@@ -2,12 +2,13 @@
 #include <core.p4>
 #include <v1model.p4>
 
-
-//Type Declarations for Parser
-const bit<16> TYPE_IPV4 = 0x800;
+//Type Declarations for Parser TypeEth
+const bit<16> TYPE_IPV4 = 0x0800;
 const bit<16> TYPE_EAP  = 0x888e;
 const bit<16> TYPE_UNKNOWN = 0x0006;
 const bit<16> TYPE_STUB = 0x00;
+
+//Type Declarations for Parser IPv4 packets
 const bit<8>  TYPE_TCP  = 6;
 const bit<8>  TYPE_UDP  = 17;
 const bit<8>  TYPE_ICMP  = 1;
@@ -26,9 +27,9 @@ typedef bit<48> macAddr_t;
 typedef bit<32> ip4Addr_t;
 
 header ethernet_t {
-    macAddr_t dstAddr;
-    macAddr_t srcAddr;
-    bit<16>   etherType;
+    macAddr_t dEth;
+    macAddr_t sEth;
+    bit<16>   typeEth;
 }
 
 //Standard IPv4 Header
@@ -89,31 +90,13 @@ struct headers {
 //Metadata variables that get reset for every packet. Need to define the roles ASAP
 struct metadata {
 
-    //God knows what what these variables were declared
-    bit<24> state_smac;
-    bit<24> state_dmac;
-    bit<24> state_type;
-    bit<24> state_sip;
-    bit<24> state_dip;
-    bit<24> state_proto;
-    bit<24> state_sport;
-    bit<24> state_dport;
-    bit<24> state_default;
+    bit<24> current_state; //contains the current state to match with
+    bit<24> stub_current_state_value; //Just for the first level
+    bit<8>  flag; //used as a toggle for the match action pipeline
+
+    //used to store port numbers of both UDP and TCP
     bit<16> sport;
     bit<16> dport;
-    bit<8> protocol;
-    bit<32> sip;
-    bit<32> dip;
-
-    //bit<16> state_smac_default;
-    bit<8> flag_smac;
-    bit<8> flag_dmac;
-    bit<8> flag_type;
-    bit<8> flag_sip;
-    bit<8> flag_dip;
-    bit<8> flag_proto;
-    bit<8> flag_sport;
-    bit<8> flag_dport;
 
 }
 
@@ -133,7 +116,7 @@ parser MyParser(packet_in packet,
     //Transition based on EtherType
     state parse_ethernet {
         packet.extract(hdr.ethernet);
-        transition select(hdr.ethernet.etherType) {
+        transition select(hdr.ethernet.typeEth) {
             TYPE_IPV4: parse_ipv4;
             TYPE_EAP: parse_ipv4;
             TYPE_UNKNOWN: parse_ipv4;
@@ -206,7 +189,7 @@ control MyIngress(inout headers hdr,
         mark_to_drop(standard_metadata);
     }
 
-    //Send Packet to Control ControlPlane
+    //Send Packet to ControlPlane
     action dhcp_forward(egressSpec_t port) {
 
         //Example Register wrire. Ignore
@@ -217,306 +200,359 @@ control MyIngress(inout headers hdr,
     }
 
     //Normal Forward to the normal port
-    action forward(macAddr_t dstAddr, egressSpec_t port) {
+    action forward(macAddr_t dstAddr, egressSpec_t switchPort) {
 
            //Standard Operations
-           hdr.ethernet.sEth = hdr.ethernet.dEth;
-           hdr.ethernet.dEth = dstAddr;
-           standard_metadata.egress_spec = port;
-           hdr.ipv4.ttl = hdr.ipv4.ttl -1;
+          hdr.ethernet.sEth = hdr.ethernet.dEth;
+          hdr.ethernet.dEth = dstAddr;
+          standard_metadata.egress_spec = switchPort;
+          hdr.ipv4.ttl = hdr.ipv4.ttl -1;
     }
 
-    //OUR SOLUTION TABLES
-    action store_state_sMAC(bit<24> val)
+    //***LEVEL 1 Special Action
+    action default_action_one()
     {
-      meta.flag_smac = 1;
-      meta.state_smac = val;
+        // Just store a stub state value
+        //Hardcoded to 0 for the time being
+        meta.stub_current_state_value = 0;
     }
-    action store_state_sMAC_default(bit<24> val)
+
+    //***Generic match actions LEVELS(2-7)
+    //exact table match
+    action ns_exact(bit<24> next_state)
     {
-      meta.state_default = val;
+      meta.flag = 1;
+      meta.current_state = next_state;
     }
-    action store_state_sMAC_default1(bit<24> val)
+    //default table match
+    action ns_default(bit<24> next_state)
     {
-    	meta.flag_smac=0;
-    	meta.state_smac=val;
+    	meta.flag = 0;
+    	meta.current_state = next_state;
     }
-    action store_state_dMAC(bit<24> val)
-    {
-      meta.flag_dmac = 1;
-      meta.state_dmac = val;
-    }
-    action store_state_dMAC_default(bit<24> val)
-    {
-    	meta.flag_dmac=0;
-    	meta.state_dmac=val;
-    }
-    action store_state_typEth(bit<24> val)
-    {
-      meta.flag_type = 1;
-      meta.state_type = val;
-    }
-    action store_state_typEth_default(bit<24> val)
-    {
-    	meta.flag_type=0;
-    	meta.state_type=val;
-    }
-    action store_state_proto(bit<24> val)
-    {
-      meta.flag_proto = 1;
-      meta.state_proto = val;
-    }
-    action store_state_proto_default(bit<24> val)
-    {
-    	meta.flag_proto=0;
-    	meta.state_proto=val;
-    }
-    action store_state_sPort(bit<24> val)
-    {
-      meta.flag_sport = 1;
-      meta.state_sport = val;
-    }
-    action store_state_sPort_default(bit<24> val)
-    {
-    	meta.flag_sport=0;
-    	meta.state_sport=val;
-    }
-    action store_state_dPort(bit<24> val)
-    {
-      meta.flag_dport = 1;
-      meta.state_dport = val;
-    }
-    action store_state_dPort_default(bit<24> val)
-    {
-    	meta.flag_dport=0;
-    	meta.state_dport=val;
-    }
-    action store_state_srcIP(bit<24> val)
-    {
-      meta.flag_sip = 1;
-      meta.state_sip = val;
-    }
-    action store_state_srcIP_default(bit<24> val)
-    {
-    	meta.flag_sip=0;
-    	meta.state_sip=val;
-    }
-    action store_state_dstIP(bit<24> val)
-    {
-      meta.flag_dip = 1;
-      meta.state_dip = val;
-    }
-    action store_state_dstIP_default(bit<24> val)
-    {
-    	meta.flag_dip=0;
-    	meta.state_dip=val;
-    }
+
+    //***LEVEL 8 Special Actions
+    //exact table match
+    // action ns_exact_last(macAddr_t dstAddr, egressSpec_t switchPort)
+    // {
+    //
+    //         //Standard Operations
+    //         hdr.ethernet.sEth = hdr.ethernet.dEth;
+    //         hdr.ethernet.dEth = dstAddr;
+    //         standard_metadata.egress_spec = switchPort;
+    //         hdr.ipv4.ttl = hdr.ipv4.ttl -1;
+    //
+    // }
+    // //default table match
+    // action ns_default_last(macAddr_t dstAddr, egressSpec_t switchPort)
+    // {
+    //         //Standard Operations
+    //         hdr.ethernet.sEth = hdr.ethernet.dEth;
+    //         hdr.ethernet.dEth = dstAddr;
+    //         standard_metadata.egress_spec = switchPort;
+    //         hdr.ipv4.ttl = hdr.ipv4.ttl -1;
+    // }
+
 
 
     //******** TABLE DECLARATIONS **********//
 
+    //**DHCP packet flow**//
     table ipv4_lpm {
         key = {
             hdr.ipv4.srcAddr: lpm;
         }
         actions = {
             dhcp_forward;
-            drop;
             NoAction;
+        }
+        size = 1024;
+        default_action = NoAction();
+    }
+
+    //**LEVEL 1**//
+    //sMAC_exact table
+    table sMAC_exact{
+        key= {
+            hdr.ethernet.sEth:exact;
+        }
+        actions = {
+                ns_exact;
+                default_action_one;
+        }
+        size = 1024;
+        default_action = default_action_one();
+    }
+
+    table sMAC_default{
+        key= {
+            meta.stub_current_state_value:exact;
+        }
+        actions = {
+                ns_default;
+                drop;
+        }
+        size = 1024;
+        default_action = drop();
+
+    }
+
+    //**LEVEL 2**//
+    table dMAC_exact{
+        key= {
+            meta.current_state:exact;
+            hdr.ethernet.dEth:exact;
+        }
+        actions = {
+              ns_exact;
+              NoAction;
+        }
+        size = 1024;
+        default_action = NoAction();
+    }
+
+    table dMAC_default{
+        key= {
+            meta.current_state:exact;
+        }
+        actions = {
+            ns_default;
+            drop;
         }
         size = 1024;
         default_action = drop();
     }
 
-
-    //sMAC_exact table
-    table sMAC_exact{
-        key= {
-
-            hdr.ethernet.sEth:exact;
-        }
-        actions = {
-                store_state_sMAC;
-                store_state_sMAC_default;
-        }
-        size = 1024;
-        default_action = store_state_sMAC_default(0);
-
-    }
-
-    table sMAC_default{
-        key= {
-            meta.state_default:exact;
-        }
-        actions = {
-                store_state_sMAC_default1;
-                NoAction;
-        }
-         size = 1024;
-       default_action =NoAction();
-
-    }
-
-    table dMAC_exact{
-        key= {
-            meta.state_smac:exact;
-            hdr.ethernet.dEth:exact;
-        }
-
-    actions = {
-
-              store_state_dMAC;
-                drop;
-                NoAction;
-        }
-
-        size = 1024;
-        default_action =NoAction();
-    }
-
-    table dMAC_default{
-        key= {
-            meta.state_smac:exact;
-
-        }
-
-    actions = {
-
-              store_state_dMAC_default;
-                drop;
-                NoAction;
-        }
-
-        size = 1024;
-        default_action =drop();
-    }
-
+    //**LEVEL 3**//
     table typEth_exact{
-        key= {
-            meta.state_dmac:exact;
+        key = {
+            meta.current_state:exact;
             hdr.ethernet.typeEth:exact;
-
         }
-
-    actions = {
-
-              store_state_typEth;
-               // drop;
-                NoAction;
+        actions = {
+            ns_exact;
+            NoAction;
         }
 
         size = 1024;
-        default_action =NoAction();
-        //default_action = register_action_ethernet_type(1010);
+        default_action = NoAction();
     }
 
     table typEth_default{
        key= {
-           meta.state_dmac:exact;
-
+           meta.current_state:exact;
        }
-
-   actions = {
-
-             store_state_typEth_default;
-             drop;
-               //NoAction;
+       actions = {
+           ns_default;
+           drop;
        }
-
        size = 1024;
-       default_action =drop();//NoAction();
-       }
+       default_action =drop();
+    }
 
+    //**LEVEL 4**//
     table proto_exact{
       key={
 
-        meta.state_type:exact;
-        //hdr.ipv4.protocol:exact;
-        meta.protocol:exact;
+        meta.current_state:exact;
+        hdr.ipv4.protocol:exact;
       }
 
     actions = {
-
-                store_state_proto;
-                //drop;
-                NoAction;
-        }
-
-        size = 1024;
-        default_action =NoAction();
+        ns_exact;
+        NoAction;
+    }
+    size = 1024;
+    default_action = NoAction();
     }
 
     table proto_default{
       key={
-
-        meta.state_type:exact;
+        meta.current_state:exact;
       }
 
     actions = {
-
-                store_state_proto_default;
-                drop;
-                //NoAction;
-        }
-
-        size = 1024;
-        default_action =drop();//NoAction();
+        ns_default;
+        drop;
     }
 
+    size = 1024;
+    default_action = drop();
+    }
+
+    //**LEVEL 5**//
     table sPort_exact{
       key={
-        meta.state_proto:exact;
-        //hdr.tcp.srcPort:exact;
-        //hdr.udp.srcPort:exact;
+        meta.current_state:exact;
         meta.sport:exact;
       }
       actions = {
-        store_state_sPort;
-        //drop;
+        ns_exact;
         NoAction;
       }
       size = 1024;
       default_action =NoAction();
-      //default_action =NoAction();
     }
 
     table sPort_default{
       key={
-        meta.state_proto:exact;
+        meta.current_state:exact;
 
       }
       actions = {
-        store_state_sPort_default;
+        ns_default;
         drop;
-        //NoAction;
       }
       size = 1024;
-      default_action =drop();//NoAction();
+      default_action =drop();
     }
 
+    //**LEVEL 6**//
     table dPort_exact{
       key={
-        meta.state_sport:exact;
-        //hdr.tcp.dstPort:exact;
-        //hdr.udp.dstPort:exact;
+        meta.current_state:exact;
         meta.dport:exact;
       }
       actions = {
-        store_state_dPort;
-        //drop;
+        ns_exact;
         NoAction;
       }
       size = 1024;
-      default_action =NoAction();
-      //default_action =NoAction();
+      default_action = NoAction();
     }
+
+    table dPort_default{
+      key={
+        meta.current_state:exact;
+
+      }
+      actions = {
+        ns_default;
+        drop;
+      }
+      size = 1024;
+      default_action =drop();
+    }
+
+    //**LEVEL 7**//
+    table srcIP_exact{
+      key={
+        meta.current_state:exact;
+        hdr.ipv4.srcAddr:exact;
+      }
+      actions = {
+        ns_exact;
+        NoAction;
+      }
+      size = 1024;
+      default_action = NoAction();
+    }
+
+    table srcIP_default{
+      key={
+        meta.current_state:exact;
+
+      }
+      actions = {
+        ns_default;
+        drop;
+      }
+      size = 1024;
+      default_action =drop();
+    }
+
+    //**LEVEL 8**//
+    table dstIP_exact{
+      key={
+        meta.current_state:exact;
+        hdr.ipv4.dstAddr:exact;
+      }
+      actions = {
+        forward;
+        NoAction;
+      }
+      size = 1024;
+      default_action = NoAction();
+    }
+
+    table dstIP_default{
+      key={
+        meta.current_state:exact;
+
+      }
+      actions = {
+        forward;
+        drop;
+      }
+      size = 1024;
+      default_action =drop();
+    }
+
+
 
     //******** APPLY BLOCK (Steer The Packet) **********//
 
     apply {
-        if (hdr.ipv4.isValid()) {
-            ipv4_lpm.apply();
+
+        //For DHCP packets
+        // if (hdr.ipv4.isValid()) {
+
+        // }
+        if(ipv4_lpm.apply().miss){
+
+        //Getting the port numbers
+        if (hdr.tcp.isValid()){
+            meta.sport= hdr.tcp.srcPort;
+            meta.dport= hdr.tcp.dstPort;
         }
+        else if (hdr.udp.isValid()){
+            meta.sport= hdr.udp.srcPort;
+            meta.dport= hdr.udp.dstPort;
+        }
+
+        //Match Action pipeline definition
+        sMAC_exact.apply();
+        if(meta.flag==0){
+            sMAC_default.apply();
+        }
+        meta.flag=0;
+        dMAC_exact.apply();
+        if(meta.flag==0){
+            dMAC_default.apply();
+        }
+        meta.flag=0;
+        typEth_exact.apply();
+        if(meta.flag==0){
+            typEth_default.apply();
+        }
+        meta.flag=0;
+        proto_exact.apply();
+        if(meta.flag==0){
+            proto_default.apply();
+        }
+        meta.flag=0;
+        sPort_exact.apply();
+        if(meta.flag==0){
+            sPort_default.apply();
+        }
+        meta.flag=0;
+        dPort_exact.apply();
+        if(meta.flag==0){
+            dPort_default.apply();
+        }
+        meta.flag=0;
+        srcIP_exact.apply();
+        if(meta.flag==0){
+            srcIP_default.apply();
+        }
+        meta.flag=0;
+        dstIP_exact.apply();
+        if(meta.flag==0){
+            dstIP_default.apply();
+        }
+
+        }
+
     }
 }
 

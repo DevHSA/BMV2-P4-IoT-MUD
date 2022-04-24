@@ -188,14 +188,12 @@ def main(p4info_file_path, bmv2_file_path):
                 "port": 510,
             })
         s1.WriteTableEntry(table_entry)
-
+        
 
         print("Installed ingress tunnel rule on %s" % s1.name)
-
         readTableRules(p4info_helper, s1)
 
-        s1.PacketIn(s1)
-
+        s1.PacketIn(p4info_helper, s1, readTableRules)
 
 
 
