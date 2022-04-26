@@ -102,7 +102,7 @@ def send_DHCP(iface):
     #Parameter Request List
     data = data + b'\x37\x04\x01\x03\x06\x2a'
     #Host name
-    str = "http://127.0.0.1:443/hellobarbie"
+    str = "http://127.0.0.1:443/amazonecho"
     strlen = len(str)
     print(strlen)
     strlen_bytes = strlen.to_bytes(1,'big')

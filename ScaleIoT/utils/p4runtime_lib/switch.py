@@ -84,10 +84,8 @@ class SwitchConnection(object):
         for item in self.stream_msg_resp:
 
             packetpayload = item.packet.payload
-
             #now converting payload from bytes to string
             packetstring = packetpayload.decode("utf-8",'backslashreplace')
-
             ind = packetstring.find("http") #finding index of http in the packet
 
             cleanURL = packetstring[ind:-4]#URL after removing the trailing characters
@@ -96,8 +94,13 @@ class SwitchConnection(object):
             wordList = cleanURL.split("/")
             MUDfilename = wordList[-1]
 
-            rootpath = "/home/p4/BMV2-P4-IoT-MUD/ScaleIoT/MUDFiles/"
+            if len(MUDfilename) == 0 :
+                continue
 
+            rootpath = "/home/p4/BMV2-P4-IoT-MUD/ScaleIoT/MUDFiles/"
+            #
+            # print(">>>>>>>>>>>>>>>>>>>>>IoT Device Name")
+            # print(MUDfilename)
             #for Raw MUD file
             rawMUDurl = 'http://127.0.0.1:443/' + MUDfilename
             rawRequest = requests.get(rawMUDurl, allow_redirects=True)
@@ -247,76 +250,76 @@ class SwitchConnection(object):
                 })
             s1.WriteTableEntry(table_entry)
 
-            ##sPORT TABLE ENTRY
-            table_entry = p4info_helper.buildTableEntry(
-                table_name="MyIngress.dPort_exact",
-                match_fields={
-                    "meta.current_state": 1,
-                    "meta.dport": 443
-                },
-                action_name="MyIngress.ns_exact",
-                action_params={
-                    "next_state": 16,
-                })
-            s1.WriteTableEntry(table_entry)
-            table_entry = p4info_helper.buildTableEntry(
-                table_name="MyIngress.dPort_default",
-                match_fields={
-                    "meta.current_state": 1
-                },
-                action_name="MyIngress.ns_default",
-                action_params={
-                    "next_state": 17,
-                })
-            s1.WriteTableEntry(table_entry)
-
-            ##sIP TABLE ENTRY
-            table_entry = p4info_helper.buildTableEntry(
-                table_name="MyIngress.srcIP_exact",
-                match_fields={
-                    "meta.current_state": 1,
-                    "hdr.ipv4.srcAddr": "55.65.55.33"
-                },
-                action_name="MyIngress.ns_exact",
-                action_params={
-                    "next_state": 120,
-                })
-            s1.WriteTableEntry(table_entry)
-            table_entry = p4info_helper.buildTableEntry(
-                table_name="MyIngress.srcIP_default",
-                match_fields={
-                    "meta.current_state": 1
-                },
-                action_name="MyIngress.ns_default",
-                action_params={
-                    "next_state": 290,
-                })
-            s1.WriteTableEntry(table_entry)
-
-            ##dIP TABLE ENTRY
-            table_entry = p4info_helper.buildTableEntry(
-                table_name="MyIngress.dstIP_exact",
-                match_fields={
-                    "meta.current_state": 1,
-                    "hdr.ipv4.dstAddr": "55.65.55.11"
-                },
-                action_name="MyIngress.forward",
-                action_params={
-                    "dstAddr": "08:00:00:00:02:22",
-                    "switchPort": 2
-                })
-            s1.WriteTableEntry(table_entry)
-            table_entry = p4info_helper.buildTableEntry(
-                table_name="MyIngress.dstIP_default",
-                match_fields={
-                    "meta.current_state": 1
-                },
-                action_name="MyIngress.forward",
-                action_params={
-                    "dstAddr": "08:00:00:00:02:22",
-                    "switchPort": 2
-                })
-            s1.WriteTableEntry(table_entry)
+            # ##sPORT TABLE ENTRY
+            # table_entry = p4info_helper.buildTableEntry(
+            #     table_name="MyIngress.dPort_exact",
+            #     match_fields={
+            #         "meta.current_state": 1,
+            #         "meta.dport": 443
+            #     },
+            #     action_name="MyIngress.ns_exact",
+            #     action_params={
+            #         "next_state": 16,
+            #     })
+            # s1.WriteTableEntry(table_entry)
+            # table_entry = p4info_helper.buildTableEntry(
+            #     table_name="MyIngress.dPort_default",
+            #     match_fields={
+            #         "meta.current_state": 1
+            #     },
+            #     action_name="MyIngress.ns_default",
+            #     action_params={
+            #         "next_state": 17,
+            #     })
+            # s1.WriteTableEntry(table_entry)
+            #
+            # ##sIP TABLE ENTRY
+            # table_entry = p4info_helper.buildTableEntry(
+            #     table_name="MyIngress.srcIP_exact",
+            #     match_fields={
+            #         "meta.current_state": 1,
+            #         "hdr.ipv4.srcAddr": "55.65.55.33"
+            #     },
+            #     action_name="MyIngress.ns_exact",
+            #     action_params={
+            #         "next_state": 120,
+            #     })
+            # s1.WriteTableEntry(table_entry)
+            # table_entry = p4info_helper.buildTableEntry(
+            #     table_name="MyIngress.srcIP_default",
+            #     match_fields={
+            #         "meta.current_state": 1
+            #     },
+            #     action_name="MyIngress.ns_default",
+            #     action_params={
+            #         "next_state": 290,
+            #     })
+            # s1.WriteTableEntry(table_entry)
+            #
+            # ##dIP TABLE ENTRY
+            # table_entry = p4info_helper.buildTableEntry(
+            #     table_name="MyIngress.dstIP_exact",
+            #     match_fields={
+            #         "meta.current_state": 1,
+            #         "hdr.ipv4.dstAddr": "55.65.55.11"
+            #     },
+            #     action_name="MyIngress.forward",
+            #     action_params={
+            #         "dstAddr": "08:00:00:00:02:22",
+            #         "switchPort": 2
+            #     })
+            # s1.WriteTableEntry(table_entry)
+            # table_entry = p4info_helper.buildTableEntry(
+            #     table_name="MyIngress.dstIP_default",
+            #     match_fields={
+            #         "meta.current_state": 1
+            #     },
+            #     action_name="MyIngress.forward",
+            #     action_params={
+            #         "dstAddr": "08:00:00:00:02:22",
+            #         "switchPort": 2
+            #     })
+            # s1.WriteTableEntry(table_entry)
 
 
 
