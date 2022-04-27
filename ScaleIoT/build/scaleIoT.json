@@ -1,0 +1,3075 @@
+{
+  "header_types" : [
+    {
+      "name" : "scalars_0",
+      "id" : 0,
+      "fields" : [
+        ["userMetadata.current_state", 24, false],
+        ["userMetadata.stub_current_state_value", 24, false],
+        ["userMetadata.flag", 8, false],
+        ["userMetadata.sport", 16, false],
+        ["userMetadata.dport", 16, false]
+      ]
+    },
+    {
+      "name" : "standard_metadata",
+      "id" : 1,
+      "fields" : [
+        ["ingress_port", 9, false],
+        ["egress_spec", 9, false],
+        ["egress_port", 9, false],
+        ["instance_type", 32, false],
+        ["packet_length", 32, false],
+        ["enq_timestamp", 32, false],
+        ["enq_qdepth", 19, false],
+        ["deq_timedelta", 32, false],
+        ["deq_qdepth", 19, false],
+        ["ingress_global_timestamp", 48, false],
+        ["egress_global_timestamp", 48, false],
+        ["mcast_grp", 16, false],
+        ["egress_rid", 16, false],
+        ["checksum_error", 1, false],
+        ["parser_error", 32, false],
+        ["priority", 3, false],
+        ["_padding", 3, false]
+      ]
+    },
+    {
+      "name" : "ethernet_t",
+      "id" : 2,
+      "fields" : [
+        ["dEth", 48, false],
+        ["sEth", 48, false],
+        ["typeEth", 16, false]
+      ]
+    },
+    {
+      "name" : "ipv4_t",
+      "id" : 3,
+      "fields" : [
+        ["version", 4, false],
+        ["ihl", 4, false],
+        ["diffserv", 8, false],
+        ["totalLen", 16, false],
+        ["identification", 16, false],
+        ["flags", 3, false],
+        ["fragOffset", 13, false],
+        ["ttl", 8, false],
+        ["protocol", 8, false],
+        ["hdrChecksum", 16, false],
+        ["srcAddr", 32, false],
+        ["dstAddr", 32, false]
+      ]
+    },
+    {
+      "name" : "tcp_t",
+      "id" : 4,
+      "fields" : [
+        ["srcPort", 16, false],
+        ["dstPort", 16, false],
+        ["seqNo", 32, false],
+        ["ackNo", 32, false],
+        ["dataOffset", 4, false],
+        ["res", 4, false],
+        ["cwr", 1, false],
+        ["ece", 1, false],
+        ["urg", 1, false],
+        ["ack", 1, false],
+        ["psh", 1, false],
+        ["rst", 1, false],
+        ["syn", 1, false],
+        ["fin", 1, false],
+        ["window", 16, false],
+        ["checksum", 16, false],
+        ["urgentPtr", 16, false]
+      ]
+    },
+    {
+      "name" : "udp_t",
+      "id" : 5,
+      "fields" : [
+        ["srcPort", 16, false],
+        ["dstPort", 16, false],
+        ["length_", 16, false],
+        ["checksum", 16, false]
+      ]
+    }
+  ],
+  "headers" : [
+    {
+      "name" : "scalars",
+      "id" : 0,
+      "header_type" : "scalars_0",
+      "metadata" : true,
+      "pi_omit" : true
+    },
+    {
+      "name" : "standard_metadata",
+      "id" : 1,
+      "header_type" : "standard_metadata",
+      "metadata" : true,
+      "pi_omit" : true
+    },
+    {
+      "name" : "ethernet",
+      "id" : 2,
+      "header_type" : "ethernet_t",
+      "metadata" : false,
+      "pi_omit" : true
+    },
+    {
+      "name" : "ipv4",
+      "id" : 3,
+      "header_type" : "ipv4_t",
+      "metadata" : false,
+      "pi_omit" : true
+    },
+    {
+      "name" : "tcp",
+      "id" : 4,
+      "header_type" : "tcp_t",
+      "metadata" : false,
+      "pi_omit" : true
+    },
+    {
+      "name" : "udp",
+      "id" : 5,
+      "header_type" : "udp_t",
+      "metadata" : false,
+      "pi_omit" : true
+    }
+  ],
+  "header_stacks" : [],
+  "header_union_types" : [],
+  "header_unions" : [],
+  "header_union_stacks" : [],
+  "field_lists" : [],
+  "errors" : [
+    ["NoError", 0],
+    ["PacketTooShort", 1],
+    ["NoMatch", 2],
+    ["StackOutOfBounds", 3],
+    ["HeaderTooShort", 4],
+    ["ParserTimeout", 5],
+    ["ParserInvalidArgument", 6]
+  ],
+  "enums" : [],
+  "parsers" : [
+    {
+      "name" : "parser",
+      "id" : 0,
+      "init_state" : "start",
+      "parse_states" : [
+        {
+          "name" : "start",
+          "id" : 0,
+          "parser_ops" : [
+            {
+              "parameters" : [
+                {
+                  "type" : "regular",
+                  "value" : "ethernet"
+                }
+              ],
+              "op" : "extract"
+            }
+          ],
+          "transitions" : [
+            {
+              "type" : "hexstr",
+              "value" : "0x0800",
+              "mask" : null,
+              "next_state" : "parse_ipv4"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x888e",
+              "mask" : null,
+              "next_state" : "parse_ipv4"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x0006",
+              "mask" : null,
+              "next_state" : "parse_ipv4"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x0000",
+              "mask" : null,
+              "next_state" : "parse_ipv4"
+            },
+            {
+              "type" : "default",
+              "value" : null,
+              "mask" : null,
+              "next_state" : null
+            }
+          ],
+          "transition_key" : [
+            {
+              "type" : "field",
+              "value" : ["ethernet", "typeEth"]
+            }
+          ]
+        },
+        {
+          "name" : "parse_ipv4",
+          "id" : 1,
+          "parser_ops" : [
+            {
+              "parameters" : [
+                {
+                  "type" : "regular",
+                  "value" : "ipv4"
+                }
+              ],
+              "op" : "extract"
+            }
+          ],
+          "transitions" : [
+            {
+              "type" : "hexstr",
+              "value" : "0x06",
+              "mask" : null,
+              "next_state" : "parse_tcp"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x11",
+              "mask" : null,
+              "next_state" : "parse_udp"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x01",
+              "mask" : null,
+              "next_state" : "parse_tcp"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x02",
+              "mask" : null,
+              "next_state" : "parse_tcp"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x2c",
+              "mask" : null,
+              "next_state" : "parse_tcp"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x3a",
+              "mask" : null,
+              "next_state" : "parse_tcp"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x00",
+              "mask" : null,
+              "next_state" : "parse_tcp"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x63",
+              "mask" : null,
+              "next_state" : "parse_tcp"
+            },
+            {
+              "type" : "default",
+              "value" : null,
+              "mask" : null,
+              "next_state" : null
+            }
+          ],
+          "transition_key" : [
+            {
+              "type" : "field",
+              "value" : ["ipv4", "protocol"]
+            }
+          ]
+        },
+        {
+          "name" : "parse_tcp",
+          "id" : 2,
+          "parser_ops" : [
+            {
+              "parameters" : [
+                {
+                  "type" : "regular",
+                  "value" : "tcp"
+                }
+              ],
+              "op" : "extract"
+            }
+          ],
+          "transitions" : [
+            {
+              "type" : "default",
+              "value" : null,
+              "mask" : null,
+              "next_state" : null
+            }
+          ],
+          "transition_key" : []
+        },
+        {
+          "name" : "parse_udp",
+          "id" : 3,
+          "parser_ops" : [
+            {
+              "parameters" : [
+                {
+                  "type" : "regular",
+                  "value" : "udp"
+                }
+              ],
+              "op" : "extract"
+            }
+          ],
+          "transitions" : [
+            {
+              "type" : "default",
+              "value" : null,
+              "mask" : null,
+              "next_state" : null
+            }
+          ],
+          "transition_key" : []
+        }
+      ]
+    }
+  ],
+  "parse_vsets" : [],
+  "deparsers" : [
+    {
+      "name" : "deparser",
+      "id" : 0,
+      "source_info" : {
+        "filename" : "scaleIoT.p4",
+        "line" : 597,
+        "column" : 8,
+        "source_fragment" : "MyDeparser"
+      },
+      "order" : ["ethernet", "ipv4"],
+      "primitives" : []
+    }
+  ],
+  "meter_arrays" : [],
+  "counter_arrays" : [],
+  "register_arrays" : [
+    {
+      "name" : "MyIngress.flow_duration",
+      "id" : 0,
+      "source_info" : {
+        "filename" : "scaleIoT.p4",
+        "line" : 181,
+        "column" : 27,
+        "source_fragment" : "flow_duration"
+      },
+      "size" : 100,
+      "bitwidth" : 32
+    }
+  ],
+  "calculations" : [
+    {
+      "name" : "calc",
+      "id" : 0,
+      "source_info" : {
+        "filename" : "scaleIoT.p4",
+        "line" : 575,
+        "column" : 8,
+        "source_fragment" : "update_checksum( ..."
+      },
+      "algo" : "csum16",
+      "input" : [
+        {
+          "type" : "field",
+          "value" : ["ipv4", "version"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "ihl"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "diffserv"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "totalLen"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "identification"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "flags"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "fragOffset"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "ttl"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "protocol"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "srcAddr"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "dstAddr"]
+        }
+      ]
+    }
+  ],
+  "learn_lists" : [],
+  "actions" : [
+    {
+      "name" : "NoAction",
+      "id" : 0,
+      "runtime_data" : [],
+      "primitives" : []
+    },
+    {
+      "name" : "NoAction",
+      "id" : 1,
+      "runtime_data" : [],
+      "primitives" : []
+    },
+    {
+      "name" : "NoAction",
+      "id" : 2,
+      "runtime_data" : [],
+      "primitives" : []
+    },
+    {
+      "name" : "NoAction",
+      "id" : 3,
+      "runtime_data" : [],
+      "primitives" : []
+    },
+    {
+      "name" : "NoAction",
+      "id" : 4,
+      "runtime_data" : [],
+      "primitives" : []
+    },
+    {
+      "name" : "NoAction",
+      "id" : 5,
+      "runtime_data" : [],
+      "primitives" : []
+    },
+    {
+      "name" : "NoAction",
+      "id" : 6,
+      "runtime_data" : [],
+      "primitives" : []
+    },
+    {
+      "name" : "NoAction",
+      "id" : 7,
+      "runtime_data" : [],
+      "primitives" : []
+    },
+    {
+      "name" : "MyIngress.drop",
+      "id" : 8,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "mark_to_drop",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "standard_metadata"
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 189,
+            "column" : 8,
+            "source_fragment" : "mark_to_drop(standard_metadata)"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.drop",
+      "id" : 9,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "mark_to_drop",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "standard_metadata"
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 189,
+            "column" : 8,
+            "source_fragment" : "mark_to_drop(standard_metadata)"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.drop",
+      "id" : 10,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "mark_to_drop",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "standard_metadata"
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 189,
+            "column" : 8,
+            "source_fragment" : "mark_to_drop(standard_metadata)"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.drop",
+      "id" : 11,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "mark_to_drop",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "standard_metadata"
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 189,
+            "column" : 8,
+            "source_fragment" : "mark_to_drop(standard_metadata)"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.drop",
+      "id" : 12,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "mark_to_drop",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "standard_metadata"
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 189,
+            "column" : 8,
+            "source_fragment" : "mark_to_drop(standard_metadata)"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.drop",
+      "id" : 13,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "mark_to_drop",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "standard_metadata"
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 189,
+            "column" : 8,
+            "source_fragment" : "mark_to_drop(standard_metadata)"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.drop",
+      "id" : 14,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "mark_to_drop",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "standard_metadata"
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 189,
+            "column" : 8,
+            "source_fragment" : "mark_to_drop(standard_metadata)"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.drop",
+      "id" : 15,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "mark_to_drop",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "standard_metadata"
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 189,
+            "column" : 8,
+            "source_fragment" : "mark_to_drop(standard_metadata)"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.dhcp_forward",
+      "id" : 16,
+      "runtime_data" : [
+        {
+          "name" : "port",
+          "bitwidth" : 9
+        }
+      ],
+      "primitives" : [
+        {
+          "op" : "register_write",
+          "parameters" : [
+            {
+              "type" : "register_array",
+              "value" : "MyIngress.flow_duration"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x00000001"
+            },
+            {
+              "type" : "field",
+              "value" : ["standard_metadata", "enq_timestamp"]
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 196,
+            "column" : 8,
+            "source_fragment" : "flow_duration.write(1, standard_metadata.enq_timestamp)"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["standard_metadata", "egress_spec"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 0
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 199,
+            "column" : 8,
+            "source_fragment" : "standard_metadata.egress_spec = port"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.forward",
+      "id" : 17,
+      "runtime_data" : [
+        {
+          "name" : "dstAddr",
+          "bitwidth" : 48
+        },
+        {
+          "name" : "switchPort",
+          "bitwidth" : 9
+        }
+      ],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ethernet", "sEth"]
+            },
+            {
+              "type" : "field",
+              "value" : ["ethernet", "dEth"]
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 206,
+            "column" : 10,
+            "source_fragment" : "hdr.ethernet.sEth = hdr.ethernet.dEth"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ethernet", "dEth"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 0
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 207,
+            "column" : 10,
+            "source_fragment" : "hdr.ethernet.dEth = dstAddr"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["standard_metadata", "egress_spec"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 1
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 208,
+            "column" : 10,
+            "source_fragment" : "standard_metadata.egress_spec = switchPort"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ipv4", "ttl"]
+            },
+            {
+              "type" : "expression",
+              "value" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "&",
+                  "left" : {
+                    "type" : "expression",
+                    "value" : {
+                      "op" : "+",
+                      "left" : {
+                        "type" : "field",
+                        "value" : ["ipv4", "ttl"]
+                      },
+                      "right" : {
+                        "type" : "hexstr",
+                        "value" : "0xff"
+                      }
+                    }
+                  },
+                  "right" : {
+                    "type" : "hexstr",
+                    "value" : "0xff"
+                  }
+                }
+              }
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 209,
+            "column" : 10,
+            "source_fragment" : "hdr.ipv4.ttl = hdr.ipv4.ttl -1"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.forward",
+      "id" : 18,
+      "runtime_data" : [
+        {
+          "name" : "dstAddr",
+          "bitwidth" : 48
+        },
+        {
+          "name" : "switchPort",
+          "bitwidth" : 9
+        }
+      ],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ethernet", "sEth"]
+            },
+            {
+              "type" : "field",
+              "value" : ["ethernet", "dEth"]
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 206,
+            "column" : 10,
+            "source_fragment" : "hdr.ethernet.sEth = hdr.ethernet.dEth"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ethernet", "dEth"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 0
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 207,
+            "column" : 10,
+            "source_fragment" : "hdr.ethernet.dEth = dstAddr"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["standard_metadata", "egress_spec"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 1
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 208,
+            "column" : 10,
+            "source_fragment" : "standard_metadata.egress_spec = switchPort"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ipv4", "ttl"]
+            },
+            {
+              "type" : "expression",
+              "value" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "&",
+                  "left" : {
+                    "type" : "expression",
+                    "value" : {
+                      "op" : "+",
+                      "left" : {
+                        "type" : "field",
+                        "value" : ["ipv4", "ttl"]
+                      },
+                      "right" : {
+                        "type" : "hexstr",
+                        "value" : "0xff"
+                      }
+                    }
+                  },
+                  "right" : {
+                    "type" : "hexstr",
+                    "value" : "0xff"
+                  }
+                }
+              }
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 209,
+            "column" : 10,
+            "source_fragment" : "hdr.ipv4.ttl = hdr.ipv4.ttl -1"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.default_action_one",
+      "id" : 19,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.stub_current_state_value"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x000000"
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 217,
+            "column" : 8,
+            "source_fragment" : "meta.stub_current_state_value = 0"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.ns_exact",
+      "id" : 20,
+      "runtime_data" : [
+        {
+          "name" : "next_state",
+          "bitwidth" : 24
+        }
+      ],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.flag"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x01"
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 224,
+            "column" : 6,
+            "source_fragment" : "meta.flag = 1"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.current_state"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 0
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 225,
+            "column" : 6,
+            "source_fragment" : "meta.current_state = next_state"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.ns_exact",
+      "id" : 21,
+      "runtime_data" : [
+        {
+          "name" : "next_state",
+          "bitwidth" : 24
+        }
+      ],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.flag"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x01"
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 224,
+            "column" : 6,
+            "source_fragment" : "meta.flag = 1"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.current_state"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 0
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 225,
+            "column" : 6,
+            "source_fragment" : "meta.current_state = next_state"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.ns_exact",
+      "id" : 22,
+      "runtime_data" : [
+        {
+          "name" : "next_state",
+          "bitwidth" : 24
+        }
+      ],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.flag"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x01"
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 224,
+            "column" : 6,
+            "source_fragment" : "meta.flag = 1"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.current_state"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 0
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 225,
+            "column" : 6,
+            "source_fragment" : "meta.current_state = next_state"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.ns_exact",
+      "id" : 23,
+      "runtime_data" : [
+        {
+          "name" : "next_state",
+          "bitwidth" : 24
+        }
+      ],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.flag"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x01"
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 224,
+            "column" : 6,
+            "source_fragment" : "meta.flag = 1"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.current_state"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 0
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 225,
+            "column" : 6,
+            "source_fragment" : "meta.current_state = next_state"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.ns_exact",
+      "id" : 24,
+      "runtime_data" : [
+        {
+          "name" : "next_state",
+          "bitwidth" : 24
+        }
+      ],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.flag"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x01"
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 224,
+            "column" : 6,
+            "source_fragment" : "meta.flag = 1"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.current_state"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 0
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 225,
+            "column" : 6,
+            "source_fragment" : "meta.current_state = next_state"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.ns_exact",
+      "id" : 25,
+      "runtime_data" : [
+        {
+          "name" : "next_state",
+          "bitwidth" : 24
+        }
+      ],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.flag"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x01"
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 224,
+            "column" : 6,
+            "source_fragment" : "meta.flag = 1"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.current_state"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 0
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 225,
+            "column" : 6,
+            "source_fragment" : "meta.current_state = next_state"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.ns_exact",
+      "id" : 26,
+      "runtime_data" : [
+        {
+          "name" : "next_state",
+          "bitwidth" : 24
+        }
+      ],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.flag"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x01"
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 224,
+            "column" : 6,
+            "source_fragment" : "meta.flag = 1"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.current_state"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 0
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 225,
+            "column" : 6,
+            "source_fragment" : "meta.current_state = next_state"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.ns_default",
+      "id" : 27,
+      "runtime_data" : [
+        {
+          "name" : "next_state",
+          "bitwidth" : 24
+        }
+      ],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.current_state"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 0
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 231,
+            "column" : 5,
+            "source_fragment" : "meta.current_state = next_state"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.ns_default",
+      "id" : 28,
+      "runtime_data" : [
+        {
+          "name" : "next_state",
+          "bitwidth" : 24
+        }
+      ],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.current_state"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 0
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 231,
+            "column" : 5,
+            "source_fragment" : "meta.current_state = next_state"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.ns_default",
+      "id" : 29,
+      "runtime_data" : [
+        {
+          "name" : "next_state",
+          "bitwidth" : 24
+        }
+      ],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.current_state"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 0
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 231,
+            "column" : 5,
+            "source_fragment" : "meta.current_state = next_state"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.ns_default",
+      "id" : 30,
+      "runtime_data" : [
+        {
+          "name" : "next_state",
+          "bitwidth" : 24
+        }
+      ],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.current_state"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 0
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 231,
+            "column" : 5,
+            "source_fragment" : "meta.current_state = next_state"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.ns_default",
+      "id" : 31,
+      "runtime_data" : [
+        {
+          "name" : "next_state",
+          "bitwidth" : 24
+        }
+      ],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.current_state"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 0
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 231,
+            "column" : 5,
+            "source_fragment" : "meta.current_state = next_state"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.ns_default",
+      "id" : 32,
+      "runtime_data" : [
+        {
+          "name" : "next_state",
+          "bitwidth" : 24
+        }
+      ],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.current_state"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 0
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 231,
+            "column" : 5,
+            "source_fragment" : "meta.current_state = next_state"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.ns_default",
+      "id" : 33,
+      "runtime_data" : [
+        {
+          "name" : "next_state",
+          "bitwidth" : 24
+        }
+      ],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.current_state"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 0
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 231,
+            "column" : 5,
+            "source_fragment" : "meta.current_state = next_state"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "scaleIoT505",
+      "id" : 34,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.sport"]
+            },
+            {
+              "type" : "field",
+              "value" : ["tcp", "srcPort"]
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 505,
+            "column" : 12,
+            "source_fragment" : "meta.sport= hdr.tcp.srcPort"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.dport"]
+            },
+            {
+              "type" : "field",
+              "value" : ["tcp", "dstPort"]
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 506,
+            "column" : 12,
+            "source_fragment" : "meta.dport= hdr.tcp.dstPort"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "scaleIoT509",
+      "id" : 35,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.sport"]
+            },
+            {
+              "type" : "field",
+              "value" : ["udp", "srcPort"]
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 509,
+            "column" : 12,
+            "source_fragment" : "meta.sport= hdr.udp.srcPort"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.dport"]
+            },
+            {
+              "type" : "field",
+              "value" : ["udp", "dstPort"]
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 510,
+            "column" : 12,
+            "source_fragment" : "meta.dport= hdr.udp.dstPort"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "scaleIoT518",
+      "id" : 36,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.flag"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x00"
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 518,
+            "column" : 8,
+            "source_fragment" : "meta.flag=0"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "scaleIoT523",
+      "id" : 37,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.flag"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x00"
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 523,
+            "column" : 8,
+            "source_fragment" : "meta.flag=0"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "scaleIoT528",
+      "id" : 38,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.flag"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x00"
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 528,
+            "column" : 8,
+            "source_fragment" : "meta.flag=0"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "scaleIoT533",
+      "id" : 39,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.flag"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x00"
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 533,
+            "column" : 8,
+            "source_fragment" : "meta.flag=0"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "scaleIoT538",
+      "id" : 40,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.flag"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x00"
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 538,
+            "column" : 8,
+            "source_fragment" : "meta.flag=0"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "scaleIoT543",
+      "id" : 41,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.flag"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x00"
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 543,
+            "column" : 8,
+            "source_fragment" : "meta.flag=0"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "scaleIoT548",
+      "id" : 42,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "userMetadata.flag"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x00"
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 548,
+            "column" : 8,
+            "source_fragment" : "meta.flag=0"
+          }
+        }
+      ]
+    }
+  ],
+  "pipelines" : [
+    {
+      "name" : "ingress",
+      "id" : 0,
+      "source_info" : {
+        "filename" : "scaleIoT.p4",
+        "line" : 176,
+        "column" : 8,
+        "source_fragment" : "MyIngress"
+      },
+      "init_table" : "MyIngress.ipv4_lpm",
+      "tables" : [
+        {
+          "name" : "MyIngress.ipv4_lpm",
+          "id" : 0,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 261,
+            "column" : 10,
+            "source_fragment" : "ipv4_lpm"
+          },
+          "key" : [
+            {
+              "match_type" : "lpm",
+              "name" : "hdr.ipv4.srcAddr",
+              "target" : ["ipv4", "srcAddr"],
+              "mask" : null
+            }
+          ],
+          "match_type" : "lpm",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [16, 0],
+          "actions" : ["MyIngress.dhcp_forward", "NoAction"],
+          "base_default_next" : null,
+          "next_tables" : {
+            "__HIT__" : null,
+            "__MISS__" : "node_3"
+          },
+          "default_entry" : {
+            "action_id" : 0,
+            "action_const" : false,
+            "action_data" : [],
+            "action_entry_const" : false
+          }
+        },
+        {
+          "name" : "tbl_scaleIoT505",
+          "id" : 1,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 505,
+            "column" : 22,
+            "source_fragment" : "= hdr.tcp.srcPort; ..."
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [34],
+          "actions" : ["scaleIoT505"],
+          "base_default_next" : "MyIngress.sMAC_exact",
+          "next_tables" : {
+            "scaleIoT505" : "MyIngress.sMAC_exact"
+          },
+          "default_entry" : {
+            "action_id" : 34,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "tbl_scaleIoT509",
+          "id" : 2,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 509,
+            "column" : 22,
+            "source_fragment" : "= hdr.udp.srcPort; ..."
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [35],
+          "actions" : ["scaleIoT509"],
+          "base_default_next" : "MyIngress.sMAC_exact",
+          "next_tables" : {
+            "scaleIoT509" : "MyIngress.sMAC_exact"
+          },
+          "default_entry" : {
+            "action_id" : 35,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "MyIngress.sMAC_exact",
+          "id" : 3,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 275,
+            "column" : 10,
+            "source_fragment" : "sMAC_exact"
+          },
+          "key" : [
+            {
+              "match_type" : "exact",
+              "name" : "hdr.ethernet.sEth",
+              "target" : ["ethernet", "sEth"],
+              "mask" : null
+            }
+          ],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [20, 19],
+          "actions" : ["MyIngress.ns_exact", "MyIngress.default_action_one"],
+          "base_default_next" : "node_8",
+          "next_tables" : {
+            "MyIngress.ns_exact" : "node_8",
+            "MyIngress.default_action_one" : "node_8"
+          },
+          "default_entry" : {
+            "action_id" : 19,
+            "action_const" : false,
+            "action_data" : [],
+            "action_entry_const" : false
+          }
+        },
+        {
+          "name" : "MyIngress.sMAC_default",
+          "id" : 4,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 287,
+            "column" : 10,
+            "source_fragment" : "sMAC_default"
+          },
+          "key" : [
+            {
+              "match_type" : "exact",
+              "name" : "meta.stub_current_state_value",
+              "target" : ["scalars", "userMetadata.stub_current_state_value"],
+              "mask" : null
+            }
+          ],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [27, 8],
+          "actions" : ["MyIngress.ns_default", "MyIngress.drop"],
+          "base_default_next" : "tbl_scaleIoT518",
+          "next_tables" : {
+            "MyIngress.ns_default" : "tbl_scaleIoT518",
+            "MyIngress.drop" : "tbl_scaleIoT518"
+          },
+          "default_entry" : {
+            "action_id" : 8,
+            "action_const" : false,
+            "action_data" : [],
+            "action_entry_const" : false
+          }
+        },
+        {
+          "name" : "tbl_scaleIoT518",
+          "id" : 5,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 518,
+            "column" : 17,
+            "source_fragment" : "="
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [36],
+          "actions" : ["scaleIoT518"],
+          "base_default_next" : "MyIngress.dMAC_exact",
+          "next_tables" : {
+            "scaleIoT518" : "MyIngress.dMAC_exact"
+          },
+          "default_entry" : {
+            "action_id" : 36,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "MyIngress.dMAC_exact",
+          "id" : 6,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 301,
+            "column" : 10,
+            "source_fragment" : "dMAC_exact"
+          },
+          "key" : [
+            {
+              "match_type" : "exact",
+              "name" : "meta.current_state",
+              "target" : ["scalars", "userMetadata.current_state"],
+              "mask" : null
+            },
+            {
+              "match_type" : "exact",
+              "name" : "hdr.ethernet.dEth",
+              "target" : ["ethernet", "dEth"],
+              "mask" : null
+            }
+          ],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [21, 1],
+          "actions" : ["MyIngress.ns_exact", "NoAction"],
+          "base_default_next" : "node_12",
+          "next_tables" : {
+            "MyIngress.ns_exact" : "node_12",
+            "NoAction" : "node_12"
+          },
+          "default_entry" : {
+            "action_id" : 1,
+            "action_const" : false,
+            "action_data" : [],
+            "action_entry_const" : false
+          }
+        },
+        {
+          "name" : "MyIngress.dMAC_default",
+          "id" : 7,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 314,
+            "column" : 10,
+            "source_fragment" : "dMAC_default"
+          },
+          "key" : [
+            {
+              "match_type" : "exact",
+              "name" : "meta.current_state",
+              "target" : ["scalars", "userMetadata.current_state"],
+              "mask" : null
+            }
+          ],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [28, 9],
+          "actions" : ["MyIngress.ns_default", "MyIngress.drop"],
+          "base_default_next" : "tbl_scaleIoT523",
+          "next_tables" : {
+            "MyIngress.ns_default" : "tbl_scaleIoT523",
+            "MyIngress.drop" : "tbl_scaleIoT523"
+          },
+          "default_entry" : {
+            "action_id" : 9,
+            "action_const" : false,
+            "action_data" : [],
+            "action_entry_const" : false
+          }
+        },
+        {
+          "name" : "tbl_scaleIoT523",
+          "id" : 8,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 523,
+            "column" : 17,
+            "source_fragment" : "="
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [37],
+          "actions" : ["scaleIoT523"],
+          "base_default_next" : "MyIngress.typEth_exact",
+          "next_tables" : {
+            "scaleIoT523" : "MyIngress.typEth_exact"
+          },
+          "default_entry" : {
+            "action_id" : 37,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "MyIngress.typEth_exact",
+          "id" : 9,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 327,
+            "column" : 10,
+            "source_fragment" : "typEth_exact"
+          },
+          "key" : [
+            {
+              "match_type" : "exact",
+              "name" : "meta.current_state",
+              "target" : ["scalars", "userMetadata.current_state"],
+              "mask" : null
+            },
+            {
+              "match_type" : "exact",
+              "name" : "hdr.ethernet.typeEth",
+              "target" : ["ethernet", "typeEth"],
+              "mask" : null
+            }
+          ],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [22, 2],
+          "actions" : ["MyIngress.ns_exact", "NoAction"],
+          "base_default_next" : "node_16",
+          "next_tables" : {
+            "MyIngress.ns_exact" : "node_16",
+            "NoAction" : "node_16"
+          },
+          "default_entry" : {
+            "action_id" : 2,
+            "action_const" : false,
+            "action_data" : [],
+            "action_entry_const" : false
+          }
+        },
+        {
+          "name" : "MyIngress.typEth_default",
+          "id" : 10,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 341,
+            "column" : 10,
+            "source_fragment" : "typEth_default"
+          },
+          "key" : [
+            {
+              "match_type" : "exact",
+              "name" : "meta.current_state",
+              "target" : ["scalars", "userMetadata.current_state"],
+              "mask" : null
+            }
+          ],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [29, 10],
+          "actions" : ["MyIngress.ns_default", "MyIngress.drop"],
+          "base_default_next" : "tbl_scaleIoT528",
+          "next_tables" : {
+            "MyIngress.ns_default" : "tbl_scaleIoT528",
+            "MyIngress.drop" : "tbl_scaleIoT528"
+          },
+          "default_entry" : {
+            "action_id" : 10,
+            "action_const" : false,
+            "action_data" : [],
+            "action_entry_const" : false
+          }
+        },
+        {
+          "name" : "tbl_scaleIoT528",
+          "id" : 11,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 528,
+            "column" : 17,
+            "source_fragment" : "="
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [38],
+          "actions" : ["scaleIoT528"],
+          "base_default_next" : "MyIngress.proto_exact",
+          "next_tables" : {
+            "scaleIoT528" : "MyIngress.proto_exact"
+          },
+          "default_entry" : {
+            "action_id" : 38,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "MyIngress.proto_exact",
+          "id" : 12,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 354,
+            "column" : 10,
+            "source_fragment" : "proto_exact"
+          },
+          "key" : [
+            {
+              "match_type" : "exact",
+              "name" : "meta.current_state",
+              "target" : ["scalars", "userMetadata.current_state"],
+              "mask" : null
+            },
+            {
+              "match_type" : "exact",
+              "name" : "hdr.ipv4.protocol",
+              "target" : ["ipv4", "protocol"],
+              "mask" : null
+            }
+          ],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [23, 3],
+          "actions" : ["MyIngress.ns_exact", "NoAction"],
+          "base_default_next" : "node_20",
+          "next_tables" : {
+            "MyIngress.ns_exact" : "node_20",
+            "NoAction" : "node_20"
+          },
+          "default_entry" : {
+            "action_id" : 3,
+            "action_const" : false,
+            "action_data" : [],
+            "action_entry_const" : false
+          }
+        },
+        {
+          "name" : "MyIngress.proto_default",
+          "id" : 13,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 369,
+            "column" : 10,
+            "source_fragment" : "proto_default"
+          },
+          "key" : [
+            {
+              "match_type" : "exact",
+              "name" : "meta.current_state",
+              "target" : ["scalars", "userMetadata.current_state"],
+              "mask" : null
+            }
+          ],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [30, 11],
+          "actions" : ["MyIngress.ns_default", "MyIngress.drop"],
+          "base_default_next" : "tbl_scaleIoT533",
+          "next_tables" : {
+            "MyIngress.ns_default" : "tbl_scaleIoT533",
+            "MyIngress.drop" : "tbl_scaleIoT533"
+          },
+          "default_entry" : {
+            "action_id" : 11,
+            "action_const" : false,
+            "action_data" : [],
+            "action_entry_const" : false
+          }
+        },
+        {
+          "name" : "tbl_scaleIoT533",
+          "id" : 14,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 533,
+            "column" : 17,
+            "source_fragment" : "="
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [39],
+          "actions" : ["scaleIoT533"],
+          "base_default_next" : "MyIngress.sPort_exact",
+          "next_tables" : {
+            "scaleIoT533" : "MyIngress.sPort_exact"
+          },
+          "default_entry" : {
+            "action_id" : 39,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "MyIngress.sPort_exact",
+          "id" : 15,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 384,
+            "column" : 10,
+            "source_fragment" : "sPort_exact"
+          },
+          "key" : [
+            {
+              "match_type" : "exact",
+              "name" : "meta.current_state",
+              "target" : ["scalars", "userMetadata.current_state"],
+              "mask" : null
+            },
+            {
+              "match_type" : "exact",
+              "name" : "meta.sport",
+              "target" : ["scalars", "userMetadata.sport"],
+              "mask" : null
+            }
+          ],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [24, 4],
+          "actions" : ["MyIngress.ns_exact", "NoAction"],
+          "base_default_next" : "node_24",
+          "next_tables" : {
+            "MyIngress.ns_exact" : "node_24",
+            "NoAction" : "node_24"
+          },
+          "default_entry" : {
+            "action_id" : 4,
+            "action_const" : false,
+            "action_data" : [],
+            "action_entry_const" : false
+          }
+        },
+        {
+          "name" : "MyIngress.sPort_default",
+          "id" : 16,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 397,
+            "column" : 10,
+            "source_fragment" : "sPort_default"
+          },
+          "key" : [
+            {
+              "match_type" : "exact",
+              "name" : "meta.current_state",
+              "target" : ["scalars", "userMetadata.current_state"],
+              "mask" : null
+            }
+          ],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [31, 12],
+          "actions" : ["MyIngress.ns_default", "MyIngress.drop"],
+          "base_default_next" : "tbl_scaleIoT538",
+          "next_tables" : {
+            "MyIngress.ns_default" : "tbl_scaleIoT538",
+            "MyIngress.drop" : "tbl_scaleIoT538"
+          },
+          "default_entry" : {
+            "action_id" : 12,
+            "action_const" : false,
+            "action_data" : [],
+            "action_entry_const" : false
+          }
+        },
+        {
+          "name" : "tbl_scaleIoT538",
+          "id" : 17,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 538,
+            "column" : 17,
+            "source_fragment" : "="
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [40],
+          "actions" : ["scaleIoT538"],
+          "base_default_next" : "MyIngress.dPort_exact",
+          "next_tables" : {
+            "scaleIoT538" : "MyIngress.dPort_exact"
+          },
+          "default_entry" : {
+            "action_id" : 40,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "MyIngress.dPort_exact",
+          "id" : 18,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 411,
+            "column" : 10,
+            "source_fragment" : "dPort_exact"
+          },
+          "key" : [
+            {
+              "match_type" : "exact",
+              "name" : "meta.current_state",
+              "target" : ["scalars", "userMetadata.current_state"],
+              "mask" : null
+            },
+            {
+              "match_type" : "exact",
+              "name" : "meta.dport",
+              "target" : ["scalars", "userMetadata.dport"],
+              "mask" : null
+            }
+          ],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [25, 5],
+          "actions" : ["MyIngress.ns_exact", "NoAction"],
+          "base_default_next" : "node_28",
+          "next_tables" : {
+            "MyIngress.ns_exact" : "node_28",
+            "NoAction" : "node_28"
+          },
+          "default_entry" : {
+            "action_id" : 5,
+            "action_const" : false,
+            "action_data" : [],
+            "action_entry_const" : false
+          }
+        },
+        {
+          "name" : "MyIngress.dPort_default",
+          "id" : 19,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 424,
+            "column" : 10,
+            "source_fragment" : "dPort_default"
+          },
+          "key" : [
+            {
+              "match_type" : "exact",
+              "name" : "meta.current_state",
+              "target" : ["scalars", "userMetadata.current_state"],
+              "mask" : null
+            }
+          ],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [32, 13],
+          "actions" : ["MyIngress.ns_default", "MyIngress.drop"],
+          "base_default_next" : "tbl_scaleIoT543",
+          "next_tables" : {
+            "MyIngress.ns_default" : "tbl_scaleIoT543",
+            "MyIngress.drop" : "tbl_scaleIoT543"
+          },
+          "default_entry" : {
+            "action_id" : 13,
+            "action_const" : false,
+            "action_data" : [],
+            "action_entry_const" : false
+          }
+        },
+        {
+          "name" : "tbl_scaleIoT543",
+          "id" : 20,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 543,
+            "column" : 17,
+            "source_fragment" : "="
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [41],
+          "actions" : ["scaleIoT543"],
+          "base_default_next" : "MyIngress.srcIP_exact",
+          "next_tables" : {
+            "scaleIoT543" : "MyIngress.srcIP_exact"
+          },
+          "default_entry" : {
+            "action_id" : 41,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "MyIngress.srcIP_exact",
+          "id" : 21,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 438,
+            "column" : 10,
+            "source_fragment" : "srcIP_exact"
+          },
+          "key" : [
+            {
+              "match_type" : "exact",
+              "name" : "meta.current_state",
+              "target" : ["scalars", "userMetadata.current_state"],
+              "mask" : null
+            },
+            {
+              "match_type" : "exact",
+              "name" : "hdr.ipv4.srcAddr",
+              "target" : ["ipv4", "srcAddr"],
+              "mask" : null
+            }
+          ],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [26, 6],
+          "actions" : ["MyIngress.ns_exact", "NoAction"],
+          "base_default_next" : "node_32",
+          "next_tables" : {
+            "MyIngress.ns_exact" : "node_32",
+            "NoAction" : "node_32"
+          },
+          "default_entry" : {
+            "action_id" : 6,
+            "action_const" : false,
+            "action_data" : [],
+            "action_entry_const" : false
+          }
+        },
+        {
+          "name" : "MyIngress.srcIP_default",
+          "id" : 22,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 451,
+            "column" : 10,
+            "source_fragment" : "srcIP_default"
+          },
+          "key" : [
+            {
+              "match_type" : "exact",
+              "name" : "meta.current_state",
+              "target" : ["scalars", "userMetadata.current_state"],
+              "mask" : null
+            }
+          ],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [33, 14],
+          "actions" : ["MyIngress.ns_default", "MyIngress.drop"],
+          "base_default_next" : "tbl_scaleIoT548",
+          "next_tables" : {
+            "MyIngress.ns_default" : "tbl_scaleIoT548",
+            "MyIngress.drop" : "tbl_scaleIoT548"
+          },
+          "default_entry" : {
+            "action_id" : 14,
+            "action_const" : false,
+            "action_data" : [],
+            "action_entry_const" : false
+          }
+        },
+        {
+          "name" : "tbl_scaleIoT548",
+          "id" : 23,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 548,
+            "column" : 17,
+            "source_fragment" : "="
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [42],
+          "actions" : ["scaleIoT548"],
+          "base_default_next" : "MyIngress.dstIP_exact",
+          "next_tables" : {
+            "scaleIoT548" : "MyIngress.dstIP_exact"
+          },
+          "default_entry" : {
+            "action_id" : 42,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "MyIngress.dstIP_exact",
+          "id" : 24,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 465,
+            "column" : 10,
+            "source_fragment" : "dstIP_exact"
+          },
+          "key" : [
+            {
+              "match_type" : "exact",
+              "name" : "meta.current_state",
+              "target" : ["scalars", "userMetadata.current_state"],
+              "mask" : null
+            },
+            {
+              "match_type" : "exact",
+              "name" : "hdr.ipv4.dstAddr",
+              "target" : ["ipv4", "dstAddr"],
+              "mask" : null
+            }
+          ],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [17, 7],
+          "actions" : ["MyIngress.forward", "NoAction"],
+          "base_default_next" : "MyIngress.dstIP_default",
+          "next_tables" : {
+            "MyIngress.forward" : "MyIngress.dstIP_default",
+            "NoAction" : "MyIngress.dstIP_default"
+          },
+          "default_entry" : {
+            "action_id" : 7,
+            "action_const" : false,
+            "action_data" : [],
+            "action_entry_const" : false
+          }
+        },
+        {
+          "name" : "MyIngress.dstIP_default",
+          "id" : 25,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 478,
+            "column" : 10,
+            "source_fragment" : "dstIP_default"
+          },
+          "key" : [
+            {
+              "match_type" : "exact",
+              "name" : "meta.current_state",
+              "target" : ["scalars", "userMetadata.current_state"],
+              "mask" : null
+            }
+          ],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [18, 15],
+          "actions" : ["MyIngress.forward", "MyIngress.drop"],
+          "base_default_next" : null,
+          "next_tables" : {
+            "MyIngress.forward" : null,
+            "MyIngress.drop" : null
+          },
+          "default_entry" : {
+            "action_id" : 15,
+            "action_const" : false,
+            "action_data" : [],
+            "action_entry_const" : false
+          }
+        }
+      ],
+      "action_profiles" : [],
+      "conditionals" : [
+        {
+          "name" : "node_3",
+          "id" : 0,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 504,
+            "column" : 12,
+            "source_fragment" : "hdr.tcp.isValid()"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "d2b",
+              "left" : null,
+              "right" : {
+                "type" : "field",
+                "value" : ["tcp", "$valid$"]
+              }
+            }
+          },
+          "true_next" : "tbl_scaleIoT505",
+          "false_next" : "node_5"
+        },
+        {
+          "name" : "node_5",
+          "id" : 1,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 508,
+            "column" : 17,
+            "source_fragment" : "hdr.udp.isValid()"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "d2b",
+              "left" : null,
+              "right" : {
+                "type" : "field",
+                "value" : ["udp", "$valid$"]
+              }
+            }
+          },
+          "true_next" : "tbl_scaleIoT509",
+          "false_next" : "MyIngress.sMAC_exact"
+        },
+        {
+          "name" : "node_8",
+          "id" : 2,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 515,
+            "column" : 11,
+            "source_fragment" : "meta.flag==0"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "==",
+              "left" : {
+                "type" : "field",
+                "value" : ["scalars", "userMetadata.flag"]
+              },
+              "right" : {
+                "type" : "hexstr",
+                "value" : "0x00"
+              }
+            }
+          },
+          "true_next" : "MyIngress.sMAC_default",
+          "false_next" : "tbl_scaleIoT518"
+        },
+        {
+          "name" : "node_12",
+          "id" : 3,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 520,
+            "column" : 11,
+            "source_fragment" : "meta.flag==0"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "==",
+              "left" : {
+                "type" : "field",
+                "value" : ["scalars", "userMetadata.flag"]
+              },
+              "right" : {
+                "type" : "hexstr",
+                "value" : "0x00"
+              }
+            }
+          },
+          "true_next" : "MyIngress.dMAC_default",
+          "false_next" : "tbl_scaleIoT523"
+        },
+        {
+          "name" : "node_16",
+          "id" : 4,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 525,
+            "column" : 11,
+            "source_fragment" : "meta.flag==0"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "==",
+              "left" : {
+                "type" : "field",
+                "value" : ["scalars", "userMetadata.flag"]
+              },
+              "right" : {
+                "type" : "hexstr",
+                "value" : "0x00"
+              }
+            }
+          },
+          "true_next" : "MyIngress.typEth_default",
+          "false_next" : "tbl_scaleIoT528"
+        },
+        {
+          "name" : "node_20",
+          "id" : 5,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 530,
+            "column" : 11,
+            "source_fragment" : "meta.flag==0"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "==",
+              "left" : {
+                "type" : "field",
+                "value" : ["scalars", "userMetadata.flag"]
+              },
+              "right" : {
+                "type" : "hexstr",
+                "value" : "0x00"
+              }
+            }
+          },
+          "true_next" : "MyIngress.proto_default",
+          "false_next" : "tbl_scaleIoT533"
+        },
+        {
+          "name" : "node_24",
+          "id" : 6,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 535,
+            "column" : 11,
+            "source_fragment" : "meta.flag==0"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "==",
+              "left" : {
+                "type" : "field",
+                "value" : ["scalars", "userMetadata.flag"]
+              },
+              "right" : {
+                "type" : "hexstr",
+                "value" : "0x00"
+              }
+            }
+          },
+          "true_next" : "MyIngress.sPort_default",
+          "false_next" : "tbl_scaleIoT538"
+        },
+        {
+          "name" : "node_28",
+          "id" : 7,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 540,
+            "column" : 11,
+            "source_fragment" : "meta.flag==0"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "==",
+              "left" : {
+                "type" : "field",
+                "value" : ["scalars", "userMetadata.flag"]
+              },
+              "right" : {
+                "type" : "hexstr",
+                "value" : "0x00"
+              }
+            }
+          },
+          "true_next" : "MyIngress.dPort_default",
+          "false_next" : "tbl_scaleIoT543"
+        },
+        {
+          "name" : "node_32",
+          "id" : 8,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 545,
+            "column" : 11,
+            "source_fragment" : "meta.flag==0"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "==",
+              "left" : {
+                "type" : "field",
+                "value" : ["scalars", "userMetadata.flag"]
+              },
+              "right" : {
+                "type" : "hexstr",
+                "value" : "0x00"
+              }
+            }
+          },
+          "true_next" : "MyIngress.srcIP_default",
+          "false_next" : "tbl_scaleIoT548"
+        }
+      ]
+    },
+    {
+      "name" : "egress",
+      "id" : 1,
+      "source_info" : {
+        "filename" : "scaleIoT.p4",
+        "line" : 563,
+        "column" : 8,
+        "source_fragment" : "MyEgress"
+      },
+      "init_table" : null,
+      "tables" : [],
+      "action_profiles" : [],
+      "conditionals" : []
+    }
+  ],
+  "checksums" : [
+    {
+      "name" : "cksum",
+      "id" : 0,
+      "source_info" : {
+        "filename" : "scaleIoT.p4",
+        "line" : 575,
+        "column" : 8,
+        "source_fragment" : "update_checksum( ..."
+      },
+      "target" : ["ipv4", "hdrChecksum"],
+      "type" : "generic",
+      "calculation" : "calc",
+      "verify" : false,
+      "update" : true,
+      "if_cond" : {
+        "type" : "expression",
+        "value" : {
+          "op" : "d2b",
+          "left" : null,
+          "right" : {
+            "type" : "field",
+            "value" : ["ipv4", "$valid$"]
+          }
+        }
+      }
+    }
+  ],
+  "force_arith" : [],
+  "extern_instances" : [],
+  "field_aliases" : [
+    [
+      "queueing_metadata.enq_timestamp",
+      ["standard_metadata", "enq_timestamp"]
+    ],
+    [
+      "queueing_metadata.enq_qdepth",
+      ["standard_metadata", "enq_qdepth"]
+    ],
+    [
+      "queueing_metadata.deq_timedelta",
+      ["standard_metadata", "deq_timedelta"]
+    ],
+    [
+      "queueing_metadata.deq_qdepth",
+      ["standard_metadata", "deq_qdepth"]
+    ],
+    [
+      "intrinsic_metadata.ingress_global_timestamp",
+      ["standard_metadata", "ingress_global_timestamp"]
+    ],
+    [
+      "intrinsic_metadata.egress_global_timestamp",
+      ["standard_metadata", "egress_global_timestamp"]
+    ],
+    [
+      "intrinsic_metadata.mcast_grp",
+      ["standard_metadata", "mcast_grp"]
+    ],
+    [
+      "intrinsic_metadata.egress_rid",
+      ["standard_metadata", "egress_rid"]
+    ],
+    [
+      "intrinsic_metadata.priority",
+      ["standard_metadata", "priority"]
+    ]
+  ],
+  "program" : "scaleIoT.p4",
+  "__meta__" : {
+    "version" : [2, 23],
+    "compiler" : "https://github.com/p4lang/p4c"
+  }
+}
