@@ -1,0 +1,14 @@
+sMAC,dMAC,typEth,proto,sPort,dPort,srcIP,dstIP,action
+*,*,0x0800,17,*,67,*,*,forward
+*,*,0x0800,17,*,53,*,*,forward
+<sMAC>,*,0x0800,6,*,443,*,35.203.134.251,forward
+<sMAC>,*,0x0800,6,*,443,*,34.105.49.234,forward
+<sMAC>,ff:ff:ff:ff:ff:ff,0x0800,17,*,67,*,255.255.255.255,forward
+<sMAC>,*,0x0800,6,*,8883,*,35.197.82.39,forward
+<sMAC>,*,0x0800,17,*,53,*,8.8.8.8,forward
+*,<dMAC>,0x0800,6,8883,*,35.197.82.39,*,forward
+*,*,0x0800,17,53,*,*,*,forward
+*,<dMAC>,0x0800,6,443,*,34.105.49.234,*,forward
+*,*,0x0800,17,67,*,*,*,forward
+*,<dMAC>,0x0800,17,53,*,8.8.8.8,*,forward
+*,<dMAC>,0x0800,6,443,*,35.203.134.251,*,forward

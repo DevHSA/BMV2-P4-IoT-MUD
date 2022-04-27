@@ -203,6 +203,7 @@ control MyIngress(inout headers hdr,
     action forward(macAddr_t dstAddr, egressSpec_t switchPort) {
 
            //Standard Operations
+          meta.flag = 1;
           hdr.ethernet.sEth = hdr.ethernet.dEth;
           hdr.ethernet.dEth = dstAddr;
           standard_metadata.egress_spec = switchPort;

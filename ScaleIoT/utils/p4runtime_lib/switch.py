@@ -83,7 +83,21 @@ class SwitchConnection(object):
 
         for item in self.stream_msg_resp:
 
+
+            ##EXTRACTING MAC ADDRESS
+            print(item.packet)
+            print(type(item.packet.payload))
+
             packetpayload = item.packet.payload
+            print(packetpayload.hex())
+            packetString = packetpayload.hex()
+            print(type(packetString))
+            convertedAddress = packetString[12:24]
+            print(convertedAddress)
+            IoTmacAddress = ':'.join(convertedAddress[i:i+2] for i in range(0, len(convertedAddress), 2))
+            print(IoTmacAddress)
+
+            ##EXTRACTING PAYLOAD MUD URL
             #now converting payload from bytes to string
             packetstring = packetpayload.decode("utf-8",'backslashreplace')
             ind = packetstring.find("http") #finding index of http in the packet
@@ -94,11 +108,11 @@ class SwitchConnection(object):
             wordList = cleanURL.split("/")
             MUDfilename = wordList[-1]
 
+            ##In case of router solicitation messages we ignore and listen to the stream again
             if len(MUDfilename) == 0 :
                 continue
 
             rootpath = "/home/p4/BMV2-P4-IoT-MUD/ScaleIoT/MUDFiles/"
-            #
             # print(">>>>>>>>>>>>>>>>>>>>>IoT Device Name")
             # print(MUDfilename)
             #for Raw MUD file
@@ -120,7 +134,6 @@ class SwitchConnection(object):
             open(publickeyfile, 'wb').write(publickeyRequest.content)
 
             try:
-
                 #verifying the signed file and raw file using the public key
             	subprocess.check_output(["openssl", "dgst" ,"-sha256", "-verify" ,"/home/p4/BMV2-P4-IoT-MUD/ScaleIoT/MUDFiles/pub-key.pem", "-signature" , signedMUDfile, rawMUDfile]).decode("utf-8")
 
@@ -132,200 +145,32 @@ class SwitchConnection(object):
             	os.remove(signedMUDfile)
             	os.remove('pub-key.pem')
 
-            pureACL = readMUDFile(rawMUDfile)
+            pureACL = readMUDFile(rawMUDfile, IoTmacAddress)
             resolvedACL = resolve(pureACL)
-
-
-            ##sETH TABLE ENTRY
-            table_entry = p4info_helper.buildTableEntry(
-                table_name="MyIngress.sMAC_exact",
-                match_fields={
-                    "hdr.ethernet.sEth": "11:44:20:00:00:11"
-                },
-                action_name="MyIngress.ns_exact",
-                action_params={
-                    "next_state": 4,
-                })
-            s1.WriteTableEntry(table_entry)
-            table_entry = p4info_helper.buildTableEntry(
-                table_name="MyIngress.sMAC_default",
-                match_fields={
-                    "meta.stub_current_state_value": 1
-                },
-                action_name="MyIngress.ns_default",
-                action_params={
-                    "next_state": 4,
-                })
-            s1.WriteTableEntry(table_entry)
-
-            ##dETH TABLE ENTRY
-            table_entry = p4info_helper.buildTableEntry(
-                table_name="MyIngress.dMAC_exact",
-                match_fields={
-                    "meta.current_state": 1,
-                    "hdr.ethernet.dEth": "11:44:20:00:00:11"
-                },
-                action_name="MyIngress.ns_exact",
-                action_params={
-                    "next_state": 8,
-                })
-            s1.WriteTableEntry(table_entry)
-            table_entry = p4info_helper.buildTableEntry(
-                table_name="MyIngress.dMAC_default",
-                match_fields={
-                    "meta.current_state": 1
-                },
-                action_name="MyIngress.ns_default",
-                action_params={
-                    "next_state": 9,
-                })
-            s1.WriteTableEntry(table_entry)
-
-            ##typEth TABLE ENTRY
-            table_entry = p4info_helper.buildTableEntry(
-                table_name="MyIngress.typEth_exact",
-                match_fields={
-                    "meta.current_state": 1,
-                    "hdr.ethernet.typeEth": 0x0800
-                },
-                action_name="MyIngress.ns_exact",
-                action_params={
-                    "next_state": 10,
-                })
-            s1.WriteTableEntry(table_entry)
-            table_entry = p4info_helper.buildTableEntry(
-                table_name="MyIngress.typEth_default",
-                match_fields={
-                    "meta.current_state": 1
-                },
-                action_name="MyIngress.ns_default",
-                action_params={
-                    "next_state": 11,
-                })
-            s1.WriteTableEntry(table_entry)
-
-            ##protocol TABLE ENTRY
-            table_entry = p4info_helper.buildTableEntry(
-                table_name="MyIngress.proto_exact",
-                match_fields={
-                    "meta.current_state": 1,
-                    "hdr.ipv4.protocol": 17
-                },
-                action_name="MyIngress.ns_exact",
-                action_params={
-                    "next_state": 13,
-                })
-            s1.WriteTableEntry(table_entry)
-            table_entry = p4info_helper.buildTableEntry(
-                table_name="MyIngress.proto_default",
-                match_fields={
-                    "meta.current_state": 1
-                },
-                action_name="MyIngress.ns_default",
-                action_params={
-                    "next_state": 14,
-                })
-            s1.WriteTableEntry(table_entry)
-
-            ##sPORT TABLE ENTRY
-            table_entry = p4info_helper.buildTableEntry(
-                table_name="MyIngress.sPort_exact",
-                match_fields={
-                    "meta.current_state": 1,
-                    "meta.sport": 443
-                },
-                action_name="MyIngress.ns_exact",
-                action_params={
-                    "next_state": 16,
-                })
-            s1.WriteTableEntry(table_entry)
-            table_entry = p4info_helper.buildTableEntry(
-                table_name="MyIngress.sPort_default",
-                match_fields={
-                    "meta.current_state": 1
-                },
-                action_name="MyIngress.ns_default",
-                action_params={
-                    "next_state": 17,
-                })
-            s1.WriteTableEntry(table_entry)
-
-            # ##sPORT TABLE ENTRY
-            # table_entry = p4info_helper.buildTableEntry(
-            #     table_name="MyIngress.dPort_exact",
-            #     match_fields={
-            #         "meta.current_state": 1,
-            #         "meta.dport": 443
-            #     },
-            #     action_name="MyIngress.ns_exact",
-            #     action_params={
-            #         "next_state": 16,
-            #     })
-            # s1.WriteTableEntry(table_entry)
-            # table_entry = p4info_helper.buildTableEntry(
-            #     table_name="MyIngress.dPort_default",
-            #     match_fields={
-            #         "meta.current_state": 1
-            #     },
-            #     action_name="MyIngress.ns_default",
-            #     action_params={
-            #         "next_state": 17,
-            #     })
-            # s1.WriteTableEntry(table_entry)
-            #
-            # ##sIP TABLE ENTRY
-            # table_entry = p4info_helper.buildTableEntry(
-            #     table_name="MyIngress.srcIP_exact",
-            #     match_fields={
-            #         "meta.current_state": 1,
-            #         "hdr.ipv4.srcAddr": "55.65.55.33"
-            #     },
-            #     action_name="MyIngress.ns_exact",
-            #     action_params={
-            #         "next_state": 120,
-            #     })
-            # s1.WriteTableEntry(table_entry)
-            # table_entry = p4info_helper.buildTableEntry(
-            #     table_name="MyIngress.srcIP_default",
-            #     match_fields={
-            #         "meta.current_state": 1
-            #     },
-            #     action_name="MyIngress.ns_default",
-            #     action_params={
-            #         "next_state": 290,
-            #     })
-            # s1.WriteTableEntry(table_entry)
-            #
-            # ##dIP TABLE ENTRY
-            # table_entry = p4info_helper.buildTableEntry(
-            #     table_name="MyIngress.dstIP_exact",
-            #     match_fields={
-            #         "meta.current_state": 1,
-            #         "hdr.ipv4.dstAddr": "55.65.55.11"
-            #     },
-            #     action_name="MyIngress.forward",
-            #     action_params={
-            #         "dstAddr": "08:00:00:00:02:22",
-            #         "switchPort": 2
-            #     })
-            # s1.WriteTableEntry(table_entry)
-            # table_entry = p4info_helper.buildTableEntry(
-            #     table_name="MyIngress.dstIP_default",
-            #     match_fields={
-            #         "meta.current_state": 1
-            #     },
-            #     action_name="MyIngress.forward",
-            #     action_params={
-            #         "dstAddr": "08:00:00:00:02:22",
-            #         "switchPort": 2
-            #     })
-            # s1.WriteTableEntry(table_entry)
 
 
 
             readTableRules(p4info_helper, s1)
-
             convertDT(resolvedACL, p4info_helper, s1, readTableRules)
+
+            
+
+
+    def DeleteTableEntry(self, table_entry, dry_run=False):
+        request = p4runtime_pb2.WriteRequest()
+        request.device_id = self.device_id
+        request.election_id.low = 1
+        update = request.updates.add()
+        if table_entry.is_default_action:
+            update.type = p4runtime_pb2.Update.DELETE
+        else:
+            update.type = p4runtime_pb2.Update.DELETE
+        update.entity.table_entry.CopyFrom(table_entry)
+        if dry_run:
+            print("P4Runtime Write:", request)
+        else:
+            self.client_stub.Write(request)
+
 
     def MasterArbitrationUpdate(self, dry_run=False, **kwargs):
         request = p4runtime_pb2.StreamMessageRequest()

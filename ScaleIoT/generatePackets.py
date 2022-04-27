@@ -4,6 +4,8 @@ import socket
 import random
 import time
 import pandas as pd
+from datetime import datetime
+
 
 from scapy.all import *
 
@@ -49,6 +51,7 @@ def send_packet(iface, listView):
     # input("Press the return key to send the packet:")
 
     sendp(pkt, iface=iface, verbose=False)
+
 
 
 def send_DHCP(iface):
@@ -102,7 +105,7 @@ def send_DHCP(iface):
     #Parameter Request List
     data = data + b'\x37\x04\x01\x03\x06\x2a'
     #Host name
-    str = "http://127.0.0.1:443/amazonecho"
+    str = "http://127.0.0.1:443/augustdoorbell"
     strlen = len(str)
     print(strlen)
     strlen_bytes = strlen.to_bytes(1,'big')
@@ -118,13 +121,28 @@ def send_DHCP(iface):
 
     pkt = pkt / Raw(load=data)
 
+    now = datetime.now()
+    mic = now.microsecond
+    print(mic)
+
+    milliseconds = int(time.time() * 1000)
+    print("Time in milliseconds since epoch", milliseconds)
     sendp(pkt, iface=iface, verbose=True)
 
+def send_test(iface):
+
+    pkt = Ether(src="00:0b:82:01:fc:42", dst="00:0b:82:01:fc:46", type=0x0800)
+    pkt = pkt / IP(proto=6 , src="224.239.227.216", dst="54.239.27.116")
+    pkt = pkt / TCP(sport=3322, dport=443)
+
+    sendp(pkt, iface=iface, verbose=True)
 
 def main():
 
     iface = get_if()
     send_DHCP(iface)
+    time.sleep(2)
+    # send_test(iface)
 
     #Read packet generator
 

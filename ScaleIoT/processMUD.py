@@ -26,8 +26,8 @@ def getSourceDestination(data):
     return data.get(src_net_key, '*'), data.get(dest_net_key, '*'), data.get('protocol', '*')
 
 #Main Function
-def readMUDFile(pathName):
-    print("INSIDE READMUDFILE")
+def readMUDFile(pathName, IoTmacAddress):
+    # print("INSIDE READMUDFILE")
     # os.chdir("/home/p4/BMV2-P4-IoT-MUD/ScaleIoT/MUDFiles/")
     files=os.listdir("/home/p4/BMV2-P4-IoT-MUD/ScaleIoT/MUDFiles/")
     data = []
@@ -54,7 +54,7 @@ def readMUDFile(pathName):
 
     final_list = []
     for i in range(len(data)):
-        print("Inside")
+        # print("Inside")
         access_json=data[i].get('ietf-access-control-list:access-lists').get('acl')
         for acl in access_json:
             aces = acl['aces']['ace']
@@ -112,19 +112,15 @@ def readMUDFile(pathName):
                 final_row['action'] = 'forward' if ace['actions'].get('forwarding', '') == 'accept' else '*'
 
                 if final_row['srcIP'] == '*' and final_row['dstIP'] != '*':
-                    final_row['sMAC'] = '9e:8d:de:80:29:28'
+                    final_row['sMAC'] = IoTmacAddress#'9e:8d:de:80:29:28'
 
                 if final_row['dstIP'] == '*' and final_row['srcIP'] != '*':
-                    final_row['dMAC'] = '9e:8d:de:80:29:28'
+                    final_row['dMAC'] = IoTmacAddress#'9e:8d:de:80:29:28'
                 final_list.append(final_row)
 
     df = pd.DataFrame(final_list)
     df.head()
-    # print(df)
-
-
-    # print("Reached End")
-    # print(df.shape)
+    
     columns = ['sMAC','dMAC','typEth','srcIP','dstIP','proto','sPort','dPort','action']
     df1 = df[columns]
 
@@ -137,7 +133,7 @@ def readMUDFile(pathName):
 
     return df2
 
-    # df2.to_csv('ACLWithoutDuplicates.csv')
+
 
 
 
