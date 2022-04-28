@@ -1,4 +1,4 @@
-**Technologies**
+**Components and technologies used:**
 
 -   **MUD File server**
 
@@ -28,41 +28,45 @@
 
     Mininet-IoT is used to emulate a network of IoT devices via nodes
     and links.
+    
+____
 
-    **Flow of messages**
+**Flow of messages**
 
-    Once the Mininet environment is set up, the host sends DHCP packets
-    to the switch using **generatepackets.py**. To generate DHCP
-    packets, we import sendp() from scapy with source IP set to 0.0.0.0.
+![image](https://user-images.githubusercontent.com/42608920/165621064-0830df5d-2591-4235-821e-cf5d5d83e6b6.png)
 
-    The switch is configured to forward DHCP packets to the controller
-    via virtual port 510. When the controller receives packet-in
-    messages, it extracts the URL from the packet payload, requests the
-    MUD file from the server, verifies the signature file using the
-    public key, and subsequently, the MUD file is sent to
-    **processMUD.py**.
+Once the Mininet environment is set up, the host sends DHCP packets
+to the switch using **generatepackets.py**. To generate DHCP
+packets, we import sendp() from scapy with source IP set to 0.0.0.0.
 
-    At **processMUD.py**, the MUD file is converted from a simple
-    flattened JSON file into a Pandas DataFrame, which is next directed
-    to **resolve.py**. The domain names are resolved to IP addresses
-    using the **gethostbyname()** function. Subsequently, the resolved
-    ACL rules are sent to decisiontree.py
+The switch is configured to forward DHCP packets to the controller
+via virtual port 510. When the controller receives packet-in
+messages, it extracts the URL from the packet payload, requests the
+MUD file from the server, verifies the signature file using the
+public key, and subsequently, the MUD file is sent to
+**processMUD.py**.
 
-    The **decisiontree.py** has two tasks: converting resolved ACL rules
-    to a decision tree and adding corresponding table rules to
-    the switch.
+At **processMUD.py**, the MUD file is converted from a simple
+flattened JSON file into a Pandas DataFrame, which is next directed
+to **resolve.py**. The domain names are resolved to IP addresses
+using the **gethostbyname()** function. Subsequently, the resolved
+ACL rules are sent to decisiontree.py
 
-    A decision tree is a k-ary search tree to store rules while avoiding
-    repetitions and optimizing time. A decision tree starts with the
-    root and travels through 8 levels before deciding to forward or drop
-    the packet. Any two nodes are siblings if they have the same parent,
-    and **isPresent** is a Boolean variable that indicates whether the
-    node is already in the tree or not. Another variable,
-    **levelCounter,** keeps track of the number of sets of siblings at a
-    particular level. An ACL rule is defined as a list of 8 elements –
-    corresponding to the eight tuple format.
+The **decisiontree.py** has two tasks: converting resolved ACL rules
+to a decision tree and adding corresponding table rules to
+the switch.
 
-    Three parameters uniquely identify each node:
+A decision tree is a k-ary search tree to store rules while avoiding
+repetitions and optimizing time. A decision tree starts with the
+root and travels through 8 levels before deciding to forward or drop
+the packet. Any two nodes are siblings if they have the same parent,
+and **isPresent** is a Boolean variable that indicates whether the
+node is already in the tree or not. Another variable,
+**levelCounter,** keeps track of the number of sets of siblings at a
+particular level. An ACL rule is defined as a list of 8 elements –
+corresponding to the eight tuple format.
+
+Three parameters uniquely identify each node:
 
 1.  **state** – that depends on the previous node values,
 
@@ -86,15 +90,28 @@ be observed:
 -   If the current node has no child, **levelCounters** is incremented
     by 1.
 
-1.  If the node is already present, iterate to the next header field of
+2.  If the node is already present, iterate to the next header field of
     the rule.
 
-2.  If the node is not present, define the new node using the three
+3.  If the node is not present, define the new node using the three
     parameters, add it to the tree and iterate to the next header field
     of the rule.
 
-Once the rule is added to the tree, it is converted to table rules which
+    Once the rule is added to the tree, it is converted to table rules which
 are installed in the switch.
 
-![image](https://user-images.githubusercontent.com/42608920/165621064-0830df5d-2591-4235-821e-cf5d5d83e6b6.png)
 
+___
+
+**Instructions to run the code** :
+
+1. Download and extract the zipped folder.
+2. Execute **installations.sh**
+3. change the absolute location of MUD files in switch.py, (around lines 29, 115 and 138) and processMUD.py(line 32).
+4. To start MUD server, go to **MUDserver/webapp**, open in terminal and run **sudo python3 mudserver.py**
+5. Go to ScaleIoT folder, and run **make** in terminal. The mininet environment will be setup.
+6. Open new terminal in the ScaleIoT folder and type **./controller.py**.
+7. In the mininet environment, type xterm h1, and in node h1, type **python3 generatePackets.py**. This will generate and send  a DHCP packet from host h1(which is the IoT device) to the switch s1, and start the aforementioned circuit.
+
+    Now, according to the MUD URL specified in the DHCP packet, the MUD file will be downloaded and processed to flow rules which will be installed on the switch.
+___
