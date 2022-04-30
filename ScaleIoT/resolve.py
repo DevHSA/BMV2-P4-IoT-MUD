@@ -47,7 +47,7 @@ def resolve(pureACL):
 
         # print("count = ", count)
         # count+=1
-        print(index)
+        #print(index)
         #0 (Convert All MACs to generic ones)
         # if row['sMAC'] != '*' and row['sMAC']!= 'ff:ff:ff:ff:ff:ff':
         #     row['sMAC'] = "<sMAC>"
@@ -57,9 +57,11 @@ def resolve(pureACL):
         #     pureACL.at[index,'dMAC'] = row['dMAC']
 
         #1 (Remove all '/' notations)
+
         if row['srcIP'] != '*' and row['srcIP'].find('/')!=-1:
             row['srcIP'] = row['srcIP'].split('/')[0]
             pureACL.at[index,'srcIP'] = row['srcIP']
+
         if row['dstIP'] != '*' and row['dstIP'].find('/')!=-1:
             row['dstIP'] = row['dstIP'].split('/')[0]
             pureACL.at[index,'dstIP'] = row['dstIP']
@@ -67,6 +69,7 @@ def resolve(pureACL):
         #2 Convert all the Domain Names to IP Addresses
         if row['srcIP'] != '*':
             pureACL.at[index,'srcIP'] = domainResolver(row['srcIP'])
+            
         if row['dstIP'] != '*':
             pureACL.at[index,'dstIP'] = domainResolver(row['dstIP'])
 

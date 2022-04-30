@@ -4995,3 +4995,1336 @@ Action entry: MyIngress.dhcp_forward - 1fe,
 [18:23:56.652] [bmv2] [D] [thread 15051] [25.0] [cxt 0] Deparser 'deparser': end
 [18:23:56.653] [bmv2] [D] [thread 15053] [25.0] [cxt 0] Transmitting packet of size 70 out of port 510
 [18:23:56.653] [bmv2] [D] [thread 15053] Transmitting packet-in
+[18:30:46.254] [bmv2] [D] [thread 15048] [26.0] [cxt 0] Processing packet received on port 2
+[18:30:46.255] [bmv2] [D] [thread 15048] [26.0] [cxt 0] Parser 'parser': start
+[18:30:46.255] [bmv2] [D] [thread 15048] [26.0] [cxt 0] Parser 'parser' entering state 'start'
+[18:30:46.255] [bmv2] [D] [thread 15048] [26.0] [cxt 0] Extracting header 'ethernet'
+[18:30:46.255] [bmv2] [D] [thread 15048] [26.0] [cxt 0] Parser state 'start': key is 86dd
+[18:30:46.255] [bmv2] [T] [thread 15048] [26.0] [cxt 0] Bytes parsed: 14
+[18:30:46.255] [bmv2] [D] [thread 15048] [26.0] [cxt 0] Parser 'parser': end
+[18:30:46.255] [bmv2] [D] [thread 15048] [26.0] [cxt 0] Pipeline 'ingress': start
+[18:30:46.255] [bmv2] [T] [thread 15048] [26.0] [cxt 0] Applying table 'MyIngress.ipv4_lpm'
+[18:30:46.255] [bmv2] [D] [thread 15048] [26.0] [cxt 0] Looking up key:
+* hdr.ipv4.srcAddr    : 00000000
+
+[18:30:46.255] [bmv2] [D] [thread 15048] [26.0] [cxt 0] Table 'MyIngress.ipv4_lpm': hit with handle 0
+[18:30:46.255] [bmv2] [D] [thread 15048] [26.0] [cxt 0] Dumping entry 0
+Match key:
+* hdr.ipv4.srcAddr    : LPM       00000000/32
+Action entry: MyIngress.dhcp_forward - 1fe,
+
+[18:30:46.255] [bmv2] [D] [thread 15048] [26.0] [cxt 0] Action entry is MyIngress.dhcp_forward - 1fe,
+[18:30:46.255] [bmv2] [T] [thread 15048] [26.0] [cxt 0] Action MyIngress.dhcp_forward
+[18:30:46.255] [bmv2] [T] [thread 15048] [26.0] [cxt 0] scaleIoT.p4(196) Primitive flow_duration.write(1, standard_metadata.enq_timestamp)
+[18:30:46.255] [bmv2] [T] [thread 15048] [26.0] [cxt 0] Wrote register 'MyIngress.flow_duration' at index 1 with value 0
+[18:30:46.255] [bmv2] [T] [thread 15048] [26.0] [cxt 0] scaleIoT.p4(199) Primitive standard_metadata.egress_spec = port
+[18:30:46.255] [bmv2] [D] [thread 15048] [26.0] [cxt 0] Pipeline 'ingress': end
+[18:30:46.255] [bmv2] [D] [thread 15048] [26.0] [cxt 0] Egress port is 510
+[18:30:46.255] [bmv2] [D] [thread 15051] [26.0] [cxt 0] Pipeline 'egress': start
+[18:30:46.256] [bmv2] [D] [thread 15051] [26.0] [cxt 0] Pipeline 'egress': end
+[18:30:46.256] [bmv2] [D] [thread 15051] [26.0] [cxt 0] Deparser 'deparser': start
+[18:30:46.256] [bmv2] [T] [thread 15051] [26.0] [cxt 0] Skipping checksum 'cksum' update because condition not met
+[18:30:46.256] [bmv2] [D] [thread 15051] [26.0] [cxt 0] Deparsing header 'ethernet'
+[18:30:46.256] [bmv2] [D] [thread 15051] [26.0] [cxt 0] Deparser 'deparser': end
+[18:30:46.256] [bmv2] [D] [thread 15053] [26.0] [cxt 0] Transmitting packet of size 70 out of port 510
+[18:30:46.256] [bmv2] [D] [thread 15053] Transmitting packet-in
+[18:32:08.173] [bmv2] [D] [thread 15048] [27.0] [cxt 0] Processing packet received on port 1
+[18:32:08.173] [bmv2] [D] [thread 15048] [27.0] [cxt 0] Parser 'parser': start
+[18:32:08.173] [bmv2] [D] [thread 15048] [27.0] [cxt 0] Parser 'parser' entering state 'start'
+[18:32:08.173] [bmv2] [D] [thread 15048] [27.0] [cxt 0] Extracting header 'ethernet'
+[18:32:08.173] [bmv2] [D] [thread 15048] [27.0] [cxt 0] Parser state 'start': key is 86dd
+[18:32:08.173] [bmv2] [T] [thread 15048] [27.0] [cxt 0] Bytes parsed: 14
+[18:32:08.173] [bmv2] [D] [thread 15048] [27.0] [cxt 0] Parser 'parser': end
+[18:32:08.173] [bmv2] [D] [thread 15048] [27.0] [cxt 0] Pipeline 'ingress': start
+[18:32:08.173] [bmv2] [T] [thread 15048] [27.0] [cxt 0] Applying table 'MyIngress.ipv4_lpm'
+[18:32:08.173] [bmv2] [D] [thread 15048] [27.0] [cxt 0] Looking up key:
+* hdr.ipv4.srcAddr    : 00000000
+
+[18:32:08.173] [bmv2] [D] [thread 15048] [27.0] [cxt 0] Table 'MyIngress.ipv4_lpm': hit with handle 0
+[18:32:08.173] [bmv2] [D] [thread 15048] [27.0] [cxt 0] Dumping entry 0
+Match key:
+* hdr.ipv4.srcAddr    : LPM       00000000/32
+Action entry: MyIngress.dhcp_forward - 1fe,
+
+[18:32:08.173] [bmv2] [D] [thread 15048] [27.0] [cxt 0] Action entry is MyIngress.dhcp_forward - 1fe,
+[18:32:08.173] [bmv2] [T] [thread 15048] [27.0] [cxt 0] Action MyIngress.dhcp_forward
+[18:32:08.173] [bmv2] [T] [thread 15048] [27.0] [cxt 0] scaleIoT.p4(196) Primitive flow_duration.write(1, standard_metadata.enq_timestamp)
+[18:32:08.173] [bmv2] [T] [thread 15048] [27.0] [cxt 0] Wrote register 'MyIngress.flow_duration' at index 1 with value 0
+[18:32:08.173] [bmv2] [T] [thread 15048] [27.0] [cxt 0] scaleIoT.p4(199) Primitive standard_metadata.egress_spec = port
+[18:32:08.173] [bmv2] [D] [thread 15048] [27.0] [cxt 0] Pipeline 'ingress': end
+[18:32:08.173] [bmv2] [D] [thread 15048] [27.0] [cxt 0] Egress port is 510
+[18:32:08.173] [bmv2] [D] [thread 15051] [27.0] [cxt 0] Pipeline 'egress': start
+[18:32:08.173] [bmv2] [D] [thread 15051] [27.0] [cxt 0] Pipeline 'egress': end
+[18:32:08.173] [bmv2] [D] [thread 15051] [27.0] [cxt 0] Deparser 'deparser': start
+[18:32:08.173] [bmv2] [T] [thread 15051] [27.0] [cxt 0] Skipping checksum 'cksum' update because condition not met
+[18:32:08.173] [bmv2] [D] [thread 15051] [27.0] [cxt 0] Deparsing header 'ethernet'
+[18:32:08.173] [bmv2] [D] [thread 15051] [27.0] [cxt 0] Deparser 'deparser': end
+[18:32:08.174] [bmv2] [D] [thread 15053] [27.0] [cxt 0] Transmitting packet of size 70 out of port 510
+[18:32:08.174] [bmv2] [D] [thread 15053] Transmitting packet-in
+[18:45:47.373] [bmv2] [D] [thread 15048] [28.0] [cxt 0] Processing packet received on port 2
+[18:45:47.373] [bmv2] [D] [thread 15048] [28.0] [cxt 0] Parser 'parser': start
+[18:45:47.373] [bmv2] [D] [thread 15048] [28.0] [cxt 0] Parser 'parser' entering state 'start'
+[18:45:47.373] [bmv2] [D] [thread 15048] [28.0] [cxt 0] Extracting header 'ethernet'
+[18:45:47.373] [bmv2] [D] [thread 15048] [28.0] [cxt 0] Parser state 'start': key is 86dd
+[18:45:47.373] [bmv2] [T] [thread 15048] [28.0] [cxt 0] Bytes parsed: 14
+[18:45:47.373] [bmv2] [D] [thread 15048] [28.0] [cxt 0] Parser 'parser': end
+[18:45:47.373] [bmv2] [D] [thread 15048] [28.0] [cxt 0] Pipeline 'ingress': start
+[18:45:47.373] [bmv2] [T] [thread 15048] [28.0] [cxt 0] Applying table 'MyIngress.ipv4_lpm'
+[18:45:47.373] [bmv2] [D] [thread 15048] [28.0] [cxt 0] Looking up key:
+* hdr.ipv4.srcAddr    : 00000000
+
+[18:45:47.373] [bmv2] [D] [thread 15048] [28.0] [cxt 0] Table 'MyIngress.ipv4_lpm': hit with handle 0
+[18:45:47.373] [bmv2] [D] [thread 15048] [28.0] [cxt 0] Dumping entry 0
+Match key:
+* hdr.ipv4.srcAddr    : LPM       00000000/32
+Action entry: MyIngress.dhcp_forward - 1fe,
+
+[18:45:47.373] [bmv2] [D] [thread 15048] [28.0] [cxt 0] Action entry is MyIngress.dhcp_forward - 1fe,
+[18:45:47.373] [bmv2] [T] [thread 15048] [28.0] [cxt 0] Action MyIngress.dhcp_forward
+[18:45:47.373] [bmv2] [T] [thread 15048] [28.0] [cxt 0] scaleIoT.p4(196) Primitive flow_duration.write(1, standard_metadata.enq_timestamp)
+[18:45:47.373] [bmv2] [T] [thread 15048] [28.0] [cxt 0] Wrote register 'MyIngress.flow_duration' at index 1 with value 0
+[18:45:47.373] [bmv2] [T] [thread 15048] [28.0] [cxt 0] scaleIoT.p4(199) Primitive standard_metadata.egress_spec = port
+[18:45:47.373] [bmv2] [D] [thread 15048] [28.0] [cxt 0] Pipeline 'ingress': end
+[18:45:47.373] [bmv2] [D] [thread 15048] [28.0] [cxt 0] Egress port is 510
+[18:45:47.373] [bmv2] [D] [thread 15051] [28.0] [cxt 0] Pipeline 'egress': start
+[18:45:47.373] [bmv2] [D] [thread 15051] [28.0] [cxt 0] Pipeline 'egress': end
+[18:45:47.373] [bmv2] [D] [thread 15051] [28.0] [cxt 0] Deparser 'deparser': start
+[18:45:47.373] [bmv2] [T] [thread 15051] [28.0] [cxt 0] Skipping checksum 'cksum' update because condition not met
+[18:45:47.373] [bmv2] [D] [thread 15051] [28.0] [cxt 0] Deparsing header 'ethernet'
+[18:45:47.373] [bmv2] [D] [thread 15051] [28.0] [cxt 0] Deparser 'deparser': end
+[18:45:47.374] [bmv2] [D] [thread 15053] [28.0] [cxt 0] Transmitting packet of size 70 out of port 510
+[18:45:47.374] [bmv2] [D] [thread 15053] Transmitting packet-in
+[18:48:31.213] [bmv2] [D] [thread 15048] [29.0] [cxt 0] Processing packet received on port 1
+[18:48:31.213] [bmv2] [D] [thread 15048] [29.0] [cxt 0] Parser 'parser': start
+[18:48:31.213] [bmv2] [D] [thread 15048] [29.0] [cxt 0] Parser 'parser' entering state 'start'
+[18:48:31.213] [bmv2] [D] [thread 15048] [29.0] [cxt 0] Extracting header 'ethernet'
+[18:48:31.213] [bmv2] [D] [thread 15048] [29.0] [cxt 0] Parser state 'start': key is 86dd
+[18:48:31.213] [bmv2] [T] [thread 15048] [29.0] [cxt 0] Bytes parsed: 14
+[18:48:31.213] [bmv2] [D] [thread 15048] [29.0] [cxt 0] Parser 'parser': end
+[18:48:31.213] [bmv2] [D] [thread 15048] [29.0] [cxt 0] Pipeline 'ingress': start
+[18:48:31.213] [bmv2] [T] [thread 15048] [29.0] [cxt 0] Applying table 'MyIngress.ipv4_lpm'
+[18:48:31.213] [bmv2] [D] [thread 15048] [29.0] [cxt 0] Looking up key:
+* hdr.ipv4.srcAddr    : 00000000
+
+[18:48:31.213] [bmv2] [D] [thread 15048] [29.0] [cxt 0] Table 'MyIngress.ipv4_lpm': hit with handle 0
+[18:48:31.213] [bmv2] [D] [thread 15048] [29.0] [cxt 0] Dumping entry 0
+Match key:
+* hdr.ipv4.srcAddr    : LPM       00000000/32
+Action entry: MyIngress.dhcp_forward - 1fe,
+
+[18:48:31.213] [bmv2] [D] [thread 15048] [29.0] [cxt 0] Action entry is MyIngress.dhcp_forward - 1fe,
+[18:48:31.213] [bmv2] [T] [thread 15048] [29.0] [cxt 0] Action MyIngress.dhcp_forward
+[18:48:31.213] [bmv2] [T] [thread 15048] [29.0] [cxt 0] scaleIoT.p4(196) Primitive flow_duration.write(1, standard_metadata.enq_timestamp)
+[18:48:31.213] [bmv2] [T] [thread 15048] [29.0] [cxt 0] Wrote register 'MyIngress.flow_duration' at index 1 with value 0
+[18:48:31.213] [bmv2] [T] [thread 15048] [29.0] [cxt 0] scaleIoT.p4(199) Primitive standard_metadata.egress_spec = port
+[18:48:31.213] [bmv2] [D] [thread 15048] [29.0] [cxt 0] Pipeline 'ingress': end
+[18:48:31.213] [bmv2] [D] [thread 15048] [29.0] [cxt 0] Egress port is 510
+[18:48:31.213] [bmv2] [D] [thread 15051] [29.0] [cxt 0] Pipeline 'egress': start
+[18:48:31.215] [bmv2] [D] [thread 15051] [29.0] [cxt 0] Pipeline 'egress': end
+[18:48:31.215] [bmv2] [D] [thread 15051] [29.0] [cxt 0] Deparser 'deparser': start
+[18:48:31.215] [bmv2] [T] [thread 15051] [29.0] [cxt 0] Skipping checksum 'cksum' update because condition not met
+[18:48:31.216] [bmv2] [D] [thread 15051] [29.0] [cxt 0] Deparsing header 'ethernet'
+[18:48:31.216] [bmv2] [D] [thread 15051] [29.0] [cxt 0] Deparser 'deparser': end
+[18:48:31.216] [bmv2] [D] [thread 15053] [29.0] [cxt 0] Transmitting packet of size 70 out of port 510
+[18:48:31.216] [bmv2] [D] [thread 15053] Transmitting packet-in
+[19:16:55.153] [bmv2] [D] [thread 15048] [30.0] [cxt 0] Processing packet received on port 2
+[19:16:55.153] [bmv2] [D] [thread 15048] [30.0] [cxt 0] Parser 'parser': start
+[19:16:55.153] [bmv2] [D] [thread 15048] [30.0] [cxt 0] Parser 'parser' entering state 'start'
+[19:16:55.153] [bmv2] [D] [thread 15048] [30.0] [cxt 0] Extracting header 'ethernet'
+[19:16:55.153] [bmv2] [D] [thread 15048] [30.0] [cxt 0] Parser state 'start': key is 86dd
+[19:16:55.153] [bmv2] [T] [thread 15048] [30.0] [cxt 0] Bytes parsed: 14
+[19:16:55.153] [bmv2] [D] [thread 15048] [30.0] [cxt 0] Parser 'parser': end
+[19:16:55.153] [bmv2] [D] [thread 15048] [30.0] [cxt 0] Pipeline 'ingress': start
+[19:16:55.153] [bmv2] [T] [thread 15048] [30.0] [cxt 0] Applying table 'MyIngress.ipv4_lpm'
+[19:16:55.153] [bmv2] [D] [thread 15048] [30.0] [cxt 0] Looking up key:
+* hdr.ipv4.srcAddr    : 00000000
+
+[19:16:55.153] [bmv2] [D] [thread 15048] [30.0] [cxt 0] Table 'MyIngress.ipv4_lpm': hit with handle 0
+[19:16:55.153] [bmv2] [D] [thread 15048] [30.0] [cxt 0] Dumping entry 0
+Match key:
+* hdr.ipv4.srcAddr    : LPM       00000000/32
+Action entry: MyIngress.dhcp_forward - 1fe,
+
+[19:16:55.153] [bmv2] [D] [thread 15048] [30.0] [cxt 0] Action entry is MyIngress.dhcp_forward - 1fe,
+[19:16:55.153] [bmv2] [T] [thread 15048] [30.0] [cxt 0] Action MyIngress.dhcp_forward
+[19:16:55.153] [bmv2] [T] [thread 15048] [30.0] [cxt 0] scaleIoT.p4(196) Primitive flow_duration.write(1, standard_metadata.enq_timestamp)
+[19:16:55.153] [bmv2] [T] [thread 15048] [30.0] [cxt 0] Wrote register 'MyIngress.flow_duration' at index 1 with value 0
+[19:16:55.154] [bmv2] [T] [thread 15048] [30.0] [cxt 0] scaleIoT.p4(199) Primitive standard_metadata.egress_spec = port
+[19:16:55.154] [bmv2] [D] [thread 15048] [30.0] [cxt 0] Pipeline 'ingress': end
+[19:16:55.154] [bmv2] [D] [thread 15048] [30.0] [cxt 0] Egress port is 510
+[19:16:55.154] [bmv2] [D] [thread 15051] [30.0] [cxt 0] Pipeline 'egress': start
+[19:16:55.154] [bmv2] [D] [thread 15051] [30.0] [cxt 0] Pipeline 'egress': end
+[19:16:55.154] [bmv2] [D] [thread 15051] [30.0] [cxt 0] Deparser 'deparser': start
+[19:16:55.154] [bmv2] [T] [thread 15051] [30.0] [cxt 0] Skipping checksum 'cksum' update because condition not met
+[19:16:55.154] [bmv2] [D] [thread 15051] [30.0] [cxt 0] Deparsing header 'ethernet'
+[19:16:55.154] [bmv2] [D] [thread 15051] [30.0] [cxt 0] Deparser 'deparser': end
+[19:16:55.154] [bmv2] [D] [thread 15053] [30.0] [cxt 0] Transmitting packet of size 70 out of port 510
+[19:16:55.154] [bmv2] [D] [thread 15053] Transmitting packet-in
+[19:21:17.292] [bmv2] [D] [thread 15048] [31.0] [cxt 0] Processing packet received on port 1
+[19:21:17.292] [bmv2] [D] [thread 15048] [31.0] [cxt 0] Parser 'parser': start
+[19:21:17.292] [bmv2] [D] [thread 15048] [31.0] [cxt 0] Parser 'parser' entering state 'start'
+[19:21:17.292] [bmv2] [D] [thread 15048] [31.0] [cxt 0] Extracting header 'ethernet'
+[19:21:17.292] [bmv2] [D] [thread 15048] [31.0] [cxt 0] Parser state 'start': key is 86dd
+[19:21:17.292] [bmv2] [T] [thread 15048] [31.0] [cxt 0] Bytes parsed: 14
+[19:21:17.292] [bmv2] [D] [thread 15048] [31.0] [cxt 0] Parser 'parser': end
+[19:21:17.292] [bmv2] [D] [thread 15048] [31.0] [cxt 0] Pipeline 'ingress': start
+[19:21:17.292] [bmv2] [T] [thread 15048] [31.0] [cxt 0] Applying table 'MyIngress.ipv4_lpm'
+[19:21:17.292] [bmv2] [D] [thread 15048] [31.0] [cxt 0] Looking up key:
+* hdr.ipv4.srcAddr    : 00000000
+
+[19:21:17.292] [bmv2] [D] [thread 15048] [31.0] [cxt 0] Table 'MyIngress.ipv4_lpm': hit with handle 0
+[19:21:17.292] [bmv2] [D] [thread 15048] [31.0] [cxt 0] Dumping entry 0
+Match key:
+* hdr.ipv4.srcAddr    : LPM       00000000/32
+Action entry: MyIngress.dhcp_forward - 1fe,
+
+[19:21:17.292] [bmv2] [D] [thread 15048] [31.0] [cxt 0] Action entry is MyIngress.dhcp_forward - 1fe,
+[19:21:17.292] [bmv2] [T] [thread 15048] [31.0] [cxt 0] Action MyIngress.dhcp_forward
+[19:21:17.292] [bmv2] [T] [thread 15048] [31.0] [cxt 0] scaleIoT.p4(196) Primitive flow_duration.write(1, standard_metadata.enq_timestamp)
+[19:21:17.292] [bmv2] [T] [thread 15048] [31.0] [cxt 0] Wrote register 'MyIngress.flow_duration' at index 1 with value 0
+[19:21:17.292] [bmv2] [T] [thread 15048] [31.0] [cxt 0] scaleIoT.p4(199) Primitive standard_metadata.egress_spec = port
+[19:21:17.292] [bmv2] [D] [thread 15048] [31.0] [cxt 0] Pipeline 'ingress': end
+[19:21:17.292] [bmv2] [D] [thread 15048] [31.0] [cxt 0] Egress port is 510
+[19:21:17.293] [bmv2] [D] [thread 15051] [31.0] [cxt 0] Pipeline 'egress': start
+[19:21:17.293] [bmv2] [D] [thread 15051] [31.0] [cxt 0] Pipeline 'egress': end
+[19:21:17.293] [bmv2] [D] [thread 15051] [31.0] [cxt 0] Deparser 'deparser': start
+[19:21:17.293] [bmv2] [T] [thread 15051] [31.0] [cxt 0] Skipping checksum 'cksum' update because condition not met
+[19:21:17.293] [bmv2] [D] [thread 15051] [31.0] [cxt 0] Deparsing header 'ethernet'
+[19:21:17.293] [bmv2] [D] [thread 15051] [31.0] [cxt 0] Deparser 'deparser': end
+[19:21:17.293] [bmv2] [D] [thread 15053] [31.0] [cxt 0] Transmitting packet of size 70 out of port 510
+[19:21:17.293] [bmv2] [D] [thread 15053] Transmitting packet-in
+[19:44:17.869] [bmv2] [W] [thread 15129] [P4Runtime] p4::tmp::P4DeviceConfig is deprecated
+[19:44:17.876] [bmv2] [D] [thread 15129] Set default default entry for table 'MyIngress.ipv4_lpm': NoAction - 
+[19:44:17.876] [bmv2] [D] [thread 15129] Set default default entry for table 'tbl_scaleIoT506': scaleIoT506 - 
+[19:44:17.876] [bmv2] [D] [thread 15129] Set default default entry for table 'tbl_scaleIoT510': scaleIoT510 - 
+[19:44:17.876] [bmv2] [D] [thread 15129] Set default default entry for table 'MyIngress.sMAC_exact': MyIngress.default_action_one - 
+[19:44:17.876] [bmv2] [D] [thread 15129] Set default default entry for table 'MyIngress.sMAC_default': MyIngress.drop - 
+[19:44:17.876] [bmv2] [D] [thread 15129] Set default default entry for table 'tbl_scaleIoT519': scaleIoT519 - 
+[19:44:17.876] [bmv2] [D] [thread 15129] Set default default entry for table 'MyIngress.dMAC_exact': NoAction - 
+[19:44:17.876] [bmv2] [D] [thread 15129] Set default default entry for table 'MyIngress.dMAC_default': MyIngress.drop - 
+[19:44:17.876] [bmv2] [D] [thread 15129] Set default default entry for table 'tbl_scaleIoT524': scaleIoT524 - 
+[19:44:17.876] [bmv2] [D] [thread 15129] Set default default entry for table 'MyIngress.typEth_exact': NoAction - 
+[19:44:17.876] [bmv2] [D] [thread 15129] Set default default entry for table 'MyIngress.typEth_default': MyIngress.drop - 
+[19:44:17.876] [bmv2] [D] [thread 15129] Set default default entry for table 'tbl_scaleIoT529': scaleIoT529 - 
+[19:44:17.876] [bmv2] [D] [thread 15129] Set default default entry for table 'MyIngress.proto_exact': NoAction - 
+[19:44:17.876] [bmv2] [D] [thread 15129] Set default default entry for table 'MyIngress.proto_default': MyIngress.drop - 
+[19:44:17.876] [bmv2] [D] [thread 15129] Set default default entry for table 'tbl_scaleIoT534': scaleIoT534 - 
+[19:44:17.876] [bmv2] [D] [thread 15129] Set default default entry for table 'MyIngress.sPort_exact': NoAction - 
+[19:44:17.876] [bmv2] [D] [thread 15129] Set default default entry for table 'MyIngress.sPort_default': MyIngress.drop - 
+[19:44:17.876] [bmv2] [D] [thread 15129] Set default default entry for table 'tbl_scaleIoT539': scaleIoT539 - 
+[19:44:17.876] [bmv2] [D] [thread 15129] Set default default entry for table 'MyIngress.dPort_exact': NoAction - 
+[19:44:17.876] [bmv2] [D] [thread 15129] Set default default entry for table 'MyIngress.dPort_default': MyIngress.drop - 
+[19:44:17.876] [bmv2] [D] [thread 15129] Set default default entry for table 'tbl_scaleIoT544': scaleIoT544 - 
+[19:44:17.876] [bmv2] [D] [thread 15129] Set default default entry for table 'MyIngress.srcIP_exact': NoAction - 
+[19:44:17.876] [bmv2] [D] [thread 15129] Set default default entry for table 'MyIngress.srcIP_default': MyIngress.drop - 
+[19:44:17.876] [bmv2] [D] [thread 15129] Set default default entry for table 'tbl_scaleIoT549': scaleIoT549 - 
+[19:44:17.876] [bmv2] [D] [thread 15129] Set default default entry for table 'MyIngress.dstIP_exact': NoAction - 
+[19:44:17.876] [bmv2] [D] [thread 15129] Set default default entry for table 'MyIngress.dstIP_default': MyIngress.drop - 
+[19:44:17.879] [bmv2] [D] [thread 15129] simple_switch target has been notified of a config swap
+[19:44:17.883] [bmv2] [D] [thread 15272] Entry 0 added to table 'MyIngress.ipv4_lpm'
+[19:44:17.883] [bmv2] [D] [thread 15272] Dumping entry 0
+Match key:
+* hdr.ipv4.srcAddr    : LPM       00000000/32
+Action entry: MyIngress.dhcp_forward - 1fe,
+
+[19:44:23.442] [bmv2] [D] [thread 15048] [32.0] [cxt 0] Processing packet received on port 1
+[19:44:23.442] [bmv2] [D] [thread 15048] [32.0] [cxt 0] Parser 'parser': start
+[19:44:23.442] [bmv2] [D] [thread 15048] [32.0] [cxt 0] Parser 'parser' entering state 'start'
+[19:44:23.442] [bmv2] [D] [thread 15048] [32.0] [cxt 0] Extracting header 'ethernet'
+[19:44:23.442] [bmv2] [D] [thread 15048] [32.0] [cxt 0] Parser state 'start': key is 0800
+[19:44:23.442] [bmv2] [T] [thread 15048] [32.0] [cxt 0] Bytes parsed: 14
+[19:44:23.442] [bmv2] [D] [thread 15048] [32.0] [cxt 0] Parser 'parser' entering state 'parse_ipv4'
+[19:44:23.442] [bmv2] [D] [thread 15048] [32.0] [cxt 0] Extracting header 'ipv4'
+[19:44:23.442] [bmv2] [D] [thread 15048] [32.0] [cxt 0] Parser state 'parse_ipv4': key is 11
+[19:44:23.442] [bmv2] [T] [thread 15048] [32.0] [cxt 0] Bytes parsed: 34
+[19:44:23.442] [bmv2] [D] [thread 15048] [32.0] [cxt 0] Parser 'parser' entering state 'parse_udp'
+[19:44:23.442] [bmv2] [D] [thread 15048] [32.0] [cxt 0] Extracting header 'udp'
+[19:44:23.442] [bmv2] [D] [thread 15048] [32.0] [cxt 0] Parser state 'parse_udp' has no switch, going to default next state
+[19:44:23.442] [bmv2] [T] [thread 15048] [32.0] [cxt 0] Bytes parsed: 42
+[19:44:23.442] [bmv2] [D] [thread 15048] [32.0] [cxt 0] Parser 'parser': end
+[19:44:23.442] [bmv2] [D] [thread 15048] [32.0] [cxt 0] Pipeline 'ingress': start
+[19:44:23.442] [bmv2] [T] [thread 15048] [32.0] [cxt 0] Applying table 'MyIngress.ipv4_lpm'
+[19:44:23.442] [bmv2] [D] [thread 15048] [32.0] [cxt 0] Looking up key:
+* hdr.ipv4.srcAddr    : 00000000
+
+[19:44:23.442] [bmv2] [D] [thread 15048] [32.0] [cxt 0] Table 'MyIngress.ipv4_lpm': hit with handle 0
+[19:44:23.442] [bmv2] [D] [thread 15048] [32.0] [cxt 0] Dumping entry 0
+Match key:
+* hdr.ipv4.srcAddr    : LPM       00000000/32
+Action entry: MyIngress.dhcp_forward - 1fe,
+
+[19:44:23.442] [bmv2] [D] [thread 15048] [32.0] [cxt 0] Action entry is MyIngress.dhcp_forward - 1fe,
+[19:44:23.442] [bmv2] [T] [thread 15048] [32.0] [cxt 0] Action MyIngress.dhcp_forward
+[19:44:23.442] [bmv2] [T] [thread 15048] [32.0] [cxt 0] scaleIoT.p4(196) Primitive flow_duration.write(1, standard_metadata.enq_timestamp)
+[19:44:23.442] [bmv2] [T] [thread 15048] [32.0] [cxt 0] Wrote register 'MyIngress.flow_duration' at index 1 with value 0
+[19:44:23.442] [bmv2] [T] [thread 15048] [32.0] [cxt 0] scaleIoT.p4(199) Primitive standard_metadata.egress_spec = port
+[19:44:23.442] [bmv2] [D] [thread 15048] [32.0] [cxt 0] Pipeline 'ingress': end
+[19:44:23.442] [bmv2] [D] [thread 15048] [32.0] [cxt 0] Egress port is 510
+[19:44:23.442] [bmv2] [D] [thread 15051] [32.0] [cxt 0] Pipeline 'egress': start
+[19:44:23.442] [bmv2] [D] [thread 15051] [32.0] [cxt 0] Pipeline 'egress': end
+[19:44:23.442] [bmv2] [D] [thread 15051] [32.0] [cxt 0] Deparser 'deparser': start
+[19:44:23.442] [bmv2] [D] [thread 15051] [32.0] [cxt 0] Updating checksum 'cksum'
+[19:44:23.442] [bmv2] [D] [thread 15051] [32.0] [cxt 0] Deparsing header 'ethernet'
+[19:44:23.442] [bmv2] [D] [thread 15051] [32.0] [cxt 0] Deparsing header 'ipv4'
+[19:44:23.442] [bmv2] [D] [thread 15051] [32.0] [cxt 0] Deparser 'deparser': end
+[19:44:23.443] [bmv2] [D] [thread 15053] [32.0] [cxt 0] Transmitting packet of size 336 out of port 510
+[19:44:23.443] [bmv2] [D] [thread 15053] Transmitting packet-in
+[19:44:25.009] [bmv2] [D] [thread 15272] Entry 0 added to table 'MyIngress.sMAC_exact'
+[19:44:25.009] [bmv2] [D] [thread 15272] Dumping entry 0
+Match key:
+* hdr.ethernet.sEth   : EXACT     000b8201fc42
+Action entry: MyIngress.ns_exact - 1,
+
+[19:44:25.011] [bmv2] [D] [thread 15129] Entry 0 added to table 'MyIngress.dMAC_default'
+[19:44:25.012] [bmv2] [D] [thread 15129] Dumping entry 0
+Match key:
+* meta.current_state  : EXACT     000001
+Action entry: MyIngress.ns_default - 1,
+
+[19:44:25.014] [bmv2] [D] [thread 15272] Entry 0 added to table 'MyIngress.typEth_exact'
+[19:44:25.014] [bmv2] [D] [thread 15272] Dumping entry 0
+Match key:
+* meta.current_state  : EXACT     000001
+* hdr.ethernet.typeEth: EXACT     0800
+Action entry: MyIngress.ns_exact - 1,
+
+[19:44:25.018] [bmv2] [D] [thread 15129] Entry 0 added to table 'MyIngress.proto_exact'
+[19:44:25.019] [bmv2] [D] [thread 15129] Dumping entry 0
+Match key:
+* meta.current_state  : EXACT     000001
+* hdr.ipv4.protocol   : EXACT     06
+Action entry: MyIngress.ns_exact - 1,
+
+[19:44:25.022] [bmv2] [D] [thread 15272] Entry 0 added to table 'MyIngress.sPort_default'
+[19:44:25.022] [bmv2] [D] [thread 15272] Dumping entry 0
+Match key:
+* meta.current_state  : EXACT     000001
+Action entry: MyIngress.ns_default - 1,
+
+[19:44:25.025] [bmv2] [D] [thread 15129] Entry 0 added to table 'MyIngress.dPort_exact'
+[19:44:25.025] [bmv2] [D] [thread 15129] Dumping entry 0
+Match key:
+* meta.current_state  : EXACT     000001
+* meta.dport          : EXACT     01bb
+Action entry: MyIngress.ns_exact - 1,
+
+[19:44:25.029] [bmv2] [D] [thread 15272] Entry 0 added to table 'MyIngress.srcIP_default'
+[19:44:25.029] [bmv2] [D] [thread 15272] Dumping entry 0
+Match key:
+* meta.current_state  : EXACT     000001
+Action entry: MyIngress.ns_default - 1,
+
+[19:44:25.032] [bmv2] [D] [thread 15129] Entry 0 added to table 'MyIngress.dstIP_exact'
+[19:44:25.032] [bmv2] [D] [thread 15129] Dumping entry 0
+Match key:
+* meta.current_state  : EXACT     000001
+* hdr.ipv4.dstAddr    : EXACT     312cccb9
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.045] [bmv2] [D] [thread 15272] Entry 0 added to table 'MyIngress.dMAC_exact'
+[19:44:25.045] [bmv2] [D] [thread 15272] Dumping entry 0
+Match key:
+* meta.current_state  : EXACT     000001
+* hdr.ethernet.dEth   : EXACT     ffffffffffff
+Action entry: MyIngress.ns_exact - 2,
+
+[19:44:25.048] [bmv2] [D] [thread 15129] Entry 1 added to table 'MyIngress.typEth_exact'
+[19:44:25.048] [bmv2] [D] [thread 15129] Dumping entry 1
+Match key:
+* meta.current_state  : EXACT     000002
+* hdr.ethernet.typeEth: EXACT     0800
+Action entry: MyIngress.ns_exact - 2,
+
+[19:44:25.052] [bmv2] [D] [thread 15272] Entry 1 added to table 'MyIngress.proto_exact'
+[19:44:25.052] [bmv2] [D] [thread 15272] Dumping entry 1
+Match key:
+* meta.current_state  : EXACT     000002
+* hdr.ipv4.protocol   : EXACT     11
+Action entry: MyIngress.ns_exact - 2,
+
+[19:44:25.054] [bmv2] [D] [thread 15129] Entry 1 added to table 'MyIngress.sPort_default'
+[19:44:25.055] [bmv2] [D] [thread 15129] Dumping entry 1
+Match key:
+* meta.current_state  : EXACT     000002
+Action entry: MyIngress.ns_default - 2,
+
+[19:44:25.064] [bmv2] [D] [thread 15272] Entry 1 added to table 'MyIngress.dPort_exact'
+[19:44:25.064] [bmv2] [D] [thread 15272] Dumping entry 1
+Match key:
+* meta.current_state  : EXACT     000002
+* meta.dport          : EXACT     0043
+Action entry: MyIngress.ns_exact - 2,
+
+[19:44:25.075] [bmv2] [D] [thread 15129] Entry 1 added to table 'MyIngress.srcIP_default'
+[19:44:25.075] [bmv2] [D] [thread 15129] Dumping entry 1
+Match key:
+* meta.current_state  : EXACT     000002
+Action entry: MyIngress.ns_default - 2,
+
+[19:44:25.077] [bmv2] [D] [thread 15272] Entry 1 added to table 'MyIngress.dstIP_exact'
+[19:44:25.078] [bmv2] [D] [thread 15272] Dumping entry 1
+Match key:
+* meta.current_state  : EXACT     000002
+* hdr.ipv4.dstAddr    : EXACT     ffffffff
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.081] [bmv2] [D] [thread 15129] Entry 2 added to table 'MyIngress.dstIP_exact'
+[19:44:25.081] [bmv2] [D] [thread 15129] Dumping entry 2
+Match key:
+* meta.current_state  : EXACT     000001
+* hdr.ipv4.dstAddr    : EXACT     d8bc10b8
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.086] [bmv2] [D] [thread 15272] Entry 3 added to table 'MyIngress.dstIP_exact'
+[19:44:25.087] [bmv2] [D] [thread 15272] Dumping entry 3
+Match key:
+* meta.current_state  : EXACT     000001
+* hdr.ipv4.dstAddr    : EXACT     3f2114ea
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.092] [bmv2] [D] [thread 15129] Entry 0 added to table 'MyIngress.sMAC_default'
+[19:44:25.092] [bmv2] [D] [thread 15129] Dumping entry 0
+Match key:
+* meta.stub_current_state_value: EXACT     000000
+Action entry: MyIngress.ns_default - 2,
+
+[19:44:25.095] [bmv2] [D] [thread 15272] Entry 1 added to table 'MyIngress.dMAC_default'
+[19:44:25.095] [bmv2] [D] [thread 15272] Dumping entry 1
+Match key:
+* meta.current_state  : EXACT     000002
+Action entry: MyIngress.ns_default - 3,
+
+[19:44:25.098] [bmv2] [D] [thread 15129] Entry 2 added to table 'MyIngress.typEth_exact'
+[19:44:25.098] [bmv2] [D] [thread 15129] Dumping entry 2
+Match key:
+* meta.current_state  : EXACT     000003
+* hdr.ethernet.typeEth: EXACT     0800
+Action entry: MyIngress.ns_exact - 3,
+
+[19:44:25.101] [bmv2] [D] [thread 15272] Entry 2 added to table 'MyIngress.proto_exact'
+[19:44:25.101] [bmv2] [D] [thread 15272] Dumping entry 2
+Match key:
+* meta.current_state  : EXACT     000003
+* hdr.ipv4.protocol   : EXACT     11
+Action entry: MyIngress.ns_exact - 3,
+
+[19:44:25.103] [bmv2] [D] [thread 15129] Entry 2 added to table 'MyIngress.sPort_default'
+[19:44:25.104] [bmv2] [D] [thread 15129] Dumping entry 2
+Match key:
+* meta.current_state  : EXACT     000003
+Action entry: MyIngress.ns_default - 3,
+
+[19:44:25.108] [bmv2] [D] [thread 15272] Entry 2 added to table 'MyIngress.dPort_exact'
+[19:44:25.108] [bmv2] [D] [thread 15272] Dumping entry 2
+Match key:
+* meta.current_state  : EXACT     000003
+* meta.dport          : EXACT     0035
+Action entry: MyIngress.ns_exact - 3,
+
+[19:44:25.112] [bmv2] [D] [thread 15129] Entry 2 added to table 'MyIngress.srcIP_default'
+[19:44:25.112] [bmv2] [D] [thread 15129] Dumping entry 2
+Match key:
+* meta.current_state  : EXACT     000003
+Action entry: MyIngress.ns_default - 3,
+
+[19:44:25.115] [bmv2] [D] [thread 15272] Entry 0 added to table 'MyIngress.dstIP_default'
+[19:44:25.115] [bmv2] [D] [thread 15272] Dumping entry 0
+Match key:
+* meta.current_state  : EXACT     000003
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.119] [bmv2] [D] [thread 15129] Entry 4 added to table 'MyIngress.dstIP_exact'
+[19:44:25.119] [bmv2] [D] [thread 15129] Dumping entry 4
+Match key:
+* meta.current_state  : EXACT     000001
+* hdr.ipv4.dstAddr    : EXACT     42822806
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.125] [bmv2] [D] [thread 15272] Entry 5 added to table 'MyIngress.dstIP_exact'
+[19:44:25.125] [bmv2] [D] [thread 15272] Dumping entry 5
+Match key:
+* meta.current_state  : EXACT     000001
+* hdr.ipv4.dstAddr    : EXACT     c8f84c4f
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.131] [bmv2] [D] [thread 15129] Entry 3 added to table 'MyIngress.proto_exact'
+[19:44:25.131] [bmv2] [D] [thread 15129] Dumping entry 3
+Match key:
+* meta.current_state  : EXACT     000001
+* hdr.ipv4.protocol   : EXACT     01
+Action entry: MyIngress.ns_exact - 4,
+
+[19:44:25.143] [bmv2] [D] [thread 15272] Entry 3 added to table 'MyIngress.sPort_default'
+[19:44:25.144] [bmv2] [D] [thread 15272] Dumping entry 3
+Match key:
+* meta.current_state  : EXACT     000004
+Action entry: MyIngress.ns_default - 4,
+
+[19:44:25.149] [bmv2] [D] [thread 15129] Entry 0 added to table 'MyIngress.dPort_default'
+[19:44:25.149] [bmv2] [D] [thread 15129] Dumping entry 0
+Match key:
+* meta.current_state  : EXACT     000004
+Action entry: MyIngress.ns_default - 4,
+
+[19:44:25.153] [bmv2] [D] [thread 15272] Entry 3 added to table 'MyIngress.srcIP_default'
+[19:44:25.154] [bmv2] [D] [thread 15272] Dumping entry 3
+Match key:
+* meta.current_state  : EXACT     000004
+Action entry: MyIngress.ns_default - 4,
+
+[19:44:25.158] [bmv2] [D] [thread 15129] Entry 6 added to table 'MyIngress.dstIP_exact'
+[19:44:25.158] [bmv2] [D] [thread 15129] Dumping entry 6
+Match key:
+* meta.current_state  : EXACT     000004
+* hdr.ipv4.dstAddr    : EXACT     08080404
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.164] [bmv2] [D] [thread 15272] Entry 7 added to table 'MyIngress.dstIP_exact'
+[19:44:25.164] [bmv2] [D] [thread 15272] Dumping entry 7
+Match key:
+* meta.current_state  : EXACT     000001
+* hdr.ipv4.dstAddr    : EXACT     5c82560a
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.169] [bmv2] [D] [thread 15129] Entry 8 added to table 'MyIngress.dstIP_exact'
+[19:44:25.170] [bmv2] [D] [thread 15129] Dumping entry 8
+Match key:
+* meta.current_state  : EXACT     000004
+* hdr.ipv4.dstAddr    : EXACT     34d1ec70
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.181] [bmv2] [D] [thread 15272] Entry 9 added to table 'MyIngress.dstIP_exact'
+[19:44:25.182] [bmv2] [D] [thread 15272] Dumping entry 9
+Match key:
+* meta.current_state  : EXACT     000001
+* hdr.ipv4.dstAddr    : EXACT     2732f218
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.186] [bmv2] [D] [thread 15129] Entry 10 added to table 'MyIngress.dstIP_exact'
+[19:44:25.186] [bmv2] [D] [thread 15129] Dumping entry 10
+Match key:
+* meta.current_state  : EXACT     000001
+* hdr.ipv4.dstAddr    : EXACT     12a16f42
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.191] [bmv2] [D] [thread 15272] Entry 4 added to table 'MyIngress.proto_exact'
+[19:44:25.192] [bmv2] [D] [thread 15272] Dumping entry 4
+Match key:
+* meta.current_state  : EXACT     000001
+* hdr.ipv4.protocol   : EXACT     11
+Action entry: MyIngress.ns_exact - 5,
+
+[19:44:25.194] [bmv2] [D] [thread 15129] Entry 4 added to table 'MyIngress.sPort_default'
+[19:44:25.195] [bmv2] [D] [thread 15129] Dumping entry 4
+Match key:
+* meta.current_state  : EXACT     000005
+Action entry: MyIngress.ns_default - 5,
+
+[19:44:25.197] [bmv2] [D] [thread 15272] Entry 3 added to table 'MyIngress.dPort_exact'
+[19:44:25.198] [bmv2] [D] [thread 15272] Dumping entry 3
+Match key:
+* meta.current_state  : EXACT     000005
+* meta.dport          : EXACT     0035
+Action entry: MyIngress.ns_exact - 5,
+
+[19:44:25.200] [bmv2] [D] [thread 15129] Entry 4 added to table 'MyIngress.srcIP_default'
+[19:44:25.200] [bmv2] [D] [thread 15129] Dumping entry 4
+Match key:
+* meta.current_state  : EXACT     000005
+Action entry: MyIngress.ns_default - 5,
+
+[19:44:25.207] [bmv2] [D] [thread 15272] Entry 11 added to table 'MyIngress.dstIP_exact'
+[19:44:25.207] [bmv2] [D] [thread 15272] Dumping entry 11
+Match key:
+* meta.current_state  : EXACT     000005
+* hdr.ipv4.dstAddr    : EXACT     08080808
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.212] [bmv2] [D] [thread 15272] Entry 4 added to table 'MyIngress.dPort_exact'
+[19:44:25.212] [bmv2] [D] [thread 15272] Dumping entry 4
+Match key:
+* meta.current_state  : EXACT     000003
+* meta.dport          : EXACT     0043
+Action entry: MyIngress.ns_exact - 6,
+
+[19:44:25.217] [bmv2] [D] [thread 15129] Entry 5 added to table 'MyIngress.srcIP_default'
+[19:44:25.218] [bmv2] [D] [thread 15129] Dumping entry 5
+Match key:
+* meta.current_state  : EXACT     000006
+Action entry: MyIngress.ns_default - 6,
+
+[19:44:25.228] [bmv2] [D] [thread 15272] Entry 1 added to table 'MyIngress.dstIP_default'
+[19:44:25.228] [bmv2] [D] [thread 15272] Dumping entry 1
+Match key:
+* meta.current_state  : EXACT     000006
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.231] [bmv2] [D] [thread 15129] Entry 12 added to table 'MyIngress.dstIP_exact'
+[19:44:25.231] [bmv2] [D] [thread 15129] Dumping entry 12
+Match key:
+* meta.current_state  : EXACT     000001
+* hdr.ipv4.dstAddr    : EXACT     b4e1d3c8
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.234] [bmv2] [D] [thread 15272] Entry 13 added to table 'MyIngress.dstIP_exact'
+[19:44:25.234] [bmv2] [D] [thread 15272] Dumping entry 13
+Match key:
+* meta.current_state  : EXACT     000001
+* hdr.ipv4.dstAddr    : EXACT     2afbdca9
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.237] [bmv2] [D] [thread 15129] Entry 14 added to table 'MyIngress.dstIP_exact'
+[19:44:25.237] [bmv2] [D] [thread 15129] Dumping entry 14
+Match key:
+* meta.current_state  : EXACT     000001
+* hdr.ipv4.dstAddr    : EXACT     12b3129a
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.243] [bmv2] [D] [thread 15272] Entry 15 added to table 'MyIngress.dstIP_exact'
+[19:44:25.243] [bmv2] [D] [thread 15272] Dumping entry 15
+Match key:
+* meta.current_state  : EXACT     000001
+* hdr.ipv4.dstAddr    : EXACT     34d1386d
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.247] [bmv2] [D] [thread 15129] Entry 16 added to table 'MyIngress.dstIP_exact'
+[19:44:25.248] [bmv2] [D] [thread 15129] Dumping entry 16
+Match key:
+* meta.current_state  : EXACT     000001
+* hdr.ipv4.dstAddr    : EXACT     34dadb48
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.253] [bmv2] [D] [thread 15272] Entry 17 added to table 'MyIngress.dstIP_exact'
+[19:44:25.253] [bmv2] [D] [thread 15272] Dumping entry 17
+Match key:
+* meta.current_state  : EXACT     000001
+* hdr.ipv4.dstAddr    : EXACT     2c96b2d5
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.258] [bmv2] [D] [thread 15129] Entry 18 added to table 'MyIngress.dstIP_exact'
+[19:44:25.258] [bmv2] [D] [thread 15129] Dumping entry 18
+Match key:
+* meta.current_state  : EXACT     000001
+* hdr.ipv4.dstAddr    : EXACT     34d1ec70
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.263] [bmv2] [D] [thread 15272] Entry 19 added to table 'MyIngress.dstIP_exact'
+[19:44:25.263] [bmv2] [D] [thread 15272] Dumping entry 19
+Match key:
+* meta.current_state  : EXACT     000001
+* hdr.ipv4.dstAddr    : EXACT     6c804321
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.269] [bmv2] [D] [thread 15129] Entry 20 added to table 'MyIngress.dstIP_exact'
+[19:44:25.269] [bmv2] [D] [thread 15129] Dumping entry 20
+Match key:
+* meta.current_state  : EXACT     000001
+* hdr.ipv4.dstAddr    : EXACT     478e0e7b
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.281] [bmv2] [D] [thread 15272] Entry 21 added to table 'MyIngress.dstIP_exact'
+[19:44:25.281] [bmv2] [D] [thread 15272] Dumping entry 21
+Match key:
+* meta.current_state  : EXACT     000001
+* hdr.ipv4.dstAddr    : EXACT     013f79eb
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.285] [bmv2] [D] [thread 15129] Entry 22 added to table 'MyIngress.dstIP_exact'
+[19:44:25.285] [bmv2] [D] [thread 15129] Dumping entry 22
+Match key:
+* meta.current_state  : EXACT     000001
+* hdr.ipv4.dstAddr    : EXACT     c787c174
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.288] [bmv2] [D] [thread 15272] Entry 23 added to table 'MyIngress.dstIP_exact'
+[19:44:25.288] [bmv2] [D] [thread 15272] Dumping entry 23
+Match key:
+* meta.current_state  : EXACT     000001
+* hdr.ipv4.dstAddr    : EXACT     20d76f44
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.293] [bmv2] [D] [thread 15129] Entry 24 added to table 'MyIngress.dstIP_exact'
+[19:44:25.293] [bmv2] [D] [thread 15129] Dumping entry 24
+Match key:
+* meta.current_state  : EXACT     000004
+* hdr.ipv4.dstAddr    : EXACT     08080808
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.297] [bmv2] [D] [thread 15272] Entry 1 added to table 'MyIngress.dMAC_exact'
+[19:44:25.297] [bmv2] [D] [thread 15272] Dumping entry 1
+Match key:
+* meta.current_state  : EXACT     000002
+* hdr.ethernet.dEth   : EXACT     000b8201fc42
+Action entry: MyIngress.ns_exact - 4,
+
+[19:44:25.301] [bmv2] [D] [thread 15129] Entry 3 added to table 'MyIngress.typEth_exact'
+[19:44:25.301] [bmv2] [D] [thread 15129] Dumping entry 3
+Match key:
+* meta.current_state  : EXACT     000004
+* hdr.ethernet.typeEth: EXACT     0800
+Action entry: MyIngress.ns_exact - 4,
+
+[19:44:25.304] [bmv2] [D] [thread 15272] Entry 5 added to table 'MyIngress.proto_exact'
+[19:44:25.304] [bmv2] [D] [thread 15272] Dumping entry 5
+Match key:
+* meta.current_state  : EXACT     000004
+* hdr.ipv4.protocol   : EXACT     06
+Action entry: MyIngress.ns_exact - 6,
+
+[19:44:25.313] [bmv2] [D] [thread 15129] Entry 0 added to table 'MyIngress.sPort_exact'
+[19:44:25.313] [bmv2] [D] [thread 15129] Dumping entry 0
+Match key:
+* meta.current_state  : EXACT     000006
+* meta.sport          : EXACT     01bb
+Action entry: MyIngress.ns_exact - 6,
+
+[19:44:25.323] [bmv2] [D] [thread 15272] Entry 1 added to table 'MyIngress.dPort_default'
+[19:44:25.323] [bmv2] [D] [thread 15272] Dumping entry 1
+Match key:
+* meta.current_state  : EXACT     000006
+Action entry: MyIngress.ns_default - 7,
+
+[19:44:25.328] [bmv2] [D] [thread 15129] Entry 0 added to table 'MyIngress.srcIP_exact'
+[19:44:25.329] [bmv2] [D] [thread 15129] Dumping entry 0
+Match key:
+* meta.current_state  : EXACT     000007
+* hdr.ipv4.srcAddr    : EXACT     2732f218
+Action entry: MyIngress.ns_exact - 7,
+
+[19:44:25.332] [bmv2] [D] [thread 15272] Entry 2 added to table 'MyIngress.dstIP_default'
+[19:44:25.332] [bmv2] [D] [thread 15272] Dumping entry 2
+Match key:
+* meta.current_state  : EXACT     000007
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.341] [bmv2] [D] [thread 15129] Entry 1 added to table 'MyIngress.srcIP_exact'
+[19:44:25.341] [bmv2] [D] [thread 15129] Dumping entry 1
+Match key:
+* meta.current_state  : EXACT     000007
+* hdr.ipv4.srcAddr    : EXACT     12b3129a
+Action entry: MyIngress.ns_exact - 8,
+
+[19:44:25.343] [bmv2] [D] [thread 15272] Entry 3 added to table 'MyIngress.dstIP_default'
+[19:44:25.344] [bmv2] [D] [thread 15272] Dumping entry 3
+Match key:
+* meta.current_state  : EXACT     000008
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.347] [bmv2] [D] [thread 15129] Entry 2 added to table 'MyIngress.srcIP_exact'
+[19:44:25.348] [bmv2] [D] [thread 15129] Dumping entry 2
+Match key:
+* meta.current_state  : EXACT     000007
+* hdr.ipv4.srcAddr    : EXACT     d8bc10b8
+Action entry: MyIngress.ns_exact - 9,
+
+[19:44:25.351] [bmv2] [D] [thread 15272] Entry 4 added to table 'MyIngress.dstIP_default'
+[19:44:25.351] [bmv2] [D] [thread 15272] Dumping entry 4
+Match key:
+* meta.current_state  : EXACT     000009
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.355] [bmv2] [D] [thread 15129] Entry 3 added to table 'MyIngress.srcIP_exact'
+[19:44:25.355] [bmv2] [D] [thread 15129] Dumping entry 3
+Match key:
+* meta.current_state  : EXACT     000007
+* hdr.ipv4.srcAddr    : EXACT     34dadb48
+Action entry: MyIngress.ns_exact - a,
+
+[19:44:25.358] [bmv2] [D] [thread 15272] Entry 5 added to table 'MyIngress.dstIP_default'
+[19:44:25.358] [bmv2] [D] [thread 15272] Dumping entry 5
+Match key:
+* meta.current_state  : EXACT     00000a
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.361] [bmv2] [D] [thread 15129] Entry 4 added to table 'MyIngress.srcIP_exact'
+[19:44:25.362] [bmv2] [D] [thread 15129] Dumping entry 4
+Match key:
+* meta.current_state  : EXACT     000007
+* hdr.ipv4.srcAddr    : EXACT     34d1386d
+Action entry: MyIngress.ns_exact - b,
+
+[19:44:25.365] [bmv2] [D] [thread 15272] Entry 6 added to table 'MyIngress.dstIP_default'
+[19:44:25.365] [bmv2] [D] [thread 15272] Dumping entry 6
+Match key:
+* meta.current_state  : EXACT     00000b
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.368] [bmv2] [D] [thread 15129] Entry 5 added to table 'MyIngress.srcIP_exact'
+[19:44:25.368] [bmv2] [D] [thread 15129] Dumping entry 5
+Match key:
+* meta.current_state  : EXACT     000007
+* hdr.ipv4.srcAddr    : EXACT     312cccb9
+Action entry: MyIngress.ns_exact - c,
+
+[19:44:25.372] [bmv2] [D] [thread 15272] Entry 7 added to table 'MyIngress.dstIP_default'
+[19:44:25.372] [bmv2] [D] [thread 15272] Dumping entry 7
+Match key:
+* meta.current_state  : EXACT     00000c
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.376] [bmv2] [D] [thread 15129] Entry 6 added to table 'MyIngress.srcIP_exact'
+[19:44:25.377] [bmv2] [D] [thread 15129] Dumping entry 6
+Match key:
+* meta.current_state  : EXACT     000007
+* hdr.ipv4.srcAddr    : EXACT     b4e1d3c8
+Action entry: MyIngress.ns_exact - d,
+
+[19:44:25.381] [bmv2] [D] [thread 15272] Entry 8 added to table 'MyIngress.dstIP_default'
+[19:44:25.382] [bmv2] [D] [thread 15272] Dumping entry 8
+Match key:
+* meta.current_state  : EXACT     00000d
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.388] [bmv2] [D] [thread 15129] Entry 7 added to table 'MyIngress.srcIP_exact'
+[19:44:25.388] [bmv2] [D] [thread 15129] Dumping entry 7
+Match key:
+* meta.current_state  : EXACT     000007
+* hdr.ipv4.srcAddr    : EXACT     20d76f44
+Action entry: MyIngress.ns_exact - e,
+
+[19:44:25.391] [bmv2] [D] [thread 15272] Entry 9 added to table 'MyIngress.dstIP_default'
+[19:44:25.392] [bmv2] [D] [thread 15272] Dumping entry 9
+Match key:
+* meta.current_state  : EXACT     00000e
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.395] [bmv2] [D] [thread 15129] Entry 1 added to table 'MyIngress.sPort_exact'
+[19:44:25.395] [bmv2] [D] [thread 15129] Dumping entry 1
+Match key:
+* meta.current_state  : EXACT     000003
+* meta.sport          : EXACT     0043
+Action entry: MyIngress.ns_exact - 7,
+
+[19:44:25.398] [bmv2] [D] [thread 15272] Entry 2 added to table 'MyIngress.dPort_default'
+[19:44:25.398] [bmv2] [D] [thread 15272] Dumping entry 2
+Match key:
+* meta.current_state  : EXACT     000007
+Action entry: MyIngress.ns_default - 8,
+
+[19:44:25.401] [bmv2] [D] [thread 15272] Entry 6 added to table 'MyIngress.srcIP_default'
+[19:44:25.401] [bmv2] [D] [thread 15272] Dumping entry 6
+Match key:
+* meta.current_state  : EXACT     000008
+Action entry: MyIngress.ns_default - f,
+
+[19:44:25.403] [bmv2] [D] [thread 15129] Entry 10 added to table 'MyIngress.dstIP_default'
+[19:44:25.403] [bmv2] [D] [thread 15129] Dumping entry 10
+Match key:
+* meta.current_state  : EXACT     00000f
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.409] [bmv2] [D] [thread 15272] Entry 6 added to table 'MyIngress.proto_exact'
+[19:44:25.409] [bmv2] [D] [thread 15272] Dumping entry 6
+Match key:
+* meta.current_state  : EXACT     000004
+* hdr.ipv4.protocol   : EXACT     01
+Action entry: MyIngress.ns_exact - 7,
+
+[19:44:25.413] [bmv2] [D] [thread 15129] Entry 5 added to table 'MyIngress.sPort_default'
+[19:44:25.413] [bmv2] [D] [thread 15129] Dumping entry 5
+Match key:
+* meta.current_state  : EXACT     000007
+Action entry: MyIngress.ns_default - 8,
+
+[19:44:25.418] [bmv2] [D] [thread 15272] Entry 3 added to table 'MyIngress.dPort_default'
+[19:44:25.418] [bmv2] [D] [thread 15272] Dumping entry 3
+Match key:
+* meta.current_state  : EXACT     000008
+Action entry: MyIngress.ns_default - 9,
+
+[19:44:25.421] [bmv2] [D] [thread 15129] Entry 8 added to table 'MyIngress.srcIP_exact'
+[19:44:25.421] [bmv2] [D] [thread 15129] Dumping entry 8
+Match key:
+* meta.current_state  : EXACT     000009
+* hdr.ipv4.srcAddr    : EXACT     34d1ec70
+Action entry: MyIngress.ns_exact - 10,
+
+[19:44:25.428] [bmv2] [D] [thread 15272] Entry 11 added to table 'MyIngress.dstIP_default'
+[19:44:25.428] [bmv2] [D] [thread 15272] Dumping entry 11
+Match key:
+* meta.current_state  : EXACT     000010
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.431] [bmv2] [D] [thread 15129] Entry 7 added to table 'MyIngress.proto_exact'
+[19:44:25.432] [bmv2] [D] [thread 15129] Dumping entry 7
+Match key:
+* meta.current_state  : EXACT     000004
+* hdr.ipv4.protocol   : EXACT     11
+Action entry: MyIngress.ns_exact - 8,
+
+[19:44:25.437] [bmv2] [D] [thread 15272] Entry 2 added to table 'MyIngress.sPort_exact'
+[19:44:25.437] [bmv2] [D] [thread 15272] Dumping entry 2
+Match key:
+* meta.current_state  : EXACT     000008
+* meta.sport          : EXACT     0035
+Action entry: MyIngress.ns_exact - 9,
+
+[19:44:25.443] [bmv2] [D] [thread 15129] Entry 4 added to table 'MyIngress.dPort_default'
+[19:44:25.443] [bmv2] [D] [thread 15129] Dumping entry 4
+Match key:
+* meta.current_state  : EXACT     000009
+Action entry: MyIngress.ns_default - a,
+
+[19:44:25.446] [bmv2] [D] [thread 15272] Entry 9 added to table 'MyIngress.srcIP_exact'
+[19:44:25.447] [bmv2] [D] [thread 15272] Dumping entry 9
+Match key:
+* meta.current_state  : EXACT     00000a
+* hdr.ipv4.srcAddr    : EXACT     08080808
+Action entry: MyIngress.ns_exact - 11,
+
+[19:44:25.453] [bmv2] [D] [thread 15129] Entry 12 added to table 'MyIngress.dstIP_default'
+[19:44:25.453] [bmv2] [D] [thread 15129] Dumping entry 12
+Match key:
+* meta.current_state  : EXACT     000011
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.456] [bmv2] [D] [thread 15272] Entry 10 added to table 'MyIngress.srcIP_exact'
+[19:44:25.457] [bmv2] [D] [thread 15272] Dumping entry 10
+Match key:
+* meta.current_state  : EXACT     000007
+* hdr.ipv4.srcAddr    : EXACT     478e0e7b
+Action entry: MyIngress.ns_exact - 12,
+
+[19:44:25.459] [bmv2] [D] [thread 15129] Entry 13 added to table 'MyIngress.dstIP_default'
+[19:44:25.459] [bmv2] [D] [thread 15129] Dumping entry 13
+Match key:
+* meta.current_state  : EXACT     000012
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.462] [bmv2] [D] [thread 15272] Entry 11 added to table 'MyIngress.srcIP_exact'
+[19:44:25.462] [bmv2] [D] [thread 15272] Dumping entry 11
+Match key:
+* meta.current_state  : EXACT     000007
+* hdr.ipv4.srcAddr    : EXACT     2c96b2d5
+Action entry: MyIngress.ns_exact - 13,
+
+[19:44:25.464] [bmv2] [D] [thread 15129] Entry 14 added to table 'MyIngress.dstIP_default'
+[19:44:25.464] [bmv2] [D] [thread 15129] Dumping entry 14
+Match key:
+* meta.current_state  : EXACT     000013
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.466] [bmv2] [D] [thread 15272] Entry 12 added to table 'MyIngress.srcIP_exact'
+[19:44:25.466] [bmv2] [D] [thread 15272] Dumping entry 12
+Match key:
+* meta.current_state  : EXACT     000007
+* hdr.ipv4.srcAddr    : EXACT     5c82560a
+Action entry: MyIngress.ns_exact - 14,
+
+[19:44:25.468] [bmv2] [D] [thread 15129] Entry 15 added to table 'MyIngress.dstIP_default'
+[19:44:25.468] [bmv2] [D] [thread 15129] Dumping entry 15
+Match key:
+* meta.current_state  : EXACT     000014
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.474] [bmv2] [D] [thread 15272] Entry 3 added to table 'MyIngress.sPort_exact'
+[19:44:25.474] [bmv2] [D] [thread 15272] Dumping entry 3
+Match key:
+* meta.current_state  : EXACT     000003
+* meta.sport          : EXACT     0035
+Action entry: MyIngress.ns_exact - a,
+
+[19:44:25.477] [bmv2] [D] [thread 15129] Entry 5 added to table 'MyIngress.dPort_default'
+[19:44:25.477] [bmv2] [D] [thread 15129] Dumping entry 5
+Match key:
+* meta.current_state  : EXACT     00000a
+Action entry: MyIngress.ns_default - b,
+
+[19:44:25.479] [bmv2] [D] [thread 15272] Entry 7 added to table 'MyIngress.srcIP_default'
+[19:44:25.479] [bmv2] [D] [thread 15272] Dumping entry 7
+Match key:
+* meta.current_state  : EXACT     00000b
+Action entry: MyIngress.ns_default - 15,
+
+[19:44:25.481] [bmv2] [D] [thread 15129] Entry 16 added to table 'MyIngress.dstIP_default'
+[19:44:25.481] [bmv2] [D] [thread 15129] Dumping entry 16
+Match key:
+* meta.current_state  : EXACT     000015
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.484] [bmv2] [D] [thread 15272] Entry 13 added to table 'MyIngress.srcIP_exact'
+[19:44:25.485] [bmv2] [D] [thread 15272] Dumping entry 13
+Match key:
+* meta.current_state  : EXACT     000007
+* hdr.ipv4.srcAddr    : EXACT     12a16f42
+Action entry: MyIngress.ns_exact - 16,
+
+[19:44:25.488] [bmv2] [D] [thread 15129] Entry 17 added to table 'MyIngress.dstIP_default'
+[19:44:25.488] [bmv2] [D] [thread 15129] Dumping entry 17
+Match key:
+* meta.current_state  : EXACT     000016
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.492] [bmv2] [D] [thread 15272] Entry 14 added to table 'MyIngress.srcIP_exact'
+[19:44:25.492] [bmv2] [D] [thread 15272] Dumping entry 14
+Match key:
+* meta.current_state  : EXACT     000007
+* hdr.ipv4.srcAddr    : EXACT     3f2114ea
+Action entry: MyIngress.ns_exact - 17,
+
+[19:44:25.494] [bmv2] [D] [thread 15129] Entry 18 added to table 'MyIngress.dstIP_default'
+[19:44:25.494] [bmv2] [D] [thread 15129] Dumping entry 18
+Match key:
+* meta.current_state  : EXACT     000017
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.499] [bmv2] [D] [thread 15272] Entry 15 added to table 'MyIngress.srcIP_exact'
+[19:44:25.499] [bmv2] [D] [thread 15272] Dumping entry 15
+Match key:
+* meta.current_state  : EXACT     000007
+* hdr.ipv4.srcAddr    : EXACT     2afbdca9
+Action entry: MyIngress.ns_exact - 18,
+
+[19:44:25.501] [bmv2] [D] [thread 15129] Entry 19 added to table 'MyIngress.dstIP_default'
+[19:44:25.501] [bmv2] [D] [thread 15129] Dumping entry 19
+Match key:
+* meta.current_state  : EXACT     000018
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.504] [bmv2] [D] [thread 15272] Entry 16 added to table 'MyIngress.srcIP_exact'
+[19:44:25.504] [bmv2] [D] [thread 15272] Dumping entry 16
+Match key:
+* meta.current_state  : EXACT     000007
+* hdr.ipv4.srcAddr    : EXACT     013f79eb
+Action entry: MyIngress.ns_exact - 19,
+
+[19:44:25.507] [bmv2] [D] [thread 15129] Entry 20 added to table 'MyIngress.dstIP_default'
+[19:44:25.507] [bmv2] [D] [thread 15129] Dumping entry 20
+Match key:
+* meta.current_state  : EXACT     000019
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.510] [bmv2] [D] [thread 15272] Entry 17 added to table 'MyIngress.srcIP_exact'
+[19:44:25.510] [bmv2] [D] [thread 15272] Dumping entry 17
+Match key:
+* meta.current_state  : EXACT     000007
+* hdr.ipv4.srcAddr    : EXACT     34d1ec70
+Action entry: MyIngress.ns_exact - 1a,
+
+[19:44:25.512] [bmv2] [D] [thread 15129] Entry 21 added to table 'MyIngress.dstIP_default'
+[19:44:25.512] [bmv2] [D] [thread 15129] Dumping entry 21
+Match key:
+* meta.current_state  : EXACT     00001a
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.515] [bmv2] [D] [thread 15272] Entry 18 added to table 'MyIngress.srcIP_exact'
+[19:44:25.515] [bmv2] [D] [thread 15272] Dumping entry 18
+Match key:
+* meta.current_state  : EXACT     000007
+* hdr.ipv4.srcAddr    : EXACT     c8f84c4f
+Action entry: MyIngress.ns_exact - 1b,
+
+[19:44:25.517] [bmv2] [D] [thread 15129] Entry 22 added to table 'MyIngress.dstIP_default'
+[19:44:25.517] [bmv2] [D] [thread 15129] Dumping entry 22
+Match key:
+* meta.current_state  : EXACT     00001b
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.524] [bmv2] [D] [thread 15272] Entry 19 added to table 'MyIngress.srcIP_exact'
+[19:44:25.525] [bmv2] [D] [thread 15272] Dumping entry 19
+Match key:
+* meta.current_state  : EXACT     000007
+* hdr.ipv4.srcAddr    : EXACT     c787c174
+Action entry: MyIngress.ns_exact - 1c,
+
+[19:44:25.527] [bmv2] [D] [thread 15129] Entry 23 added to table 'MyIngress.dstIP_default'
+[19:44:25.527] [bmv2] [D] [thread 15129] Dumping entry 23
+Match key:
+* meta.current_state  : EXACT     00001c
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.531] [bmv2] [D] [thread 15272] Entry 20 added to table 'MyIngress.srcIP_exact'
+[19:44:25.531] [bmv2] [D] [thread 15272] Dumping entry 20
+Match key:
+* meta.current_state  : EXACT     000009
+* hdr.ipv4.srcAddr    : EXACT     08080808
+Action entry: MyIngress.ns_exact - 1d,
+
+[19:44:25.534] [bmv2] [D] [thread 15129] Entry 24 added to table 'MyIngress.dstIP_default'
+[19:44:25.534] [bmv2] [D] [thread 15129] Dumping entry 24
+Match key:
+* meta.current_state  : EXACT     00001d
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.538] [bmv2] [D] [thread 15272] Entry 21 added to table 'MyIngress.srcIP_exact'
+[19:44:25.538] [bmv2] [D] [thread 15272] Dumping entry 21
+Match key:
+* meta.current_state  : EXACT     000009
+* hdr.ipv4.srcAddr    : EXACT     08080404
+Action entry: MyIngress.ns_exact - 1e,
+
+[19:44:25.552] [bmv2] [D] [thread 15129] Entry 25 added to table 'MyIngress.dstIP_default'
+[19:44:25.552] [bmv2] [D] [thread 15129] Dumping entry 25
+Match key:
+* meta.current_state  : EXACT     00001e
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.562] [bmv2] [D] [thread 15272] Entry 22 added to table 'MyIngress.srcIP_exact'
+[19:44:25.562] [bmv2] [D] [thread 15272] Dumping entry 22
+Match key:
+* meta.current_state  : EXACT     000007
+* hdr.ipv4.srcAddr    : EXACT     6c804321
+Action entry: MyIngress.ns_exact - 1f,
+
+[19:44:25.574] [bmv2] [D] [thread 15129] Entry 26 added to table 'MyIngress.dstIP_default'
+[19:44:25.574] [bmv2] [D] [thread 15129] Dumping entry 26
+Match key:
+* meta.current_state  : EXACT     00001f
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.578] [bmv2] [D] [thread 15272] Entry 23 added to table 'MyIngress.srcIP_exact'
+[19:44:25.578] [bmv2] [D] [thread 15272] Dumping entry 23
+Match key:
+* meta.current_state  : EXACT     000007
+* hdr.ipv4.srcAddr    : EXACT     42822806
+Action entry: MyIngress.ns_exact - 20,
+
+[19:44:25.581] [bmv2] [D] [thread 15129] Entry 27 added to table 'MyIngress.dstIP_default'
+[19:44:25.581] [bmv2] [D] [thread 15129] Dumping entry 27
+Match key:
+* meta.current_state  : EXACT     000020
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.585] [bmv2] [D] [thread 15272] Entry 0 added to table 'MyIngress.typEth_default'
+[19:44:25.585] [bmv2] [D] [thread 15272] Dumping entry 0
+Match key:
+* meta.current_state  : EXACT     000003
+Action entry: MyIngress.ns_default - 5,
+
+[19:44:25.590] [bmv2] [D] [thread 15129] Entry 8 added to table 'MyIngress.proto_exact'
+[19:44:25.590] [bmv2] [D] [thread 15129] Dumping entry 8
+Match key:
+* meta.current_state  : EXACT     000005
+* hdr.ipv4.protocol   : EXACT     11
+Action entry: MyIngress.ns_exact - 9,
+
+[19:44:25.593] [bmv2] [D] [thread 15272] Entry 6 added to table 'MyIngress.sPort_default'
+[19:44:25.593] [bmv2] [D] [thread 15272] Dumping entry 6
+Match key:
+* meta.current_state  : EXACT     000009
+Action entry: MyIngress.ns_default - b,
+
+[19:44:25.618] [bmv2] [D] [thread 15129] Entry 5 added to table 'MyIngress.dPort_exact'
+[19:44:25.618] [bmv2] [D] [thread 15129] Dumping entry 5
+Match key:
+* meta.current_state  : EXACT     00000b
+* meta.dport          : EXACT     0223
+Action entry: MyIngress.ns_exact - c,
+
+[19:44:25.621] [bmv2] [D] [thread 15129] Entry 8 added to table 'MyIngress.srcIP_default'
+[19:44:25.621] [bmv2] [D] [thread 15129] Dumping entry 8
+Match key:
+* meta.current_state  : EXACT     00000c
+Action entry: MyIngress.ns_default - 21,
+
+[19:44:25.626] [bmv2] [D] [thread 15272] Entry 28 added to table 'MyIngress.dstIP_default'
+[19:44:25.626] [bmv2] [D] [thread 15272] Dumping entry 28
+Match key:
+* meta.current_state  : EXACT     000021
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.629] [bmv2] [D] [thread 15129] Entry 9 added to table 'MyIngress.proto_exact'
+[19:44:25.629] [bmv2] [D] [thread 15129] Dumping entry 9
+Match key:
+* meta.current_state  : EXACT     000005
+* hdr.ipv4.protocol   : EXACT     3a
+Action entry: MyIngress.ns_exact - a,
+
+[19:44:25.632] [bmv2] [D] [thread 15272] Entry 7 added to table 'MyIngress.sPort_default'
+[19:44:25.632] [bmv2] [D] [thread 15272] Dumping entry 7
+Match key:
+* meta.current_state  : EXACT     00000a
+Action entry: MyIngress.ns_default - c,
+
+[19:44:25.635] [bmv2] [D] [thread 15129] Entry 6 added to table 'MyIngress.dPort_default'
+[19:44:25.635] [bmv2] [D] [thread 15129] Dumping entry 6
+Match key:
+* meta.current_state  : EXACT     00000c
+Action entry: MyIngress.ns_default - d,
+
+[19:44:25.638] [bmv2] [D] [thread 15272] Entry 9 added to table 'MyIngress.srcIP_default'
+[19:44:25.638] [bmv2] [D] [thread 15272] Dumping entry 9
+Match key:
+* meta.current_state  : EXACT     00000d
+Action entry: MyIngress.ns_default - 22,
+
+[19:44:25.642] [bmv2] [D] [thread 15129] Entry 29 added to table 'MyIngress.dstIP_default'
+[19:44:25.642] [bmv2] [D] [thread 15129] Dumping entry 29
+Match key:
+* meta.current_state  : EXACT     000022
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.648] [bmv2] [D] [thread 15272] Entry 6 added to table 'MyIngress.dPort_exact'
+[19:44:25.648] [bmv2] [D] [thread 15272] Dumping entry 6
+Match key:
+* meta.current_state  : EXACT     00000b
+* meta.dport          : EXACT     0035
+Action entry: MyIngress.ns_exact - e,
+
+[19:44:25.652] [bmv2] [D] [thread 15129] Entry 10 added to table 'MyIngress.srcIP_default'
+[19:44:25.652] [bmv2] [D] [thread 15129] Dumping entry 10
+Match key:
+* meta.current_state  : EXACT     00000e
+Action entry: MyIngress.ns_default - 23,
+
+[19:44:25.655] [bmv2] [D] [thread 15272] Entry 30 added to table 'MyIngress.dstIP_default'
+[19:44:25.655] [bmv2] [D] [thread 15272] Dumping entry 30
+Match key:
+* meta.current_state  : EXACT     000023
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.658] [bmv2] [D] [thread 15129] Entry 10 added to table 'MyIngress.proto_exact'
+[19:44:25.658] [bmv2] [D] [thread 15129] Dumping entry 10
+Match key:
+* meta.current_state  : EXACT     000005
+* hdr.ipv4.protocol   : EXACT     00
+Action entry: MyIngress.ns_exact - b,
+
+[19:44:25.813] [bmv2] [D] [thread 15272] Entry 8 added to table 'MyIngress.sPort_default'
+[19:44:25.813] [bmv2] [D] [thread 15272] Dumping entry 8
+Match key:
+* meta.current_state  : EXACT     00000b
+Action entry: MyIngress.ns_default - d,
+
+[19:44:25.817] [bmv2] [D] [thread 15272] Entry 7 added to table 'MyIngress.dPort_default'
+[19:44:25.817] [bmv2] [D] [thread 15272] Dumping entry 7
+Match key:
+* meta.current_state  : EXACT     00000d
+Action entry: MyIngress.ns_default - f,
+
+[19:44:25.818] [bmv2] [D] [thread 15129] Entry 11 added to table 'MyIngress.srcIP_default'
+[19:44:25.818] [bmv2] [D] [thread 15129] Dumping entry 11
+Match key:
+* meta.current_state  : EXACT     00000f
+Action entry: MyIngress.ns_default - 24,
+
+[19:44:25.821] [bmv2] [D] [thread 15272] Entry 31 added to table 'MyIngress.dstIP_default'
+[19:44:25.821] [bmv2] [D] [thread 15272] Dumping entry 31
+Match key:
+* meta.current_state  : EXACT     000024
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.825] [bmv2] [D] [thread 15129] Entry 4 added to table 'MyIngress.sPort_exact'
+[19:44:25.825] [bmv2] [D] [thread 15129] Dumping entry 4
+Match key:
+* meta.current_state  : EXACT     000009
+* meta.sport          : EXACT     0223
+Action entry: MyIngress.ns_exact - e,
+
+[19:44:25.828] [bmv2] [D] [thread 15129] Entry 8 added to table 'MyIngress.dPort_default'
+[19:44:25.828] [bmv2] [D] [thread 15129] Dumping entry 8
+Match key:
+* meta.current_state  : EXACT     00000e
+Action entry: MyIngress.ns_default - 10,
+
+[19:44:25.831] [bmv2] [D] [thread 15272] Entry 12 added to table 'MyIngress.srcIP_default'
+[19:44:25.831] [bmv2] [D] [thread 15272] Dumping entry 12
+Match key:
+* meta.current_state  : EXACT     000010
+Action entry: MyIngress.ns_default - 25,
+
+[19:44:25.834] [bmv2] [D] [thread 15129] Entry 32 added to table 'MyIngress.dstIP_default'
+[19:44:25.834] [bmv2] [D] [thread 15129] Dumping entry 32
+Match key:
+* meta.current_state  : EXACT     000025
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.838] [bmv2] [D] [thread 15272] Entry 5 added to table 'MyIngress.sPort_exact'
+[19:44:25.838] [bmv2] [D] [thread 15272] Dumping entry 5
+Match key:
+* meta.current_state  : EXACT     000009
+* meta.sport          : EXACT     0035
+Action entry: MyIngress.ns_exact - f,
+
+[19:44:25.840] [bmv2] [D] [thread 15129] Entry 9 added to table 'MyIngress.dPort_default'
+[19:44:25.840] [bmv2] [D] [thread 15129] Dumping entry 9
+Match key:
+* meta.current_state  : EXACT     00000f
+Action entry: MyIngress.ns_default - 11,
+
+[19:44:25.845] [bmv2] [D] [thread 15272] Entry 13 added to table 'MyIngress.srcIP_default'
+[19:44:25.845] [bmv2] [D] [thread 15272] Dumping entry 13
+Match key:
+* meta.current_state  : EXACT     000011
+Action entry: MyIngress.ns_default - 26,
+
+[19:44:25.847] [bmv2] [D] [thread 15129] Entry 33 added to table 'MyIngress.dstIP_default'
+[19:44:25.847] [bmv2] [D] [thread 15129] Dumping entry 33
+Match key:
+* meta.current_state  : EXACT     000026
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.850] [bmv2] [D] [thread 15272] Entry 4 added to table 'MyIngress.typEth_exact'
+[19:44:25.850] [bmv2] [D] [thread 15272] Dumping entry 4
+Match key:
+* meta.current_state  : EXACT     000003
+* hdr.ethernet.typeEth: EXACT     0006
+Action entry: MyIngress.ns_exact - 6,
+
+[19:44:25.851] [bmv2] [D] [thread 15129] Entry 0 added to table 'MyIngress.proto_default'
+[19:44:25.852] [bmv2] [D] [thread 15129] Dumping entry 0
+Match key:
+* meta.current_state  : EXACT     000006
+Action entry: MyIngress.ns_default - c,
+
+[19:44:25.853] [bmv2] [D] [thread 15272] Entry 9 added to table 'MyIngress.sPort_default'
+[19:44:25.853] [bmv2] [D] [thread 15272] Dumping entry 9
+Match key:
+* meta.current_state  : EXACT     00000c
+Action entry: MyIngress.ns_default - 10,
+
+[19:44:25.855] [bmv2] [D] [thread 15129] Entry 10 added to table 'MyIngress.dPort_default'
+[19:44:25.855] [bmv2] [D] [thread 15129] Dumping entry 10
+Match key:
+* meta.current_state  : EXACT     000010
+Action entry: MyIngress.ns_default - 12,
+
+[19:44:25.857] [bmv2] [D] [thread 15272] Entry 14 added to table 'MyIngress.srcIP_default'
+[19:44:25.857] [bmv2] [D] [thread 15272] Dumping entry 14
+Match key:
+* meta.current_state  : EXACT     000012
+Action entry: MyIngress.ns_default - 27,
+
+[19:44:25.859] [bmv2] [D] [thread 15129] Entry 34 added to table 'MyIngress.dstIP_default'
+[19:44:25.860] [bmv2] [D] [thread 15129] Dumping entry 34
+Match key:
+* meta.current_state  : EXACT     000027
+Action entry: MyIngress.forward - 80000000222,2,
+
+[19:44:25.863] [bmv2] [D] [thread 15272] Entry 5 added to table 'MyIngress.typEth_exact'
+[19:44:25.863] [bmv2] [D] [thread 15272] Dumping entry 5
+Match key:
+* meta.current_state  : EXACT     000003
+* hdr.ethernet.typeEth: EXACT     888e
+Action entry: MyIngress.ns_exact - 7,
+
+[19:44:25.867] [bmv2] [D] [thread 15129] Entry 1 added to table 'MyIngress.proto_default'
+[19:44:25.867] [bmv2] [D] [thread 15129] Dumping entry 1
+Match key:
+* meta.current_state  : EXACT     000007
+Action entry: MyIngress.ns_default - d,
+
+[19:44:25.869] [bmv2] [D] [thread 15272] Entry 10 added to table 'MyIngress.sPort_default'
+[19:44:25.869] [bmv2] [D] [thread 15272] Dumping entry 10
+Match key:
+* meta.current_state  : EXACT     00000d
+Action entry: MyIngress.ns_default - 11,
+
+[19:44:25.871] [bmv2] [D] [thread 15129] Entry 11 added to table 'MyIngress.dPort_default'
+[19:44:25.871] [bmv2] [D] [thread 15129] Dumping entry 11
+Match key:
+* meta.current_state  : EXACT     000011
+Action entry: MyIngress.ns_default - 13,
+
+[19:44:25.875] [bmv2] [D] [thread 15272] Entry 15 added to table 'MyIngress.srcIP_default'
+[19:44:25.875] [bmv2] [D] [thread 15272] Dumping entry 15
+Match key:
+* meta.current_state  : EXACT     000013
+Action entry: MyIngress.ns_default - 28,
+
+[19:44:25.877] [bmv2] [D] [thread 15129] Entry 35 added to table 'MyIngress.dstIP_default'
+[19:44:25.877] [bmv2] [D] [thread 15129] Dumping entry 35
+Match key:
+* meta.current_state  : EXACT     000028
+Action entry: MyIngress.forward - 80000000222,2,
+
