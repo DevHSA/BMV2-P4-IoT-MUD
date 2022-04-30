@@ -348,7 +348,7 @@
       "id" : 0,
       "source_info" : {
         "filename" : "scaleIoT.p4",
-        "line" : 597,
+        "line" : 598,
         "column" : 8,
         "source_fragment" : "MyDeparser"
       },
@@ -378,7 +378,7 @@
       "id" : 0,
       "source_info" : {
         "filename" : "scaleIoT.p4",
-        "line" : 575,
+        "line" : 576,
         "column" : 8,
         "source_fragment" : "update_checksum( ..."
       },
@@ -730,6 +730,25 @@
           "parameters" : [
             {
               "type" : "field",
+              "value" : ["scalars", "userMetadata.flag"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x01"
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 206,
+            "column" : 10,
+            "source_fragment" : "meta.flag = 1"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
               "value" : ["ethernet", "sEth"]
             },
             {
@@ -739,7 +758,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 206,
+            "line" : 207,
             "column" : 10,
             "source_fragment" : "hdr.ethernet.sEth = hdr.ethernet.dEth"
           }
@@ -758,7 +777,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 207,
+            "line" : 208,
             "column" : 10,
             "source_fragment" : "hdr.ethernet.dEth = dstAddr"
           }
@@ -777,7 +796,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 208,
+            "line" : 209,
             "column" : 10,
             "source_fragment" : "standard_metadata.egress_spec = switchPort"
           }
@@ -819,7 +838,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 209,
+            "line" : 210,
             "column" : 10,
             "source_fragment" : "hdr.ipv4.ttl = hdr.ipv4.ttl -1"
           }
@@ -845,6 +864,25 @@
           "parameters" : [
             {
               "type" : "field",
+              "value" : ["scalars", "userMetadata.flag"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x01"
+            }
+          ],
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 206,
+            "column" : 10,
+            "source_fragment" : "meta.flag = 1"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
               "value" : ["ethernet", "sEth"]
             },
             {
@@ -854,7 +892,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 206,
+            "line" : 207,
             "column" : 10,
             "source_fragment" : "hdr.ethernet.sEth = hdr.ethernet.dEth"
           }
@@ -873,7 +911,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 207,
+            "line" : 208,
             "column" : 10,
             "source_fragment" : "hdr.ethernet.dEth = dstAddr"
           }
@@ -892,7 +930,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 208,
+            "line" : 209,
             "column" : 10,
             "source_fragment" : "standard_metadata.egress_spec = switchPort"
           }
@@ -934,7 +972,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 209,
+            "line" : 210,
             "column" : 10,
             "source_fragment" : "hdr.ipv4.ttl = hdr.ipv4.ttl -1"
           }
@@ -960,7 +998,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 217,
+            "line" : 218,
             "column" : 8,
             "source_fragment" : "meta.stub_current_state_value = 0"
           }
@@ -991,7 +1029,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 224,
+            "line" : 225,
             "column" : 6,
             "source_fragment" : "meta.flag = 1"
           }
@@ -1010,7 +1048,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 225,
+            "line" : 226,
             "column" : 6,
             "source_fragment" : "meta.current_state = next_state"
           }
@@ -1041,7 +1079,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 224,
+            "line" : 225,
             "column" : 6,
             "source_fragment" : "meta.flag = 1"
           }
@@ -1060,7 +1098,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 225,
+            "line" : 226,
             "column" : 6,
             "source_fragment" : "meta.current_state = next_state"
           }
@@ -1091,7 +1129,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 224,
+            "line" : 225,
             "column" : 6,
             "source_fragment" : "meta.flag = 1"
           }
@@ -1110,7 +1148,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 225,
+            "line" : 226,
             "column" : 6,
             "source_fragment" : "meta.current_state = next_state"
           }
@@ -1141,7 +1179,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 224,
+            "line" : 225,
             "column" : 6,
             "source_fragment" : "meta.flag = 1"
           }
@@ -1160,7 +1198,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 225,
+            "line" : 226,
             "column" : 6,
             "source_fragment" : "meta.current_state = next_state"
           }
@@ -1191,7 +1229,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 224,
+            "line" : 225,
             "column" : 6,
             "source_fragment" : "meta.flag = 1"
           }
@@ -1210,7 +1248,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 225,
+            "line" : 226,
             "column" : 6,
             "source_fragment" : "meta.current_state = next_state"
           }
@@ -1241,7 +1279,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 224,
+            "line" : 225,
             "column" : 6,
             "source_fragment" : "meta.flag = 1"
           }
@@ -1260,7 +1298,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 225,
+            "line" : 226,
             "column" : 6,
             "source_fragment" : "meta.current_state = next_state"
           }
@@ -1291,7 +1329,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 224,
+            "line" : 225,
             "column" : 6,
             "source_fragment" : "meta.flag = 1"
           }
@@ -1310,7 +1348,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 225,
+            "line" : 226,
             "column" : 6,
             "source_fragment" : "meta.current_state = next_state"
           }
@@ -1341,7 +1379,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 231,
+            "line" : 232,
             "column" : 5,
             "source_fragment" : "meta.current_state = next_state"
           }
@@ -1372,7 +1410,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 231,
+            "line" : 232,
             "column" : 5,
             "source_fragment" : "meta.current_state = next_state"
           }
@@ -1403,7 +1441,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 231,
+            "line" : 232,
             "column" : 5,
             "source_fragment" : "meta.current_state = next_state"
           }
@@ -1434,7 +1472,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 231,
+            "line" : 232,
             "column" : 5,
             "source_fragment" : "meta.current_state = next_state"
           }
@@ -1465,7 +1503,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 231,
+            "line" : 232,
             "column" : 5,
             "source_fragment" : "meta.current_state = next_state"
           }
@@ -1496,7 +1534,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 231,
+            "line" : 232,
             "column" : 5,
             "source_fragment" : "meta.current_state = next_state"
           }
@@ -1527,7 +1565,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 231,
+            "line" : 232,
             "column" : 5,
             "source_fragment" : "meta.current_state = next_state"
           }
@@ -1535,7 +1573,7 @@
       ]
     },
     {
-      "name" : "scaleIoT505",
+      "name" : "scaleIoT506",
       "id" : 34,
       "runtime_data" : [],
       "primitives" : [
@@ -1553,7 +1591,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 505,
+            "line" : 506,
             "column" : 12,
             "source_fragment" : "meta.sport= hdr.tcp.srcPort"
           }
@@ -1572,7 +1610,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 506,
+            "line" : 507,
             "column" : 12,
             "source_fragment" : "meta.dport= hdr.tcp.dstPort"
           }
@@ -1580,7 +1618,7 @@
       ]
     },
     {
-      "name" : "scaleIoT509",
+      "name" : "scaleIoT510",
       "id" : 35,
       "runtime_data" : [],
       "primitives" : [
@@ -1598,7 +1636,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 509,
+            "line" : 510,
             "column" : 12,
             "source_fragment" : "meta.sport= hdr.udp.srcPort"
           }
@@ -1617,7 +1655,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 510,
+            "line" : 511,
             "column" : 12,
             "source_fragment" : "meta.dport= hdr.udp.dstPort"
           }
@@ -1625,7 +1663,7 @@
       ]
     },
     {
-      "name" : "scaleIoT518",
+      "name" : "scaleIoT519",
       "id" : 36,
       "runtime_data" : [],
       "primitives" : [
@@ -1643,7 +1681,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 518,
+            "line" : 519,
             "column" : 8,
             "source_fragment" : "meta.flag=0"
           }
@@ -1651,7 +1689,7 @@
       ]
     },
     {
-      "name" : "scaleIoT523",
+      "name" : "scaleIoT524",
       "id" : 37,
       "runtime_data" : [],
       "primitives" : [
@@ -1669,7 +1707,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 523,
+            "line" : 524,
             "column" : 8,
             "source_fragment" : "meta.flag=0"
           }
@@ -1677,7 +1715,7 @@
       ]
     },
     {
-      "name" : "scaleIoT528",
+      "name" : "scaleIoT529",
       "id" : 38,
       "runtime_data" : [],
       "primitives" : [
@@ -1695,7 +1733,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 528,
+            "line" : 529,
             "column" : 8,
             "source_fragment" : "meta.flag=0"
           }
@@ -1703,7 +1741,7 @@
       ]
     },
     {
-      "name" : "scaleIoT533",
+      "name" : "scaleIoT534",
       "id" : 39,
       "runtime_data" : [],
       "primitives" : [
@@ -1721,7 +1759,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 533,
+            "line" : 534,
             "column" : 8,
             "source_fragment" : "meta.flag=0"
           }
@@ -1729,7 +1767,7 @@
       ]
     },
     {
-      "name" : "scaleIoT538",
+      "name" : "scaleIoT539",
       "id" : 40,
       "runtime_data" : [],
       "primitives" : [
@@ -1747,7 +1785,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 538,
+            "line" : 539,
             "column" : 8,
             "source_fragment" : "meta.flag=0"
           }
@@ -1755,7 +1793,7 @@
       ]
     },
     {
-      "name" : "scaleIoT543",
+      "name" : "scaleIoT544",
       "id" : 41,
       "runtime_data" : [],
       "primitives" : [
@@ -1773,7 +1811,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 543,
+            "line" : 544,
             "column" : 8,
             "source_fragment" : "meta.flag=0"
           }
@@ -1781,7 +1819,7 @@
       ]
     },
     {
-      "name" : "scaleIoT548",
+      "name" : "scaleIoT549",
       "id" : 42,
       "runtime_data" : [],
       "primitives" : [
@@ -1799,7 +1837,7 @@
           ],
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 548,
+            "line" : 549,
             "column" : 8,
             "source_fragment" : "meta.flag=0"
           }
@@ -1824,7 +1862,7 @@
           "id" : 0,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 261,
+            "line" : 262,
             "column" : 10,
             "source_fragment" : "ipv4_lpm"
           },
@@ -1857,11 +1895,11 @@
           }
         },
         {
-          "name" : "tbl_scaleIoT505",
+          "name" : "tbl_scaleIoT506",
           "id" : 1,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 505,
+            "line" : 506,
             "column" : 22,
             "source_fragment" : "= hdr.tcp.srcPort; ..."
           },
@@ -1873,10 +1911,10 @@
           "support_timeout" : false,
           "direct_meters" : null,
           "action_ids" : [34],
-          "actions" : ["scaleIoT505"],
+          "actions" : ["scaleIoT506"],
           "base_default_next" : "MyIngress.sMAC_exact",
           "next_tables" : {
-            "scaleIoT505" : "MyIngress.sMAC_exact"
+            "scaleIoT506" : "MyIngress.sMAC_exact"
           },
           "default_entry" : {
             "action_id" : 34,
@@ -1886,11 +1924,11 @@
           }
         },
         {
-          "name" : "tbl_scaleIoT509",
+          "name" : "tbl_scaleIoT510",
           "id" : 2,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 509,
+            "line" : 510,
             "column" : 22,
             "source_fragment" : "= hdr.udp.srcPort; ..."
           },
@@ -1902,10 +1940,10 @@
           "support_timeout" : false,
           "direct_meters" : null,
           "action_ids" : [35],
-          "actions" : ["scaleIoT509"],
+          "actions" : ["scaleIoT510"],
           "base_default_next" : "MyIngress.sMAC_exact",
           "next_tables" : {
-            "scaleIoT509" : "MyIngress.sMAC_exact"
+            "scaleIoT510" : "MyIngress.sMAC_exact"
           },
           "default_entry" : {
             "action_id" : 35,
@@ -1919,7 +1957,7 @@
           "id" : 3,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 275,
+            "line" : 276,
             "column" : 10,
             "source_fragment" : "sMAC_exact"
           },
@@ -1956,7 +1994,7 @@
           "id" : 4,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 287,
+            "line" : 288,
             "column" : 10,
             "source_fragment" : "sMAC_default"
           },
@@ -1976,10 +2014,10 @@
           "direct_meters" : null,
           "action_ids" : [27, 8],
           "actions" : ["MyIngress.ns_default", "MyIngress.drop"],
-          "base_default_next" : "tbl_scaleIoT518",
+          "base_default_next" : "tbl_scaleIoT519",
           "next_tables" : {
-            "MyIngress.ns_default" : "tbl_scaleIoT518",
-            "MyIngress.drop" : "tbl_scaleIoT518"
+            "MyIngress.ns_default" : "tbl_scaleIoT519",
+            "MyIngress.drop" : "tbl_scaleIoT519"
           },
           "default_entry" : {
             "action_id" : 8,
@@ -1989,11 +2027,11 @@
           }
         },
         {
-          "name" : "tbl_scaleIoT518",
+          "name" : "tbl_scaleIoT519",
           "id" : 5,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 518,
+            "line" : 519,
             "column" : 17,
             "source_fragment" : "="
           },
@@ -2005,10 +2043,10 @@
           "support_timeout" : false,
           "direct_meters" : null,
           "action_ids" : [36],
-          "actions" : ["scaleIoT518"],
+          "actions" : ["scaleIoT519"],
           "base_default_next" : "MyIngress.dMAC_exact",
           "next_tables" : {
-            "scaleIoT518" : "MyIngress.dMAC_exact"
+            "scaleIoT519" : "MyIngress.dMAC_exact"
           },
           "default_entry" : {
             "action_id" : 36,
@@ -2022,7 +2060,7 @@
           "id" : 6,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 301,
+            "line" : 302,
             "column" : 10,
             "source_fragment" : "dMAC_exact"
           },
@@ -2065,7 +2103,7 @@
           "id" : 7,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 314,
+            "line" : 315,
             "column" : 10,
             "source_fragment" : "dMAC_default"
           },
@@ -2085,10 +2123,10 @@
           "direct_meters" : null,
           "action_ids" : [28, 9],
           "actions" : ["MyIngress.ns_default", "MyIngress.drop"],
-          "base_default_next" : "tbl_scaleIoT523",
+          "base_default_next" : "tbl_scaleIoT524",
           "next_tables" : {
-            "MyIngress.ns_default" : "tbl_scaleIoT523",
-            "MyIngress.drop" : "tbl_scaleIoT523"
+            "MyIngress.ns_default" : "tbl_scaleIoT524",
+            "MyIngress.drop" : "tbl_scaleIoT524"
           },
           "default_entry" : {
             "action_id" : 9,
@@ -2098,11 +2136,11 @@
           }
         },
         {
-          "name" : "tbl_scaleIoT523",
+          "name" : "tbl_scaleIoT524",
           "id" : 8,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 523,
+            "line" : 524,
             "column" : 17,
             "source_fragment" : "="
           },
@@ -2114,10 +2152,10 @@
           "support_timeout" : false,
           "direct_meters" : null,
           "action_ids" : [37],
-          "actions" : ["scaleIoT523"],
+          "actions" : ["scaleIoT524"],
           "base_default_next" : "MyIngress.typEth_exact",
           "next_tables" : {
-            "scaleIoT523" : "MyIngress.typEth_exact"
+            "scaleIoT524" : "MyIngress.typEth_exact"
           },
           "default_entry" : {
             "action_id" : 37,
@@ -2131,7 +2169,7 @@
           "id" : 9,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 327,
+            "line" : 328,
             "column" : 10,
             "source_fragment" : "typEth_exact"
           },
@@ -2174,7 +2212,7 @@
           "id" : 10,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 341,
+            "line" : 342,
             "column" : 10,
             "source_fragment" : "typEth_default"
           },
@@ -2194,10 +2232,10 @@
           "direct_meters" : null,
           "action_ids" : [29, 10],
           "actions" : ["MyIngress.ns_default", "MyIngress.drop"],
-          "base_default_next" : "tbl_scaleIoT528",
+          "base_default_next" : "tbl_scaleIoT529",
           "next_tables" : {
-            "MyIngress.ns_default" : "tbl_scaleIoT528",
-            "MyIngress.drop" : "tbl_scaleIoT528"
+            "MyIngress.ns_default" : "tbl_scaleIoT529",
+            "MyIngress.drop" : "tbl_scaleIoT529"
           },
           "default_entry" : {
             "action_id" : 10,
@@ -2207,11 +2245,11 @@
           }
         },
         {
-          "name" : "tbl_scaleIoT528",
+          "name" : "tbl_scaleIoT529",
           "id" : 11,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 528,
+            "line" : 529,
             "column" : 17,
             "source_fragment" : "="
           },
@@ -2223,10 +2261,10 @@
           "support_timeout" : false,
           "direct_meters" : null,
           "action_ids" : [38],
-          "actions" : ["scaleIoT528"],
+          "actions" : ["scaleIoT529"],
           "base_default_next" : "MyIngress.proto_exact",
           "next_tables" : {
-            "scaleIoT528" : "MyIngress.proto_exact"
+            "scaleIoT529" : "MyIngress.proto_exact"
           },
           "default_entry" : {
             "action_id" : 38,
@@ -2240,7 +2278,7 @@
           "id" : 12,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 354,
+            "line" : 355,
             "column" : 10,
             "source_fragment" : "proto_exact"
           },
@@ -2283,7 +2321,7 @@
           "id" : 13,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 369,
+            "line" : 370,
             "column" : 10,
             "source_fragment" : "proto_default"
           },
@@ -2303,10 +2341,10 @@
           "direct_meters" : null,
           "action_ids" : [30, 11],
           "actions" : ["MyIngress.ns_default", "MyIngress.drop"],
-          "base_default_next" : "tbl_scaleIoT533",
+          "base_default_next" : "tbl_scaleIoT534",
           "next_tables" : {
-            "MyIngress.ns_default" : "tbl_scaleIoT533",
-            "MyIngress.drop" : "tbl_scaleIoT533"
+            "MyIngress.ns_default" : "tbl_scaleIoT534",
+            "MyIngress.drop" : "tbl_scaleIoT534"
           },
           "default_entry" : {
             "action_id" : 11,
@@ -2316,11 +2354,11 @@
           }
         },
         {
-          "name" : "tbl_scaleIoT533",
+          "name" : "tbl_scaleIoT534",
           "id" : 14,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 533,
+            "line" : 534,
             "column" : 17,
             "source_fragment" : "="
           },
@@ -2332,10 +2370,10 @@
           "support_timeout" : false,
           "direct_meters" : null,
           "action_ids" : [39],
-          "actions" : ["scaleIoT533"],
+          "actions" : ["scaleIoT534"],
           "base_default_next" : "MyIngress.sPort_exact",
           "next_tables" : {
-            "scaleIoT533" : "MyIngress.sPort_exact"
+            "scaleIoT534" : "MyIngress.sPort_exact"
           },
           "default_entry" : {
             "action_id" : 39,
@@ -2349,7 +2387,7 @@
           "id" : 15,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 384,
+            "line" : 385,
             "column" : 10,
             "source_fragment" : "sPort_exact"
           },
@@ -2392,7 +2430,7 @@
           "id" : 16,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 397,
+            "line" : 398,
             "column" : 10,
             "source_fragment" : "sPort_default"
           },
@@ -2412,10 +2450,10 @@
           "direct_meters" : null,
           "action_ids" : [31, 12],
           "actions" : ["MyIngress.ns_default", "MyIngress.drop"],
-          "base_default_next" : "tbl_scaleIoT538",
+          "base_default_next" : "tbl_scaleIoT539",
           "next_tables" : {
-            "MyIngress.ns_default" : "tbl_scaleIoT538",
-            "MyIngress.drop" : "tbl_scaleIoT538"
+            "MyIngress.ns_default" : "tbl_scaleIoT539",
+            "MyIngress.drop" : "tbl_scaleIoT539"
           },
           "default_entry" : {
             "action_id" : 12,
@@ -2425,11 +2463,11 @@
           }
         },
         {
-          "name" : "tbl_scaleIoT538",
+          "name" : "tbl_scaleIoT539",
           "id" : 17,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 538,
+            "line" : 539,
             "column" : 17,
             "source_fragment" : "="
           },
@@ -2441,10 +2479,10 @@
           "support_timeout" : false,
           "direct_meters" : null,
           "action_ids" : [40],
-          "actions" : ["scaleIoT538"],
+          "actions" : ["scaleIoT539"],
           "base_default_next" : "MyIngress.dPort_exact",
           "next_tables" : {
-            "scaleIoT538" : "MyIngress.dPort_exact"
+            "scaleIoT539" : "MyIngress.dPort_exact"
           },
           "default_entry" : {
             "action_id" : 40,
@@ -2458,7 +2496,7 @@
           "id" : 18,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 411,
+            "line" : 412,
             "column" : 10,
             "source_fragment" : "dPort_exact"
           },
@@ -2501,7 +2539,7 @@
           "id" : 19,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 424,
+            "line" : 425,
             "column" : 10,
             "source_fragment" : "dPort_default"
           },
@@ -2521,10 +2559,10 @@
           "direct_meters" : null,
           "action_ids" : [32, 13],
           "actions" : ["MyIngress.ns_default", "MyIngress.drop"],
-          "base_default_next" : "tbl_scaleIoT543",
+          "base_default_next" : "tbl_scaleIoT544",
           "next_tables" : {
-            "MyIngress.ns_default" : "tbl_scaleIoT543",
-            "MyIngress.drop" : "tbl_scaleIoT543"
+            "MyIngress.ns_default" : "tbl_scaleIoT544",
+            "MyIngress.drop" : "tbl_scaleIoT544"
           },
           "default_entry" : {
             "action_id" : 13,
@@ -2534,11 +2572,11 @@
           }
         },
         {
-          "name" : "tbl_scaleIoT543",
+          "name" : "tbl_scaleIoT544",
           "id" : 20,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 543,
+            "line" : 544,
             "column" : 17,
             "source_fragment" : "="
           },
@@ -2550,10 +2588,10 @@
           "support_timeout" : false,
           "direct_meters" : null,
           "action_ids" : [41],
-          "actions" : ["scaleIoT543"],
+          "actions" : ["scaleIoT544"],
           "base_default_next" : "MyIngress.srcIP_exact",
           "next_tables" : {
-            "scaleIoT543" : "MyIngress.srcIP_exact"
+            "scaleIoT544" : "MyIngress.srcIP_exact"
           },
           "default_entry" : {
             "action_id" : 41,
@@ -2567,7 +2605,7 @@
           "id" : 21,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 438,
+            "line" : 439,
             "column" : 10,
             "source_fragment" : "srcIP_exact"
           },
@@ -2610,7 +2648,7 @@
           "id" : 22,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 451,
+            "line" : 452,
             "column" : 10,
             "source_fragment" : "srcIP_default"
           },
@@ -2630,10 +2668,10 @@
           "direct_meters" : null,
           "action_ids" : [33, 14],
           "actions" : ["MyIngress.ns_default", "MyIngress.drop"],
-          "base_default_next" : "tbl_scaleIoT548",
+          "base_default_next" : "tbl_scaleIoT549",
           "next_tables" : {
-            "MyIngress.ns_default" : "tbl_scaleIoT548",
-            "MyIngress.drop" : "tbl_scaleIoT548"
+            "MyIngress.ns_default" : "tbl_scaleIoT549",
+            "MyIngress.drop" : "tbl_scaleIoT549"
           },
           "default_entry" : {
             "action_id" : 14,
@@ -2643,11 +2681,11 @@
           }
         },
         {
-          "name" : "tbl_scaleIoT548",
+          "name" : "tbl_scaleIoT549",
           "id" : 23,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 548,
+            "line" : 549,
             "column" : 17,
             "source_fragment" : "="
           },
@@ -2659,10 +2697,10 @@
           "support_timeout" : false,
           "direct_meters" : null,
           "action_ids" : [42],
-          "actions" : ["scaleIoT548"],
+          "actions" : ["scaleIoT549"],
           "base_default_next" : "MyIngress.dstIP_exact",
           "next_tables" : {
-            "scaleIoT548" : "MyIngress.dstIP_exact"
+            "scaleIoT549" : "MyIngress.dstIP_exact"
           },
           "default_entry" : {
             "action_id" : 42,
@@ -2676,7 +2714,7 @@
           "id" : 24,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 465,
+            "line" : 466,
             "column" : 10,
             "source_fragment" : "dstIP_exact"
           },
@@ -2702,10 +2740,10 @@
           "direct_meters" : null,
           "action_ids" : [17, 7],
           "actions" : ["MyIngress.forward", "NoAction"],
-          "base_default_next" : "MyIngress.dstIP_default",
+          "base_default_next" : "node_36",
           "next_tables" : {
-            "MyIngress.forward" : "MyIngress.dstIP_default",
-            "NoAction" : "MyIngress.dstIP_default"
+            "MyIngress.forward" : "node_36",
+            "NoAction" : "node_36"
           },
           "default_entry" : {
             "action_id" : 7,
@@ -2719,7 +2757,7 @@
           "id" : 25,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 478,
+            "line" : 479,
             "column" : 10,
             "source_fragment" : "dstIP_default"
           },
@@ -2759,7 +2797,7 @@
           "id" : 0,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 504,
+            "line" : 505,
             "column" : 12,
             "source_fragment" : "hdr.tcp.isValid()"
           },
@@ -2774,7 +2812,7 @@
               }
             }
           },
-          "true_next" : "tbl_scaleIoT505",
+          "true_next" : "tbl_scaleIoT506",
           "false_next" : "node_5"
         },
         {
@@ -2782,7 +2820,7 @@
           "id" : 1,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 508,
+            "line" : 509,
             "column" : 17,
             "source_fragment" : "hdr.udp.isValid()"
           },
@@ -2797,7 +2835,7 @@
               }
             }
           },
-          "true_next" : "tbl_scaleIoT509",
+          "true_next" : "tbl_scaleIoT510",
           "false_next" : "MyIngress.sMAC_exact"
         },
         {
@@ -2805,7 +2843,7 @@
           "id" : 2,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 515,
+            "line" : 516,
             "column" : 11,
             "source_fragment" : "meta.flag==0"
           },
@@ -2824,14 +2862,14 @@
             }
           },
           "true_next" : "MyIngress.sMAC_default",
-          "false_next" : "tbl_scaleIoT518"
+          "false_next" : "tbl_scaleIoT519"
         },
         {
           "name" : "node_12",
           "id" : 3,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 520,
+            "line" : 521,
             "column" : 11,
             "source_fragment" : "meta.flag==0"
           },
@@ -2850,14 +2888,14 @@
             }
           },
           "true_next" : "MyIngress.dMAC_default",
-          "false_next" : "tbl_scaleIoT523"
+          "false_next" : "tbl_scaleIoT524"
         },
         {
           "name" : "node_16",
           "id" : 4,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 525,
+            "line" : 526,
             "column" : 11,
             "source_fragment" : "meta.flag==0"
           },
@@ -2876,14 +2914,14 @@
             }
           },
           "true_next" : "MyIngress.typEth_default",
-          "false_next" : "tbl_scaleIoT528"
+          "false_next" : "tbl_scaleIoT529"
         },
         {
           "name" : "node_20",
           "id" : 5,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 530,
+            "line" : 531,
             "column" : 11,
             "source_fragment" : "meta.flag==0"
           },
@@ -2902,14 +2940,14 @@
             }
           },
           "true_next" : "MyIngress.proto_default",
-          "false_next" : "tbl_scaleIoT533"
+          "false_next" : "tbl_scaleIoT534"
         },
         {
           "name" : "node_24",
           "id" : 6,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 535,
+            "line" : 536,
             "column" : 11,
             "source_fragment" : "meta.flag==0"
           },
@@ -2928,14 +2966,14 @@
             }
           },
           "true_next" : "MyIngress.sPort_default",
-          "false_next" : "tbl_scaleIoT538"
+          "false_next" : "tbl_scaleIoT539"
         },
         {
           "name" : "node_28",
           "id" : 7,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 540,
+            "line" : 541,
             "column" : 11,
             "source_fragment" : "meta.flag==0"
           },
@@ -2954,14 +2992,14 @@
             }
           },
           "true_next" : "MyIngress.dPort_default",
-          "false_next" : "tbl_scaleIoT543"
+          "false_next" : "tbl_scaleIoT544"
         },
         {
           "name" : "node_32",
           "id" : 8,
           "source_info" : {
             "filename" : "scaleIoT.p4",
-            "line" : 545,
+            "line" : 546,
             "column" : 11,
             "source_fragment" : "meta.flag==0"
           },
@@ -2980,7 +3018,33 @@
             }
           },
           "true_next" : "MyIngress.srcIP_default",
-          "false_next" : "tbl_scaleIoT548"
+          "false_next" : "tbl_scaleIoT549"
+        },
+        {
+          "name" : "node_36",
+          "id" : 9,
+          "source_info" : {
+            "filename" : "scaleIoT.p4",
+            "line" : 551,
+            "column" : 11,
+            "source_fragment" : "meta.flag==0"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "==",
+              "left" : {
+                "type" : "field",
+                "value" : ["scalars", "userMetadata.flag"]
+              },
+              "right" : {
+                "type" : "hexstr",
+                "value" : "0x00"
+              }
+            }
+          },
+          "false_next" : null,
+          "true_next" : "MyIngress.dstIP_default"
         }
       ]
     },
@@ -2989,7 +3053,7 @@
       "id" : 1,
       "source_info" : {
         "filename" : "scaleIoT.p4",
-        "line" : 563,
+        "line" : 564,
         "column" : 8,
         "source_fragment" : "MyEgress"
       },
@@ -3005,7 +3069,7 @@
       "id" : 0,
       "source_info" : {
         "filename" : "scaleIoT.p4",
-        "line" : 575,
+        "line" : 576,
         "column" : 8,
         "source_fragment" : "update_checksum( ..."
       },

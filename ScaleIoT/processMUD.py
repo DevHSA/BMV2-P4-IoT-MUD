@@ -28,29 +28,16 @@ def getSourceDestination(data):
 #Main Function
 def readMUDFile(pathName, IoTmacAddress):
     # print("INSIDE READMUDFILE")
-    # os.chdir("/home/p4/BMV2-P4-IoT-MUD/ScaleIoT/MUDFiles/")
+
+
     files=os.listdir("/home/p4/BMV2-P4-IoT-MUD/ScaleIoT/MUDFiles/")
     data = []
     df = None
-
-    # print(pathName)
-
-    # print(files)
-
-    # with open(pathName) as f:
-    #     df = json.load(f)
-    #     data.append(df)
 
     f = open(pathName)
     df = json.load(f)
     data.append(df)
     f.close()
-
-    # print(df)
-    # print(data)
-    # print(type(data))
-
-    # print("Reached End")
 
     final_list = []
     for i in range(len(data)):

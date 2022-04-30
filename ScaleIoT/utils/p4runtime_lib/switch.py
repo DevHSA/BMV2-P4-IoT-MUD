@@ -85,17 +85,17 @@ class SwitchConnection(object):
 
 
             ##EXTRACTING MAC ADDRESS
-            print(item.packet)
-            print(type(item.packet.payload))
+            # print(item.packet)
+            # print(type(item.packet.payload))
 
             packetpayload = item.packet.payload
-            print(packetpayload.hex())
+            # print(packetpayload.hex())
             packetString = packetpayload.hex()
-            print(type(packetString))
+            # print(type(packetString))
             convertedAddress = packetString[12:24]
-            print(convertedAddress)
+            # print(convertedAddress)
             IoTmacAddress = ':'.join(convertedAddress[i:i+2] for i in range(0, len(convertedAddress), 2))
-            print(IoTmacAddress)
+            # print(IoTmacAddress)
 
             ##EXTRACTING PAYLOAD MUD URL
             #now converting payload from bytes to string
