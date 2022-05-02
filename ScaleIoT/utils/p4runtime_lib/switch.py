@@ -15,7 +15,7 @@
 from abc import abstractmethod
 from datetime import datetime
 from queue import Queue
-
+import time
 
 
 #Our MUD imports
@@ -145,15 +145,31 @@ class SwitchConnection(object):
             	os.remove(signedMUDfile)
             	os.remove('pub-key.pem')
 
+            milliseconds1 = int(time.time() * 1000)
+
             pureACL = readMUDFile(rawMUDfile, IoTmacAddress)
+            milliseconds2 = int(time.time() * 1000)
+
+
+
             resolvedACL = resolve(pureACL)
+            milliseconds3 = int(time.time() * 1000)
+
+            ##Save Resolved ACL
+            resolvedACL.to_csv('template.csv', index=False);
+
+            # readTableRules(p4info_helper, s1)
+            # milliseconds3 = int(time.time() * 1000)
 
 
-
-            readTableRules(p4info_helper, s1)
             convertDT(resolvedACL, p4info_helper, s1, readTableRules)
+            milliseconds4 = int(time.time() * 1000)
 
-            
+            print("Time in milliseconds after MUD file donwload", milliseconds1)
+            print("Time in milliseconds after processMUD (Convert MUD file to ACL Rules)", milliseconds2)
+            print("Time in milliseconds to resolve domain names", milliseconds3)
+            print("Time in milliseconds after Convertion to Decision Tree ---> Send Table rules", milliseconds4)
+
 
 
     def DeleteTableEntry(self, table_entry, dry_run=False):

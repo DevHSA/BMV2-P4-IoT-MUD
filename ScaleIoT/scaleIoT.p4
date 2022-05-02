@@ -93,6 +93,7 @@ struct metadata {
     bit<24> current_state; //contains the current state to match with
     bit<24> stub_current_state_value; //Just for the first level
     bit<8>  flag; //used as a toggle for the match action pipeline
+    bit<8>  dropFlag; //used as a drop toggle
 
     //used to store port numbers of both UDP and TCP
     bit<16> sport;
@@ -186,6 +187,7 @@ control MyIngress(inout headers hdr,
     //Drop action declared for further use
     action drop() {
         //Use the predefined primitive
+        meta.dropFlag = 1;
         mark_to_drop(standard_metadata);
     }
 
@@ -516,41 +518,57 @@ control MyIngress(inout headers hdr,
         if(meta.flag==0){
             sMAC_default.apply();
         }
+        if(meta.dropFlag == 1) return;
+
         meta.flag=0;
         dMAC_exact.apply();
         if(meta.flag==0){
             dMAC_default.apply();
         }
+        if(meta.dropFlag == 1) return;
+
         meta.flag=0;
         typEth_exact.apply();
         if(meta.flag==0){
             typEth_default.apply();
         }
+        if(meta.dropFlag == 1) return;
+
         meta.flag=0;
         proto_exact.apply();
         if(meta.flag==0){
             proto_default.apply();
         }
+        if(meta.dropFlag == 1) return;
+
         meta.flag=0;
         sPort_exact.apply();
         if(meta.flag==0){
             sPort_default.apply();
         }
+        if(meta.dropFlag == 1) return;
+
         meta.flag=0;
         dPort_exact.apply();
         if(meta.flag==0){
             dPort_default.apply();
         }
+        if(meta.dropFlag == 1) return;
+
         meta.flag=0;
         srcIP_exact.apply();
         if(meta.flag==0){
             srcIP_default.apply();
         }
+        if(meta.dropFlag == 1) return;
+
         meta.flag=0;
         dstIP_exact.apply();
         if(meta.flag==0){
             dstIP_default.apply();
         }
+        if(meta.dropFlag == 1) return;
+        
 
         }
 

@@ -6,7 +6,8 @@ import random
 
 from socket import gaierror
 from random import randint
-
+import time
+from datetime import datetime
 
 ##*****ENABLE WHEN NOT EXECUTING FROM JUPYTER --
 #***Get current directory path for future use
@@ -69,7 +70,7 @@ def resolve(pureACL):
         #2 Convert all the Domain Names to IP Addresses
         if row['srcIP'] != '*':
             pureACL.at[index,'srcIP'] = domainResolver(row['srcIP'])
-            
+
         if row['dstIP'] != '*':
             pureACL.at[index,'dstIP'] = domainResolver(row['dstIP'])
 

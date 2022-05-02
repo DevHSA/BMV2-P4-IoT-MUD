@@ -126,23 +126,70 @@ def send_DHCP(iface):
     print(mic)
 
     milliseconds = int(time.time() * 1000)
-    print("Time in milliseconds since epoch", milliseconds)
+
     sendp(pkt, iface=iface, verbose=True)
+    print("Timestamp at Packet generation", milliseconds)
 
 def send_test(iface):
 
     pkt = Ether(src="00:0b:82:01:fc:42", dst="00:0b:82:01:fc:46", type=0x0800)
-    pkt = pkt / IP(proto=6 , src="224.239.227.216", dst="54.239.27.116")
+    pkt = pkt / IP(proto=6 , src="224.239.227.216", dst="104.114.84.137")
     pkt = pkt / TCP(sport=3322, dport=443)
 
     sendp(pkt, iface=iface, verbose=True)
 
+def correctness_sendPacket(iface, listView):
+
+    print(listView)
+
+    # convert to match types
+
+    typeEth = int(listView[2], 16)
+    print(type(typeEth))
+
+
+    proto = int(listView[3])
+    sport = int(listView[4])
+    dport = int(listView[5])
+    sIP = listView[6]
+    dIP = listView[7]#'2.2.2.2'
+    # print(type(type))
+    # print(type(typeEthNew))
+    pkt = []
+
+    if listView[3] == "17":
+        pkt = Ether(src=listView[0], dst=listView[1], type=typeEth)
+        pkt = pkt / IP(proto=proto , src=sIP, dst=dIP)
+        pkt = pkt / UDP(sport=sport, dport=dport)
+    else:
+        pkt = Ether(src=listView[0], dst=listView[1], type=typeEth)
+        pkt = pkt / IP(proto=proto , src=sIP, dst=dIP)
+        pkt = pkt / TCP(sport=sport, dport=dport)
+
+    print(listView)
+    # input("Press the return key to send the packet:")
+
+    sendp(pkt, iface=iface, verbose=False)
+
+
+def correctness_openFile(iface):
+
+    packetGen = pd.read_csv('./template.csv', dtype=str)
+
+    for index,row in packetGen.iterrows():
+        listView = row.tolist()
+        correctness_sendPacket(iface,listView)
+        time.sleep(0.01)
+
+    print("Stub")
+
 def main():
 
     iface = get_if()
-    send_DHCP(iface)
-    time.sleep(2)
+    # send_DHCP(iface)
+    # time.sleep(2)
     # send_test(iface)
+    correctness_openFile(iface)
 
     #Read packet generator
 

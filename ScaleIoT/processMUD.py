@@ -4,6 +4,8 @@ import os
 import numpy as np
 import csv
 import random
+import time
+from datetime import datetime
 
 ##*****ENABLE WHEN NOT EXECUTING FROM JUPYTER*********##
 #***Get current directory path for future use
@@ -119,7 +121,7 @@ def readMUDFile(pathName, IoTmacAddress):
 
     df = pd.DataFrame(final_list)
     df.head()
-    
+
     columns = ['sMAC','dMAC','typEth','srcIP','dstIP','proto','sPort','dPort','action']
     df1 = df[columns]
 
@@ -129,6 +131,8 @@ def readMUDFile(pathName, IoTmacAddress):
         df2[column] = df2[column].fillna('*')
 
     # print(df2)
+    # milliseconds = int(time.time() * 1000)
+    # print("Time in milliseconds at processMUD (Convert MUD file to ACL Rules)", milliseconds)
 
     return df2
 

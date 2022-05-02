@@ -64,10 +64,11 @@ def checkIfPresentAndReturn(valueToCheck, neighborList):
 def addSwitchCommand(addedNodeArray, addedStateArray, levelHeaders, p4info_helper, s1, readTableRules):
 
     # print("Adding Switch Command")
-    # readTableRules(p4info_helper, s1)
-    print(addedNodeArray)
-    print(addedStateArray)
-    print(addSwitchCommand.cntr)
+
+
+    # print(addedNodeArray)
+    # print(addedStateArray)
+    # print(addSwitchCommand.cntr)
     addSwitchCommand.cntr = addSwitchCommand.cntr + 1
     #for every addition, generate a corresponding switch command
     for i in range(0,8):
@@ -99,7 +100,7 @@ def addSwitchCommand(addedNodeArray, addedStateArray, levelHeaders, p4info_helpe
 
             #Handle First Level addition (Add only val,nxtState)
 
-            tablesmap = {1 : "MyIngress.dMAC_exact" , 
+            tablesmap = {1 : "MyIngress.dMAC_exact" ,
                         2 : "MyIngress.typEth_exact",
                         3 : "MyIngress.proto_exact",
                         4 : "MyIngress.sPort_exact",
@@ -604,11 +605,13 @@ def convertDT(data, p4info_helper, s1, readTableRules):
         # s1.WriteTableEntry(table_entry)
 
         addSwitchCommand(addedNodeArray, addedStateArray, levelHeaders, p4info_helper, s1, readTableRules)
+
+
+
     now = datetime.now()
     mic = now.microsecond
     print(mic)
-    milliseconds = int(time.time() * 1000)
-    print("Time in milliseconds since epoch", milliseconds)
+
     # print(addedNodeArray)
         # print(addedStateArray)
 
