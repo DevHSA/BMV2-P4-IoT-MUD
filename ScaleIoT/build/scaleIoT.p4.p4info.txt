@@ -1,0 +1,477 @@
+pkg_info {
+  arch: "v1model"
+}
+tables {
+  preamble {
+    id: 37375156
+    name: "MyIngress.ipv4_lpm"
+    alias: "ipv4_lpm"
+  }
+  match_fields {
+    id: 1
+    name: "hdr.ipv4.srcAddr"
+    bitwidth: 32
+    match_type: LPM
+  }
+  action_refs {
+    id: 22688613
+  }
+  action_refs {
+    id: 21257015
+  }
+  size: 1024
+}
+tables {
+  preamble {
+    id: 42783434
+    name: "MyIngress.sMAC_exact"
+    alias: "sMAC_exact"
+  }
+  match_fields {
+    id: 1
+    name: "hdr.ethernet.sEth"
+    bitwidth: 48
+    match_type: EXACT
+  }
+  action_refs {
+    id: 20313369
+  }
+  action_refs {
+    id: 19084811
+  }
+  size: 1024
+}
+tables {
+  preamble {
+    id: 44671406
+    name: "MyIngress.sMAC_default"
+    alias: "sMAC_default"
+  }
+  match_fields {
+    id: 1
+    name: "meta.stub_current_state_value"
+    bitwidth: 24
+    match_type: EXACT
+  }
+  action_refs {
+    id: 23236281
+  }
+  action_refs {
+    id: 25652968
+  }
+  size: 1024
+}
+tables {
+  preamble {
+    id: 42088615
+    name: "MyIngress.dMAC_exact"
+    alias: "dMAC_exact"
+  }
+  match_fields {
+    id: 1
+    name: "meta.current_state"
+    bitwidth: 24
+    match_type: EXACT
+  }
+  match_fields {
+    id: 2
+    name: "hdr.ethernet.dEth"
+    bitwidth: 48
+    match_type: EXACT
+  }
+  action_refs {
+    id: 20313369
+  }
+  action_refs {
+    id: 21257015
+  }
+  size: 1024
+}
+tables {
+  preamble {
+    id: 46919436
+    name: "MyIngress.dMAC_default"
+    alias: "dMAC_default"
+  }
+  match_fields {
+    id: 1
+    name: "meta.current_state"
+    bitwidth: 24
+    match_type: EXACT
+  }
+  action_refs {
+    id: 23236281
+  }
+  action_refs {
+    id: 25652968
+  }
+  size: 1024
+}
+tables {
+  preamble {
+    id: 42023087
+    name: "MyIngress.typEth_exact"
+    alias: "typEth_exact"
+  }
+  match_fields {
+    id: 1
+    name: "meta.current_state"
+    bitwidth: 24
+    match_type: EXACT
+  }
+  match_fields {
+    id: 2
+    name: "hdr.ethernet.typeEth"
+    bitwidth: 16
+    match_type: EXACT
+  }
+  action_refs {
+    id: 20313369
+  }
+  action_refs {
+    id: 21257015
+  }
+  size: 1024
+}
+tables {
+  preamble {
+    id: 35466170
+    name: "MyIngress.typEth_default"
+    alias: "typEth_default"
+  }
+  match_fields {
+    id: 1
+    name: "meta.current_state"
+    bitwidth: 24
+    match_type: EXACT
+  }
+  action_refs {
+    id: 23236281
+  }
+  action_refs {
+    id: 25652968
+  }
+  size: 1024
+}
+tables {
+  preamble {
+    id: 36251791
+    name: "MyIngress.proto_exact"
+    alias: "proto_exact"
+  }
+  match_fields {
+    id: 1
+    name: "meta.current_state"
+    bitwidth: 24
+    match_type: EXACT
+  }
+  match_fields {
+    id: 2
+    name: "hdr.ipv4.protocol"
+    bitwidth: 8
+    match_type: EXACT
+  }
+  action_refs {
+    id: 20313369
+  }
+  action_refs {
+    id: 21257015
+  }
+  size: 1024
+}
+tables {
+  preamble {
+    id: 41489240
+    name: "MyIngress.proto_default"
+    alias: "proto_default"
+  }
+  match_fields {
+    id: 1
+    name: "meta.current_state"
+    bitwidth: 24
+    match_type: EXACT
+  }
+  action_refs {
+    id: 23236281
+  }
+  action_refs {
+    id: 25652968
+  }
+  size: 1024
+}
+tables {
+  preamble {
+    id: 49805624
+    name: "MyIngress.sPort_exact"
+    alias: "sPort_exact"
+  }
+  match_fields {
+    id: 1
+    name: "meta.current_state"
+    bitwidth: 24
+    match_type: EXACT
+  }
+  match_fields {
+    id: 2
+    name: "meta.sport"
+    bitwidth: 16
+    match_type: EXACT
+  }
+  action_refs {
+    id: 20313369
+  }
+  action_refs {
+    id: 21257015
+  }
+  size: 1024
+}
+tables {
+  preamble {
+    id: 44026829
+    name: "MyIngress.sPort_default"
+    alias: "sPort_default"
+  }
+  match_fields {
+    id: 1
+    name: "meta.current_state"
+    bitwidth: 24
+    match_type: EXACT
+  }
+  action_refs {
+    id: 23236281
+  }
+  action_refs {
+    id: 25652968
+  }
+  size: 1024
+}
+tables {
+  preamble {
+    id: 37196547
+    name: "MyIngress.dPort_exact"
+    alias: "dPort_exact"
+  }
+  match_fields {
+    id: 1
+    name: "meta.current_state"
+    bitwidth: 24
+    match_type: EXACT
+  }
+  match_fields {
+    id: 2
+    name: "meta.dport"
+    bitwidth: 16
+    match_type: EXACT
+  }
+  action_refs {
+    id: 20313369
+  }
+  action_refs {
+    id: 21257015
+  }
+  size: 1024
+}
+tables {
+  preamble {
+    id: 41953047
+    name: "MyIngress.dPort_default"
+    alias: "dPort_default"
+  }
+  match_fields {
+    id: 1
+    name: "meta.current_state"
+    bitwidth: 24
+    match_type: EXACT
+  }
+  action_refs {
+    id: 23236281
+  }
+  action_refs {
+    id: 25652968
+  }
+  size: 1024
+}
+tables {
+  preamble {
+    id: 37988917
+    name: "MyIngress.srcIP_exact"
+    alias: "srcIP_exact"
+  }
+  match_fields {
+    id: 1
+    name: "meta.current_state"
+    bitwidth: 24
+    match_type: EXACT
+  }
+  match_fields {
+    id: 2
+    name: "hdr.ipv4.srcAddr"
+    bitwidth: 32
+    match_type: EXACT
+  }
+  action_refs {
+    id: 20313369
+  }
+  action_refs {
+    id: 21257015
+  }
+  size: 1024
+}
+tables {
+  preamble {
+    id: 39639397
+    name: "MyIngress.srcIP_default"
+    alias: "srcIP_default"
+  }
+  match_fields {
+    id: 1
+    name: "meta.current_state"
+    bitwidth: 24
+    match_type: EXACT
+  }
+  action_refs {
+    id: 23236281
+  }
+  action_refs {
+    id: 25652968
+  }
+  size: 1024
+}
+tables {
+  preamble {
+    id: 48018331
+    name: "MyIngress.dstIP_exact"
+    alias: "dstIP_exact"
+  }
+  match_fields {
+    id: 1
+    name: "meta.current_state"
+    bitwidth: 24
+    match_type: EXACT
+  }
+  match_fields {
+    id: 2
+    name: "hdr.ipv4.dstAddr"
+    bitwidth: 32
+    match_type: EXACT
+  }
+  action_refs {
+    id: 29683729
+  }
+  action_refs {
+    id: 21257015
+  }
+  size: 1024
+}
+tables {
+  preamble {
+    id: 40541573
+    name: "MyIngress.dstIP_default"
+    alias: "dstIP_default"
+  }
+  match_fields {
+    id: 1
+    name: "meta.current_state"
+    bitwidth: 24
+    match_type: EXACT
+  }
+  action_refs {
+    id: 29683729
+  }
+  action_refs {
+    id: 25652968
+  }
+  size: 1024
+}
+actions {
+  preamble {
+    id: 21257015
+    name: "NoAction"
+    alias: "NoAction"
+    annotations: "@noWarn(\"unused\")"
+  }
+}
+actions {
+  preamble {
+    id: 25652968
+    name: "MyIngress.drop"
+    alias: "drop"
+  }
+}
+actions {
+  preamble {
+    id: 22688613
+    name: "MyIngress.dhcp_forward"
+    alias: "dhcp_forward"
+  }
+  params {
+    id: 1
+    name: "port"
+    bitwidth: 9
+  }
+}
+actions {
+  preamble {
+    id: 29683729
+    name: "MyIngress.forward"
+    alias: "forward"
+  }
+  params {
+    id: 1
+    name: "dstAddr"
+    bitwidth: 48
+  }
+  params {
+    id: 2
+    name: "switchPort"
+    bitwidth: 9
+  }
+}
+actions {
+  preamble {
+    id: 19084811
+    name: "MyIngress.default_action_one"
+    alias: "default_action_one"
+  }
+}
+actions {
+  preamble {
+    id: 20313369
+    name: "MyIngress.ns_exact"
+    alias: "ns_exact"
+  }
+  params {
+    id: 1
+    name: "next_state"
+    bitwidth: 24
+  }
+}
+actions {
+  preamble {
+    id: 23236281
+    name: "MyIngress.ns_default"
+    alias: "ns_default"
+  }
+  params {
+    id: 1
+    name: "next_state"
+    bitwidth: 24
+  }
+}
+registers {
+  preamble {
+    id: 378545909
+    name: "MyIngress.flow_duration"
+    alias: "flow_duration"
+  }
+  type_spec {
+    bitstring {
+      bit {
+        bitwidth: 32
+      }
+    }
+  }
+  size: 100
+}
+type_info {
+}

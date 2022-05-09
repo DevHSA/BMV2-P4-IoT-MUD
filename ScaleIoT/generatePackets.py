@@ -105,7 +105,7 @@ def send_DHCP(iface):
     #Parameter Request List
     data = data + b'\x37\x04\x01\x03\x06\x2a'
     #Host name
-    str = "http://127.0.0.1:443/augustdoorbell"
+    str = "http://127.0.0.1:443/huebulb"
     strlen = len(str)
     print(strlen)
     strlen_bytes = strlen.to_bytes(1,'big')
@@ -140,36 +140,105 @@ def send_test(iface):
 
 def correctness_sendPacket(iface, listView):
 
+
     print(listView)
 
     # convert to match types
+    #0 = smac, 1 = dmac, 2 = typeth, 3 = srcip, 4 = dstip, 5 = proto, 6 = sport, 7 = dport
 
-    typeEth = int(listView[2], 16)
-    print(type(typeEth))
+    if(listView[0] == '*'):
+        src = "00:00:5e:00:53:af"
+    else:
+        src = listView[0]
 
+    if(listView[1] == '*'):
+        dst = "00:00:5e:00:53:af"
+    else:
+        dst = listView[1]
 
-    proto = int(listView[3])
-    sport = int(listView[4])
-    dport = int(listView[5])
-    sIP = listView[6]
-    dIP = listView[7]#'2.2.2.2'
+    if(listView[2] == '*'):
+        typeEth = 0x0800
+    else :
+        typeEth = int(listView[2], 16)
+    # print(type(typeEth))
+
+    if(listView[3] == '*'):
+        sIP = "0.0.0.1"
+    else:
+        sIP = listView[3]
+
+    if(listView[4] == '*'):
+        dIP = "0.0.0.4"
+    else:
+        dIP = listView[4]
+
+    if(listView[5] == '*'):
+        proto = 17
+    else :
+        proto = int(listView[5])
+
+    if(listView[6] == '*'):
+        sport = 443
+    else:
+        sport = int(listView[6])
+
+    if(listView[7] == '*'):
+        dport = 443
+    else:
+        dport = int(listView[7])
+
+    # sport = int(listView[4])
+    # dport = int(listView[5])
+    # sIP = listView[6]
+    # dIP = listView[7]#'2.2.2.2'
     # print(type(type))
     # print(type(typeEthNew))
     pkt = []
 
-    if listView[3] == "17":
-        pkt = Ether(src=listView[0], dst=listView[1], type=typeEth)
+    if proto == 17:
+        pkt = Ether(src=src, dst=dst, type=typeEth)
         pkt = pkt / IP(proto=proto , src=sIP, dst=dIP)
         pkt = pkt / UDP(sport=sport, dport=dport)
     else:
-        pkt = Ether(src=listView[0], dst=listView[1], type=typeEth)
+        pkt = Ether(src=src, dst=dst, type=typeEth)
         pkt = pkt / IP(proto=proto , src=sIP, dst=dIP)
         pkt = pkt / TCP(sport=sport, dport=dport)
 
-    print(listView)
+    # print(listView)
     # input("Press the return key to send the packet:")
 
     sendp(pkt, iface=iface, verbose=False)
+
+    # print(listView)
+
+    # # convert to match types
+
+    # typeEth = int(listView[2], 16)
+    # print(type(typeEth))
+
+
+    # proto = int(listView[3])
+    # sport = int(listView[4])
+    # dport = int(listView[5])
+    # sIP = listView[6]
+    # dIP = listView[7]#'2.2.2.2'
+    # # print(type(type))
+    # # print(type(typeEthNew))
+    # pkt = []
+
+    # if listView[3] == "17":
+    #     pkt = Ether(src=listView[0], dst=listView[1], type=typeEth)
+    #     pkt = pkt / IP(proto=proto , src=sIP, dst=dIP)
+    #     pkt = pkt / UDP(sport=sport, dport=dport)
+    # else:
+    #     pkt = Ether(src=listView[0], dst=listView[1], type=typeEth)
+    #     pkt = pkt / IP(proto=proto , src=sIP, dst=dIP)
+    #     pkt = pkt / TCP(sport=sport, dport=dport)
+
+    # print(listView)
+    # # input("Press the return key to send the packet:")
+
+    # sendp(pkt, iface=iface, verbose=False)
 
 
 def correctness_openFile(iface):
