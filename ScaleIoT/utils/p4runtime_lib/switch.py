@@ -158,12 +158,14 @@ class SwitchConnection(object):
             ##Save Resolved ACL
             resolvedACL.to_csv('template.csv', index=False);
 
-            # readTableRules(p4info_helper, s1)
+
             # milliseconds3 = int(time.time() * 1000)
 
 
             convertDT(resolvedACL, p4info_helper, s1, readTableRules)
             milliseconds4 = int(time.time() * 1000)
+
+            readTableRules(p4info_helper, s1)
 
             print("Time in milliseconds after MUD file donwload", milliseconds1)
             print("Time in milliseconds after processMUD (Convert MUD file to ACL Rules)", milliseconds2)
