@@ -105,7 +105,7 @@ def send_DHCP(iface):
     #Parameter Request List
     data = data + b'\x37\x04\x01\x03\x06\x2a'
     #Host name
-    str = "http://127.0.0.1:443/huebulb"
+    str = "http://127.0.0.1:443/nestsmokesensor"
     strlen = len(str)
     print(strlen)
     strlen_bytes = strlen.to_bytes(1,'big')
@@ -190,7 +190,7 @@ def correctness_sendPacket(iface, listView):
     # sport = int(listView[4])
     # dport = int(listView[5])
     # sIP = listView[6]
-    # dIP = listView[7]#'2.2.2.2'
+    # dIP = listView[7]#'2.2.2.2'00:0b:82:01:fc:42,*,*,*,224.0.0.22,18,*,*,forward
     # print(type(type))
     # print(type(typeEthNew))
     pkt = []
@@ -256,7 +256,7 @@ def main():
 
     iface = get_if()
     # send_DHCP(iface)
-    # time.sleep(2)
+    time.sleep(2)
     # send_test(iface)
     correctness_openFile(iface)
 

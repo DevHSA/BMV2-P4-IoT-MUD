@@ -1,0 +1,27 @@
+hellobarbie - all passing through
+august door bell - 4 missing
+*,*,*,*,*,17,*,547,forward - dport missing 
+*,*,*,*,*,58,*,*,forward - proto missed
+*,*,*,*,*,0,*,*,forward - proto missed
+*,*,*,*,*,17,547,*,forward = dport missing
+
+smart things - all passing
+amazon echo - all passing
+huebulb - 4 missing
+
+00:0b:82:01:fc:42,*,*,*,224.0.0.22,2,*,*,forward
+*,*,*,*,*,0,*,*,forward
+*,*,*,*,*,58,*,*,forward
+*,*,*,*,*,17,*,5353,forward
+
+withingssleepsensor
+1 packet dropped
+00:0b:82:01:fc:42,*,*,*,224.0.0.22,2,*,*,forward - protocol missed
+
+withingscardio
+all passing
+
+nestsmokesensor
+
+*,*,*,*,*,58,*,*,forward - protocol tables missed
+*,*,*,*,*,0,*,*,forward - protocol tables missed	
