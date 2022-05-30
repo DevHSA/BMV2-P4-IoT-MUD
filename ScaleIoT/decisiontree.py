@@ -184,20 +184,19 @@ def addSwitchCommand(addedNodeArray, addedStateArray, levelHeaders, p4info_helpe
                     currState = int(addedStateArray[i])
                     nxtState = int(addedStateArray[i+1])
 
+                    if i == 2:
+                        matchfields = int(matchFields , 16)
+                    elif i in (3,4,5) :
+                        matchfields = int(matchFields)
+                    else :
+                        matchfields = matchFields
 
                     ##dETH TABLE ENTRY
                     table_entry = p4info_helper.buildTableEntry(
-<<<<<<< HEAD
-                        table_name="MyIngress.dMAC_exact",
-                        match_fields={
-                            "meta.current_state": currState,
-                            "hdr.ethernet.dEth": matchFields
-=======
                         table_name= tablesmap[i],
                         match_fields={
                             "meta.current_state": currState,
                             matchesmap[i] : matchfields
->>>>>>> temp-branch
                         },
                         action_name="MyIngress.ns_exact",
                         action_params={
@@ -205,12 +204,8 @@ def addSwitchCommand(addedNodeArray, addedStateArray, levelHeaders, p4info_helpe
                         })
                     s1.WriteTableEntry(table_entry)
 
-<<<<<<< HEAD
-                elif addedNodeArray[i]=="*":
-=======
                 #if it is to be added in the default table
                 else:
->>>>>>> temp-branch
 
                     currState = int(addedStateArray[i])
                     nxtState = int(addedStateArray[i+1])

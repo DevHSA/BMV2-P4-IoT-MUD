@@ -163,12 +163,12 @@ def correctness_sendPacket(iface, listView):
     '''
 
     if(listView[0] == '*'):
-        src = "00:0b:82:01:fc:42"
+        src = "00:00:5e:00:53:af"
     else:
         src = listView[0]
 
     if(listView[1] == '*'):
-        dst = "00:0b:82:01:fc:41"
+        dst = "00:00:5e:00:53:af"
     else:
         dst = listView[1]
 
@@ -179,17 +179,17 @@ def correctness_sendPacket(iface, listView):
     # print(type(typeEth))
 
     if(listView[3] == '*'):
-        sIP = "224.239.227.216"
+        sIP = "0.0.0.1"
     else:
         sIP = listView[3]
 
     if(listView[4] == '*'):
-        dIP = "224.239.227.215"
+        dIP = "0.0.0.4"
     else:
         dIP = listView[4]
 
     if(listView[5] == '*'):
-        proto = 6
+        proto = 17
     else :
         proto = int(listView[5])
 
@@ -202,6 +202,7 @@ def correctness_sendPacket(iface, listView):
         dport = 20
     else:
         dport = int(listView[7])
+
 
     '''
     sport = int(listView[4])
@@ -276,18 +277,14 @@ def correctness_openFile(iface):
     for index,row in packetGen.iterrows():
         listView = row.tolist()
         correctness_sendPacket(iface,listView)
-        time.sleep(0.01)
-        print("sent")
-
-        print(index)
-        input("Press Enter to continue...")
+        
 def main():
 
     iface = get_if()
     # send_DHCP(iface)
-    time.sleep(2)
+    # time.sleep(2)
     # send_test(iface)
-    # correctness_openFile(iface)
+    correctness_openFile(iface)
 
 
     '''
