@@ -1,3 +1,8 @@
+'''
+Here, the domain names are resolved to IP addresses using the gethostbyname() function. 
+Subsequently, the resolved ACL rules are sent to decisiontree.py.
+'''
+
 import csv
 import pandas as pd
 import ipaddress
@@ -9,27 +14,36 @@ from random import randint
 import time
 from datetime import datetime
 
-##*****ENABLE WHEN NOT EXECUTING FROM JUPYTER --
-#***Get current directory path for future use
-# currPath = os.getcwd()
-# currPath = currPath.replace('\\','/')
-# reqPath = currPath + "/JSON/"
-##*********************************************
+'''
+ENABLE WHEN NOT EXECUTING FROM JUPYTER --
+
+Get current directory path for future use
+currPath = os.getcwd()
+currPath = currPath.replace('\\','/')
+reqPath = currPath + "/JSON/"
+
+'''
 
 #Dictionary to hold all resolved IP addresses
 resolvedDomains = {} #Empty Dictionary
 
 #Function to resolve Domains to IP addresss and store it in a local cache
+
 def domainResolver(domainName):
     try:
         return resolvedDomains[domainName] #Return the IP address if domain already resolved
+
     except KeyError:
-        #resolve the domain
+        '''
+        We find that the domainName is not present in the dictionary as a key,
+        so we resolve the domain using gethostbyname function
+        '''
+
         try: #Check if it already is an IP address. If so, return the same
             ip = ipaddress.ip_address(domainName)
             return domainName
         except ValueError: #If not an IP address, then resolve. Store and return the same
-            # print(domainName)
+            
             try: #If successfully resolved
                 resolvedDomains[domainName] = socket.gethostbyname(domainName)
                 return resolvedDomains[domainName]
@@ -38,14 +52,14 @@ def domainResolver(domainName):
                 resolvedDomains[domainName] = randIp
                 return resolvedDomains[domainName]
 
-## MAIN FUNCTION
+# MAIN FUNCTION
 def resolve(pureACL):
-    # count = 0
+
     print(pureACL)
     # print(pureACL.iterrows())
 
     for index,row in pureACL.iterrows():
-
+        
         # print("count = ", count)
         # count+=1
         #print(index)

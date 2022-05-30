@@ -1,17 +1,21 @@
-# Copyright 2017-present Open Networking Foundation
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#    http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
+'''
+
+Copyright 2017-present Open Networking Foundation
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+'''
+
 from abc import abstractmethod
 from datetime import datetime
 from queue import Queue
@@ -75,7 +79,15 @@ class SwitchConnection(object):
         self.stream_msg_resp.cancel()
 
 
-    #Custom function to handle packet-in
+    '''
+
+    Packet-in refers to the packets that are directly forwarded by the switch to the controller
+
+    Here, we have a custom function that extracts the MUD URL from the packet payload. Subsequently, the
+    conversion of MUD Rules to table rules ensue.
+
+    '''
+
     def PacketIn(self, p4info_helper, s1, readTableRules, **kwargs):
 
         print("Installed ingress tunnel rule on %s" % s1.name)
@@ -84,20 +96,11 @@ class SwitchConnection(object):
         for item in self.stream_msg_resp:
 
 
-            ##EXTRACTING MAC ADDRESS
-            # print(item.packet)
-            # print(type(item.packet.payload))
-
             packetpayload = item.packet.payload
-            # print(packetpayload.hex())
             packetString = packetpayload.hex()
-            # print(type(packetString))
             convertedAddress = packetString[12:24]
-            # print(convertedAddress)
             IoTmacAddress = ':'.join(convertedAddress[i:i+2] for i in range(0, len(convertedAddress), 2))
-            # print(IoTmacAddress)
 
-            ##EXTRACTING PAYLOAD MUD URL
             #now converting payload from bytes to string
             packetstring = packetpayload.decode("utf-8",'backslashreplace')
             ind = packetstring.find("http") #finding index of http in the packet
@@ -108,32 +111,38 @@ class SwitchConnection(object):
             wordList = cleanURL.split("/")
             MUDfilename = wordList[-1]
 
-            ##In case of router solicitation messages we ignore and listen to the stream again
+            #In case of router solicitation messages we ignore and listen to the stream again
             if len(MUDfilename) == 0 :
                 continue
 
             rootpath = "/home/p4/BMV2-P4-IoT-MUD/ScaleIoT/MUDFiles/"
-            # print(">>>>>>>>>>>>>>>>>>>>>IoT Device Name")
-            # print(MUDfilename)
-            #for Raw MUD file
+
+            '''
+
+            Now we are downloading the MUD file, signed file and the public key file
+            using the MUD file name
+
+            '''
+            #saving Raw MUD file
             rawMUDurl = 'http://127.0.0.1:443/' + MUDfilename
             rawRequest = requests.get(rawMUDurl, allow_redirects=True)
             rawMUDfile = rootpath + MUDfilename + '_file.json'
             open(rawMUDfile , 'wb').write(rawRequest.content)
 
-            #for Signed MUD file
+            #saving Signed MUD file
             signedMUDurl = 'http://127.0.0.1:443/sign' + MUDfilename
             signatureRequest = requests.get(signedMUDurl, allow_redirects=True)
             signedMUDfile = rootpath + MUDfilename + '_signfile.json'
             open(signedMUDfile, 'wb').write(signatureRequest.content)
 
-            #for public key
+            #saving public key
             publickeyurl = 'http://127.0.0.1:443/pub-key.pem'
             publickeyRequest = requests.get(publickeyurl, allow_redirects=True)
             publickeyfile = rootpath + 'pub-key.pem'
             open(publickeyfile, 'wb').write(publickeyRequest.content)
 
             try:
+
                 #verifying the signed file and raw file using the public key
             	subprocess.check_output(["openssl", "dgst" ,"-sha256", "-verify" ,"/home/p4/BMV2-P4-IoT-MUD/ScaleIoT/MUDFiles/pub-key.pem", "-signature" , signedMUDfile, rawMUDfile]).decode("utf-8")
 
@@ -145,12 +154,17 @@ class SwitchConnection(object):
             	os.remove(signedMUDfile)
             	os.remove('pub-key.pem')
 
+            '''
+
+            now we are converting the MUD file to table rules and also calculating
+            the time needed for each operation
+
+            '''
+
             milliseconds1 = int(time.time() * 1000)
 
             pureACL = readMUDFile(rawMUDfile, IoTmacAddress)
             milliseconds2 = int(time.time() * 1000)
-
-
 
             resolvedACL = resolve(pureACL)
             milliseconds3 = int(time.time() * 1000)
@@ -161,20 +175,28 @@ class SwitchConnection(object):
 
             # milliseconds3 = int(time.time() * 1000)
 
-
             convertDT(resolvedACL, p4info_helper, s1, readTableRules)
             milliseconds4 = int(time.time() * 1000)
 
+            '''
+
+            printing the table rules for debugging purpose
+            print("All table rules are here")
             readTableRules(p4info_helper, s1)
 
-            print("Time in milliseconds after MUD file donwload", milliseconds1)
+            '''
+
+
+            print("Time in milliseconds after MUD file download", milliseconds1)
             print("Time in milliseconds after processMUD (Convert MUD file to ACL Rules)", milliseconds2)
             print("Time in milliseconds to resolve domain names", milliseconds3)
             print("Time in milliseconds after Convertion to Decision Tree ---> Send Table rules", milliseconds4)
 
 
+    #DeleteTableEntry is useful for deleting the table rules when device is removed
 
     def DeleteTableEntry(self, table_entry, dry_run=False):
+
         request = p4runtime_pb2.WriteRequest()
         request.device_id = self.device_id
         request.election_id.low = 1
@@ -189,6 +211,14 @@ class SwitchConnection(object):
         else:
             self.client_stub.Write(request)
 
+    '''
+    The P4Runtime interface allows multiple controllers to be connected to the P4Runtime server
+    running on the device at the same time: one master controller - the only one with write
+    access to the device - and potentially several stand-by controllers.
+
+    In case the master goes offline, one of the stand-by controllers is available to take its place,
+    based on next highest election ID
+    '''
 
     def MasterArbitrationUpdate(self, dry_run=False, **kwargs):
         request = p4runtime_pb2.StreamMessageRequest()
@@ -202,6 +232,10 @@ class SwitchConnection(object):
             self.requests_stream.put(request)
             for item in self.stream_msg_resp:
                 return item # just one
+    '''
+    A P4Runtime client may configure the P4Runtime target with a new P4 pipeline
+    by invoking the SetForwardingPipelineConfig RPC.
+    '''
 
     def SetForwardingPipelineConfig(self, p4info, dry_run=False, **kwargs):
         device_config = self.buildDeviceConfig(**kwargs)
@@ -219,6 +253,8 @@ class SwitchConnection(object):
         else:
             self.client_stub.SetForwardingPipelineConfig(request)
 
+
+    ''' to write table entries '''
     def WriteTableEntry(self, table_entry, dry_run=False):
         request = p4runtime_pb2.WriteRequest()
         request.device_id = self.device_id
@@ -234,7 +270,7 @@ class SwitchConnection(object):
         else:
             self.client_stub.Write(request)
 
-
+    ''' to read table entries '''
     def ReadTableEntries(self, table_id=None, dry_run=False):
         request = p4runtime_pb2.ReadRequest()
         request.device_id = self.device_id

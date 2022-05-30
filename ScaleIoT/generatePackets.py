@@ -3,48 +3,55 @@ import sys
 import socket
 import random
 import time
-import pandas as pd
-from datetime import datetime
+import pandas as pd # to read csv file
+from datetime import datetime # to calculate time elapsed
 
 
 from scapy.all import *
 
+'''searching interface eth0'''
+
 def get_if():
-    ifs = get_if_list()
+
+    #ifs = get_if_list()
+
     iface = None  # "h1-eth0"
     for i in get_if_list():
         if "eth0" in i:
             iface = i
-            break
-    if not iface:
-        print("Cannot find eth0 interface")
-        exit(1)
-    return iface
+            return iface
 
 
+    print("Cannot find eth0 interface")
+    exit(1)
+    return
+
+    '''
+
+    This function generates packets based on the listview array
+    to be sent for checking correctness of our algorithm
+
+    '''
 def send_packet(iface, listView):
 
     #convert to match types
     typeEth = int(listView[2], 16)
-    print(type(typeEth))
-
+    #print(type(typeEth))
 
     proto = int(listView[3])
     sport = int(listView[4])
     dport = int(listView[5])
     sIP = listView[6]
     dIP = listView[7]#'2.2.2.2'
-    # print(type(type))
-    # print(type(typeEthNew))
+
     pkt = []
 
+    pkt = Ether(src=listView[0], dst=listView[1], type=typeEth)
+    pkt = pkt / IP(proto=proto , src=sIP, dst=dIP)
+
     if listView[3] == "17":
-        pkt = Ether(src=listView[0], dst=listView[1], type=typeEth)
-        pkt = pkt / IP(proto=proto , src=sIP, dst=dIP)
         pkt = pkt / UDP(sport=sport, dport=dport)
     else:
-        pkt = Ether(src=listView[0], dst=listView[1], type=typeEth)
-        pkt = pkt / IP(proto=proto , src=sIP, dst=dIP)
         pkt = pkt / TCP(sport=sport, dport=dport)
 
     print(listView)
@@ -56,10 +63,16 @@ def send_packet(iface, listView):
 
 def send_DHCP(iface):
 
+
+    '''
+    In the next few lines, we would be defining the header fields of the DHCP packets
+    The source IP of every DHCP packet is 0.0.0.0
+    '''
+
     pkt = Ether(src="00:0b:82:01:fc:42", dst="ff:ff:ff:ff:ff:ff", type=0x0800)
     pkt = pkt / IP(proto=17 , src="0.0.0.0", dst="255.255.255.255")
     pkt = pkt / UDP(sport=68, dport=67)
-    # pkt = pkt /
+
     #MSG TYPE to hops
     data = b'\x01\x01\x06\x00'
     #transaction ID
@@ -81,18 +94,18 @@ def send_DHCP(iface):
     #Client Hardware
     data = data + b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
     #Server Hostname
-    data = data + b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
-    data = data + b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
-    data = data + b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
-    data = data + b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
-    data = data + b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
-    data = data + b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
-    data = data + b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
-    data = data + b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
-    data = data + b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
-    data = data + b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
-    data = data + b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
-    data = data + b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+    data = data + b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00' * 12
+    # data = data + b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+    # data = data + b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+    # data = data + b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+    # data = data + b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+    # data = data + b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+    # data = data + b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+    # data = data + b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+    # data = data + b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+    # data = data + b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+    # data = data + b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+    # data = data + b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
 
     #Magic Cookie
     data = data + b'\x63\x82\x53\x63'
@@ -105,9 +118,9 @@ def send_DHCP(iface):
     #Parameter Request List
     data = data + b'\x37\x04\x01\x03\x06\x2a'
     #Host name
-    str = "http://127.0.0.1:443/nestsmokesensor"
+    str = "http://127.0.0.1:443/amazonecho"
     strlen = len(str)
-    print(strlen)
+    #print(strlen)
     strlen_bytes = strlen.to_bytes(1,'big')
     str_bytes = str.encode('utf_8')
     print(strlen_bytes)
@@ -143,8 +156,11 @@ def correctness_sendPacket(iface, listView):
 
     print(listView)
 
-    # convert to match types
-    #0 = smac, 1 = dmac, 2 = typeth, 3 = srcip, 4 = dstip, 5 = proto, 6 = sport, 7 = dport
+    '''
+    convert to match types
+    0 = smac, 1 = dmac, 2 = typeth, 3 = srcip, 4 = dstip, 5 = proto, 6 = sport, 7 = dport
+    we are assigning some default values whenever we encounter a wild card in the listView array
+    '''
 
     if(listView[0] == '*'):
         src = "00:0b:82:01:fc:42"
@@ -157,7 +173,7 @@ def correctness_sendPacket(iface, listView):
         dst = listView[1]
 
     if(listView[2] == '*'):
-        typeEth = 0x0800
+        typeEth = 0x0000
     else :
         typeEth = int(listView[2], 16)
     # print(type(typeEth))
@@ -178,69 +194,81 @@ def correctness_sendPacket(iface, listView):
         proto = int(listView[5])
 
     if(listView[6] == '*'):
-        sport = 443
+        sport = 20
     else:
         sport = int(listView[6])
 
     if(listView[7] == '*'):
-        dport = 443
+        dport = 20
     else:
         dport = int(listView[7])
 
-    # sport = int(listView[4])
-    # dport = int(listView[5])
-    # sIP = listView[6]
-    # dIP = listView[7]#'2.2.2.2'00:0b:82:01:fc:42,*,*,*,224.0.0.22,18,*,*,forward
+    '''
+    sport = int(listView[4])
+    dport = int(listView[5])
+    sIP = listView[6]
+    dIP = listView[7]#'2.2.2.2'
+    print(type(type))
+    print(type(typeEthNew))
+    '''
+
+    pkt = []
+
+    '''
+    here we are assigning TCP or UDP based on the protocol value
+    17 is for UDP
+    '''
+    pkt = Ether(src=src, dst=dst, type=typeEth)
+    pkt = pkt / IP(proto=proto , src=sIP, dst=dIP)
+    if proto == 17:
+        pkt = pkt / UDP(sport=sport, dport=dport)
+    else:
+        pkt = pkt / TCP(sport=sport, dport=dport)
+
+    '''
+    print(listView)
+    input("Press the return key to send the packet:")
+    #just for debugging
+    '''
+
+    sendp(pkt, iface=iface, verbose=False)
+
+    '''
+    print(listView)
+
+    # convert to match types
+
+    typeEth = int(listView[2], 16)
+    print(type(typeEth))
+
+
+    proto = int(listView[3])
+    sport = int(listView[4])
+    dport = int(listView[5])
+    sIP = listView[6]
+    dIP = listView[7]#'2.2.2.2'
     # print(type(type))
     # print(type(typeEthNew))
     pkt = []
 
-    if proto == 17:
-        pkt = Ether(src=src, dst=dst, type=typeEth)
+    if listView[3] == "17":
+        pkt = Ether(src=listView[0], dst=listView[1], type=typeEth)
         pkt = pkt / IP(proto=proto , src=sIP, dst=dIP)
         pkt = pkt / UDP(sport=sport, dport=dport)
     else:
-        pkt = Ether(src=src, dst=dst, type=typeEth)
+        pkt = Ether(src=listView[0], dst=listView[1], type=typeEth)
         pkt = pkt / IP(proto=proto , src=sIP, dst=dIP)
         pkt = pkt / TCP(sport=sport, dport=dport)
 
-    # print(listView)
+    print(listView)
     # input("Press the return key to send the packet:")
 
     sendp(pkt, iface=iface, verbose=False)
+    '''
 
-    # print(listView)
-
-    # # convert to match types
-
-    # typeEth = int(listView[2], 16)
-    # print(type(typeEth))
-
-
-    # proto = int(listView[3])
-    # sport = int(listView[4])
-    # dport = int(listView[5])
-    # sIP = listView[6]
-    # dIP = listView[7]#'2.2.2.2'
-    # # print(type(type))
-    # # print(type(typeEthNew))
-    # pkt = []
-
-    # if listView[3] == "17":
-    #     pkt = Ether(src=listView[0], dst=listView[1], type=typeEth)
-    #     pkt = pkt / IP(proto=proto , src=sIP, dst=dIP)
-    #     pkt = pkt / UDP(sport=sport, dport=dport)
-    # else:
-    #     pkt = Ether(src=listView[0], dst=listView[1], type=typeEth)
-    #     pkt = pkt / IP(proto=proto , src=sIP, dst=dIP)
-    #     pkt = pkt / TCP(sport=sport, dport=dport)
-
-    # print(listView)
-    # # input("Press the return key to send the packet:")
-
-    # sendp(pkt, iface=iface, verbose=False)
-
-
+    '''
+    this function reads all the table rules and generates packets accordingly
+    '''
 def correctness_openFile(iface):
 
     packetGen = pd.read_csv('./template.csv', dtype=str)
@@ -261,23 +289,25 @@ def main():
     # send_test(iface)
     # correctness_openFile(iface)
 
-    #Read packet generator
 
-    # packetGen = pd.read_csv('./GeneratedPackets.csv', dtype=str)
+    '''
 
-    # print(packetGen)
+    Read packet generator
 
-    # try:
-    #     # while True:
-    #
-    #     for index,row in packetGen.iterrows():
-    #         listView = row.tolist()
-    #         send_packet(iface,listView)
-    #         time.sleep(0.01)
-    #
-    # except KeyboardInterrupt:
-    #     print("Enter Pressed")
+    packetGen = pd.read_csv('./GeneratedPackets.csv', dtype=str)
 
+    print(packetGen)
 
+    try:
+
+        for index,row in packetGen.iterrows():
+            listView = row.tolist()
+            send_packet(iface,listView)
+            time.sleep(0.01)
+
+    except KeyboardInterrupt:
+        print("Enter Pressed")
+
+    '''
 if __name__ == '__main__':
     main()
