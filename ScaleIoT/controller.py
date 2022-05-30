@@ -21,6 +21,11 @@ SWITCH_TO_HOST_PORT = 1
 SWITCH_TO_SWITCH_PORT = 2
 
 
+'''
+
+The below code is just a template to add new functions later
+
+
 def writeTunnelRules(p4info_helper, ingress_sw, egress_sw, tunnel_id,
                      dst_eth_addr, dst_ip_addr):
     """
@@ -41,6 +46,7 @@ def writeTunnelRules(p4info_helper, ingress_sw, egress_sw, tunnel_id,
                         egress rule
     """
     # 1) Tunnel Ingress Rule
+
     table_entry = p4info_helper.buildTableEntry(
         table_name="MyIngress.ipv4_lpm",
         match_fields={
@@ -50,27 +56,29 @@ def writeTunnelRules(p4info_helper, ingress_sw, egress_sw, tunnel_id,
         action_params={
             "dst_id": tunnel_id,
         })
+
     ingress_sw.WriteTableEntry(table_entry)
     print("Installed ingress tunnel rule on %s" % ingress_sw.name)
 
-    # 2) Tunnel Transit Rule
-    # The rule will need to be added to the myTunnel_exact table and match on
-    # the tunnel ID (hdr.myTunnel.dst_id). Traffic will need to be forwarded
-    # using the myTunnel_forward action on the port connected to the next switch.
-    #
-    # For our simple topology, switch 1 and switch 2 are connected using a
-    # link attached to port 2 on both switches. We have defined a variable at
-    # the top of the file, SWITCH_TO_SWITCH_PORT, that you can use as the output
-    # port for this action.
-    #
-    # We will only need a transit rule on the ingress switch because we are
-    # using a simple topology. In general, you'll need on transit rule for
-    # each switch in the path (except the last switch, which has the egress rule),
-    # and you will need to select the port dynamically for each switch based on
-    # your topology.
+    2) Tunnel Transit Rule
+    The rule will need to be added to the myTunnel_exact table and match on
+    the tunnel ID (hdr.myTunnel.dst_id). Traffic will need to be forwarded
+    using the myTunnel_forward action on the port connected to the next switch.
+    
+    For our simple topology, switch 1 and switch 2 are connected using a
+    link attached to port 2 on both switches. We have defined a variable at
+    the top of the file, SWITCH_TO_SWITCH_PORT, that you can use as the output
+    port for this action.
+    
+    We will only need a transit rule on the ingress switch because we are
+    using a simple topology. In general, you'll need on transit rule for
+    each switch in the path (except the last switch, which has the egress rule),
+    and you will need to select the port dynamically for each switch based on
+    your topology.
 
-    # TODO build the transit rule
-    # TODO install the transit rule on the ingress switch
+    building the transit rule and installing the transit rule on the ingress switch
+
+    
     table_entry = p4info_helper.buildTableEntry(
         table_name="MyIngress.myTunnel_exact",
         match_fields={
@@ -80,14 +88,18 @@ def writeTunnelRules(p4info_helper, ingress_sw, egress_sw, tunnel_id,
         action_params={
             "port": SWITCH_TO_SWITCH_PORT
         })
+
     ingress_sw.WriteTableEntry(table_entry)
     print("Installed transit tunnel rule on %s" % ingress_sw.name)
 
-    # 3) Tunnel Egress Rule
-    # For our simple topology, the host will always be located on the
-    # SWITCH_TO_HOST_PORT (port 1).
-    # In general, you will need to keep track of which port the host is
-    # connected to.
+ 
+    3) Tunnel Egress Rule
+    For our simple topology, the host will always be located on the
+    SWITCH_TO_HOST_PORT (port 1).
+    In general, you will need to keep track of which port the host is
+    connected to.
+ 
+
     table_entry = p4info_helper.buildTableEntry(
         table_name="MyIngress.myTunnel_exact",
         match_fields={
@@ -101,6 +113,7 @@ def writeTunnelRules(p4info_helper, ingress_sw, egress_sw, tunnel_id,
     egress_sw.WriteTableEntry(table_entry)
     print("Installed egress tunnel rule on %s" % egress_sw.name)
 
+'''
 
 def readTableRules(p4info_helper, sw):
     """
@@ -108,7 +121,9 @@ def readTableRules(p4info_helper, sw):
 
     :param p4info_helper: the P4Info helper
     :param sw: the switch connection
+
     """
+
     print('\n----- Reading tables rules for %s -----' % sw.name)
     for response in sw.ReadTableEntries():
         for entity in response.entities:
@@ -129,6 +144,7 @@ def readTableRules(p4info_helper, sw):
             print()
 
 def printCounter(p4info_helper, sw, counter_name, index):
+
     """
     Reads the specified counter at the specified index from the switch. In our
     program, the index is the tunnel ID. If the index is 0, it will return all
@@ -139,6 +155,7 @@ def printCounter(p4info_helper, sw, counter_name, index):
     :param counter_name: the name of the counter from the P4 program
     :param index: the counter index (in our case, the tunnel ID)
     """
+
     for response in sw.ReadCounters(p4info_helper.get_counters_id(counter_name), index):
         for entity in response.entities:
             counter = entity.counter_entry
@@ -159,17 +176,24 @@ def main(p4info_file_path, bmv2_file_path):
     p4info_helper = p4runtime_lib.helper.P4InfoHelper(p4info_file_path)
 
     try:
-        # Create a switch connection object for s1 and s2;
-        # this is backed by a P4Runtime gRPC connection.
-        # Also, dump all P4Runtime messages sent to switch to given txt files.
+        
+        '''
+        Create a switch connection object for s1 and s2;
+        this is backed by a P4Runtime gRPC connection.
+        Also, dump all P4Runtime messages sent to switch to given txt files.
+        '''
+
         s1 = p4runtime_lib.bmv2.Bmv2SwitchConnection(
             name='s1',
             address='127.0.0.1:50051',
             device_id=0,
             proto_dump_file='logs/s1-p4runtime-requests.txt')
 
-        # Send master arbitration update message to establish this controller as
-        # master (required by P4Runtime before performing any other write operation)
+        '''
+        Send master arbitration update message to establish this controller as
+        master (required by P4Runtime before performing any other write operation)
+        '''
+
         s1.MasterArbitrationUpdate()
 
         # Install the P4 program on the switches
@@ -205,6 +229,10 @@ def main(p4info_file_path, bmv2_file_path):
     ShutdownAllSwitchConnections()
 
 if __name__ == '__main__':
+
+
+    #used to execute some code only if the file was run directly, and not imported.
+
     parser = argparse.ArgumentParser(description='P4Runtime Controller')
     parser.add_argument('--p4info', help='p4info proto in text format from p4c',
                         type=str, action="store", required=False,

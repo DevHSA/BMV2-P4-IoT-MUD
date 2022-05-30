@@ -1,3 +1,8 @@
+'''
+At processMUD.py, the MUD file is converted from a simple flattened JSON file
+into a Pandas DataFrame, which is next directed to resolve.py.
+'''
+
 import json
 import pandas as pd
 import os
@@ -7,24 +12,30 @@ import random
 import time
 from datetime import datetime
 
-##*****ENABLE WHEN NOT EXECUTING FROM JUPYTER*********##
-#***Get current directory path for future use
-# currPath = os.getcwd()
-# currPath = currPath.replace('\\','/')
-# reqPath = currPath + "/JSON/"
-##****************************************************##
+'''
+#*****ENABLE WHEN NOT EXECUTING FROM JUPYTER*********
+***Get current directory path for future use
+currPath = os.getcwd()
+currPath = currPath.replace('\\','/')
+reqPath = currPath + "/JSON/"
+#****************************************************
+'''
 
 #Utility Function 1
 def getSourceDestination(data):
+
     if 'dnsname' in str(data):
         src_net_key = 'ietf-acldns:src-dnsname'
         dest_net_key = 'ietf-acldns:dst-dnsname'
+
     elif 'network' in str(data):
         src_net_key = 'source-ipv4-network'
         dest_net_key = 'destination-ipv4-network'
+
     else:
         src_net_key = '*'
         dest_net_key = '*'
+        
     return data.get(src_net_key, '*'), data.get(dest_net_key, '*'), data.get('protocol', '*')
 
 #Main Function
@@ -45,9 +56,14 @@ def readMUDFile(pathName, IoTmacAddress):
     for i in range(len(data)):
 
         access_json=data[i].get('ietf-access-control-list:access-lists').get('acl')
+        '''
+        From here, we are trying to extract the rules from the json file.
+        The rules are in the form of nested dictionaries, so we need to match them with
+        source-mac-address, dest-mac-address, etc
+        '''
 
         for acl in access_json:
-            aces = acl['aces']['ace']
+            aces = acl['aces']['ace'] 
             for ace in aces:
                 final_row = {
                 'sMAC': '*',
@@ -117,6 +133,12 @@ def readMUDFile(pathName, IoTmacAddress):
 
                 if final_row['dstIP'] == '*' and final_row['srcIP'] != '*':
                     final_row['dMAC'] = IoTmacAddress#'9e:8d:de:80:29:28'
+
+                '''
+                After generating the "final_row" based on the values
+                in the json file, we will now append it to the final_list
+                '''
+
                 final_list.append(final_row)
 
     df = pd.DataFrame(final_list)
@@ -124,6 +146,11 @@ def readMUDFile(pathName, IoTmacAddress):
 
     columns = ['sMAC','dMAC','typEth','srcIP','dstIP','proto','sPort','dPort','action']
     df1 = df[columns]
+
+    '''
+    Now, we drop the duplicate rules(which is unlikely), and fill the empty fields with 
+    wildcard, which means any value can suffice. Finally, we return the dataframe df2
+    '''
 
     df2 =df1.drop_duplicates()
 

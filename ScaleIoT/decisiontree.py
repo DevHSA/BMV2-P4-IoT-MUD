@@ -1,3 +1,8 @@
+'''
+The decisiontree.py has two tasks: converting resolved ACL rules to a decision tree
+and adding corresponding table rules to the switch.
+'''
+
 import networkx as nx
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -5,41 +10,40 @@ import numpy as np
 import time
 from datetime import datetime
 
+'''
+#*****ENABLE WHEN NOT EXECUTING FROM JUPYTER --
+***Get current directory path for future use
+currPath = os.getcwd()
+currPath = currPath.replace('\\','/')
+reqPath = currPath + "/JSON/"
+#INPUT: GeneratedDatasetACL.csv in the same path of the executing script
+#OUTPUT: Varied... Will be listed
+'''
 
-##*****ENABLE WHEN NOT EXECUTING FROM JUPYTER --
-#***Get current directory path for future use
-# currPath = os.getcwd()
-# currPath = currPath.replace('\\','/')
-# reqPath = currPath + "/JSON/"
-##*********************************************
+'''
+Initialized Corresponding LevelCounters, and the decision tree and added
+the first node which is NULL
+'''
 
-
-##INPUT: GeneratedDatasetACL.csv in the same path of the executing script
-##OUTPUT: Varied... Will be listed
-
-#Initialized Corresponding LevelCounters
 levelCounters = [1,1,1,1,1,1,1,1,1];
-
-#Initialize the Desision Tree
 G = nx.DiGraph();
-
-#Add the first node which is labeled Null
-
 G.add_node('Null')
 
-# #calculate the size of each level
-# sizeTemplateBits = [72,96,64,56,64,64,80,80,9]
-# sizeTemplateBytes = [9,12,8,7,8,8,10,10,1.125]
+'''
 
-# calculatedSizeBits = [0,0,0,0,0,0,0,0,0]
-# calculatedSizeBytes = [0,0,0,0,0,0,0,0,0]
-# noOfNodes = [0,0,0,0,0,0,0,0,0]
-# noOfNodesSep = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+#calculate the size of each level
+sizeTemplateBits = [72,96,64,56,64,64,80,80,9]
+sizeTemplateBytes = [9,12,8,7,8,8,10,10,1.125]
 
+calculatedSizeBits = [0,0,0,0,0,0,0,0,0]
+calculatedSizeBytes = [0,0,0,0,0,0,0,0,0]
+noOfNodes = [0,0,0,0,0,0,0,0,0]
+noOfNodesSep = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+
+'''
 
 #Function to check if a particular node is present in the list of its neighbors
 def checkIfPresent(valueToCheck, neighborList):
-
 
     for node in neighborList:
         values = node.split('=')
@@ -101,6 +105,11 @@ def addSwitchCommand(addedNodeArray, addedStateArray, levelHeaders, p4info_helpe
 
             #Handle First Level addition (Add only val,nxtState)
 
+            '''
+            We are using dictionaries here so that code could be compressed for levels 
+            2 to 7(which are numbered 1 to  6).
+            '''
+
             tablesmap = {1 : "MyIngress.dMAC_exact" ,
                         2 : "MyIngress.typEth_exact",
                         3 : "MyIngress.proto_exact",
@@ -120,6 +129,11 @@ def addSwitchCommand(addedNodeArray, addedStateArray, levelHeaders, p4info_helpe
                             5 : "meta.dport",
                             6 : "hdr.ipv4.srcAddr"
                             }
+            '''
+            this is the first level which is used for adding table entry
+            to match source MAC address
+            '''
+
             if i==0:
 #                 print("Entered 0")
                 #if it is to be added in the exact table
@@ -159,10 +173,9 @@ def addSwitchCommand(addedNodeArray, addedStateArray, levelHeaders, p4info_helpe
                             "next_state": nxtState,
                         })
                     s1.WriteTableEntry(table_entry)
-            #Handle Last Level addition (Add only currState,val)
-
-            #Handle level 2 - this is the optimized code start
-            elif i == 1:
+            
+            #handling level 1 to 6 for adding table entries
+            elif i < 7:
 
                 #print("Entered 0")
                 #if it is to be added in the exact table
@@ -180,17 +193,16 @@ def addSwitchCommand(addedNodeArray, addedStateArray, levelHeaders, p4info_helpe
 
                     ##dETH TABLE ENTRY
                     table_entry = p4info_helper.buildTableEntry(
-                        table_name= "MyIngress.dMAC_exact",
+                        table_name= tablesmap[i],
                         match_fields={
                             "meta.current_state": currState,
-                            "hdr.ethernet.dEth" : matchfields
+                            matchesmap[i] : matchfields
                         },
                         action_name="MyIngress.ns_exact",
                         action_params={
                             "next_state": nxtState,
                         })
                     s1.WriteTableEntry(table_entry)
-
 
                 #if it is to be added in the default table
                 else:
@@ -201,7 +213,7 @@ def addSwitchCommand(addedNodeArray, addedStateArray, levelHeaders, p4info_helpe
                     # print(nxtState)
 
                     table_entry = p4info_helper.buildTableEntry(
-                        table_name = "MyIngress.dMAC_default",
+                        table_name = tablesdefaultmap[i],
                         match_fields={
                             "meta.current_state": currState
                         },
@@ -211,240 +223,8 @@ def addSwitchCommand(addedNodeArray, addedStateArray, levelHeaders, p4info_helpe
                         })
                     s1.WriteTableEntry(table_entry)
 
-            #Handle level 3
-            elif i==2:
-                #print("Entered 0")
-                #if it is to be added in the exact table
-                if addedNodeArray[i]!="*":
-                    matchFields = convertedValue
-                    currState = int(addedStateArray[i])
-                    nxtState = int(addedStateArray[i+1])
-                    intconv = int(matchFields, 16)
-
-                    ##dETH TABLE ENTRY
-                    table_entry = p4info_helper.buildTableEntry(
-                        table_name="MyIngress.typEth_exact",
-                        match_fields={
-                            "meta.current_state": currState,
-                            "hdr.ethernet.typeEth": intconv
-                        },
-                        action_name="MyIngress.ns_exact",
-                        action_params={
-                            "next_state": nxtState,
-                        })
-                    s1.WriteTableEntry(table_entry)
-                elif addedNodeArray[i]=="*":
-
-                    currState = int(addedStateArray[i])
-                    nxtState = int(addedStateArray[i+1])
-                    # print(currState)
-                    # print(nxtState)
-
-                    table_entry = p4info_helper.buildTableEntry(
-                        table_name="MyIngress.typEth_default",
-                        match_fields={
-                            "meta.current_state": currState
-                        },
-                        action_name="MyIngress.ns_default",
-                        action_params={
-                            "next_state": nxtState,
-                        })
-                    s1.WriteTableEntry(table_entry)
-
-
-            #Handle level 4
-            elif i==3:
-                #print("Entered 0")
-                #if it is to be added in the exact table
-                if addedNodeArray[i]!="*":
-                    # print("Inside TYPE ETH")
-                    matchFields = convertedValue
-                    currState = int(addedStateArray[i])
-                    nxtState = int(addedStateArray[i+1])
-                    intconv = int(matchFields,10)
-                    # print(matchFields)
-                    # print(type(matchFields))
-                    # print(intconv)
-
-                    # print(addedNodeArray)
-                    # print(addedStateArray)
-
-                    # intconv = 17
-
-
-                    table_entry = p4info_helper.buildTableEntry(
-                        table_name="MyIngress.proto_exact",
-                        match_fields={
-                            "meta.current_state": currState,
-                            "hdr.ipv4.protocol": intconv
-                        },
-                        action_name="MyIngress.ns_exact",
-                        action_params={
-                            "next_state": nxtState,
-                        })
-                    s1.WriteTableEntry(table_entry)
-
-
-                    # readTableRules(p4info_helper, s1)
-
-
-                #if it is to be added in the default table
-                elif addedNodeArray[i]=="*":
-
-                    currState = int(addedStateArray[i])
-                    nxtState = int(addedStateArray[i+1])
-                    # print("Inside default")
-                    # print(currState)
-                    # print(nxtState)
-
-                    table_entry = p4info_helper.buildTableEntry(
-                        table_name="MyIngress.proto_default",
-                        match_fields={
-                            "meta.current_state": currState
-                        },
-                        action_name="MyIngress.ns_default",
-                        action_params={
-                            "next_state": nxtState,
-                        })
-                    s1.WriteTableEntry(table_entry)
-
-            #Handle level 5
-            elif i==4:
-                #print("Entered 0")
-                #if it is to be added in the exact table
-                if addedNodeArray[i]!="*":
-                    matchFields = convertedValue
-                    currState = int(addedStateArray[i])
-                    nxtState = int(addedStateArray[i+1])
-                    intconv = int(matchFields)
-                    # print(matchFields)
-                    # print(intconv)
-
-
-                    # print(bytearray.fromhex(matchFields[2]))
-
-                    ##dETH TABLE ENTRY
-                    table_entry = p4info_helper.buildTableEntry(
-                        table_name="MyIngress.sPort_exact",
-                        match_fields={
-                            "meta.current_state": currState,
-                            "meta.sport": intconv
-                        },
-                        action_name="MyIngress.ns_exact",
-                        action_params={
-                            "next_state": nxtState,
-                        })
-                    s1.WriteTableEntry(table_entry)
-                elif addedNodeArray[i]=="*":
-
-                    currState = int(addedStateArray[i])
-                    nxtState = int(addedStateArray[i+1])
-                    # print(currState)
-                    # print(nxtState)
-
-                    table_entry = p4info_helper.buildTableEntry(
-                        table_name="MyIngress.sPort_default",
-                        match_fields={
-                            "meta.current_state": currState
-                        },
-                        action_name="MyIngress.ns_default",
-                        action_params={
-                            "next_state": nxtState,
-                        })
-                    s1.WriteTableEntry(table_entry)
-
-            #Handle level 6
-            elif i==5:
-                #print("Entered 0")
-                #if it is to be added in the exact table
-                if addedNodeArray[i]!="*":
-                    matchFields = convertedValue
-                    currState = int(addedStateArray[i])
-                    nxtState = int(addedStateArray[i+1])
-                    intconv = int(matchFields)
-                    # print(matchFields)
-                    # print(intconv)
-
-
-                    # print(bytearray.fromhex(matchFields[2]))
-
-                    ##dETH TABLE ENTRY
-                    table_entry = p4info_helper.buildTableEntry(
-                        table_name="MyIngress.dPort_exact",
-                        match_fields={
-                            "meta.current_state": currState,
-                            "meta.dport": intconv
-                        },
-                        action_name="MyIngress.ns_exact",
-                        action_params={
-                            "next_state": nxtState,
-                        })
-                    s1.WriteTableEntry(table_entry)
-                elif addedNodeArray[i]=="*":
-
-                    currState = int(addedStateArray[i])
-                    nxtState = int(addedStateArray[i+1])
-                    # print(currState)
-                    # print(nxtState)
-
-                    table_entry = p4info_helper.buildTableEntry(
-                        table_name="MyIngress.dPort_default",
-                        match_fields={
-                            "meta.current_state": currState
-                        },
-                        action_name="MyIngress.ns_default",
-                        action_params={
-                            "next_state": nxtState,
-                        })
-                    s1.WriteTableEntry(table_entry)
-
-            #Handle level 7
-            elif i==6:
-                #print("Entered 0")
-                #if it is to be added in the exact table
-                if addedNodeArray[i]!="*":
-                    matchFields = convertedValue
-                    currState = int(addedStateArray[i])
-                    nxtState = int(addedStateArray[i+1])
-                    # print(matchFields)
-                    # print(intconv)
-
-
-                    # print(bytearray.fromhex(matchFields[2]))
-
-                    ##dETH TABLE ENTRY
-                    table_entry = p4info_helper.buildTableEntry(
-                        table_name="MyIngress.srcIP_exact",
-                        match_fields={
-                            "meta.current_state": currState,
-                            "hdr.ipv4.srcAddr": convertedValue
-                        },
-                        action_name="MyIngress.ns_exact",
-                        action_params={
-                            "next_state": nxtState,
-                        })
-                    s1.WriteTableEntry(table_entry)
-                elif addedNodeArray[i]=="*":
-
-                    currState = int(addedStateArray[i])
-                    nxtState = int(addedStateArray[i+1])
-                    # print(currState)
-                    # print(nxtState)
-
-                    table_entry = p4info_helper.buildTableEntry(
-                        table_name="MyIngress.srcIP_default",
-                        match_fields={
-                            "meta.current_state": currState
-                        },
-                        action_name="MyIngress.ns_default",
-                        action_params={
-                            "next_state": nxtState,
-                        })
-                    s1.WriteTableEntry(table_entry)
-
-            ##LAST STAGE WHERE WE FORWARD
             else:
-#                 print("Entered 8")
+                #print("Entered 8")
                 #if the action is forward, then push
                 if addedNodeArray[i] == "forward":
                     command = 'table_add final '+convertedValue+' '+addedStateArray[i] + ' => 08:00:00:00:02:22 2'
@@ -486,6 +266,298 @@ def addSwitchCommand(addedNodeArray, addedStateArray, levelHeaders, p4info_helpe
                             "switchPort": 2
                         })
                     s1.WriteTableEntry(table_entry)
+            '''
+
+            IGNORE THE BELOW COMMENTED PART WHICH PREVIOUSLY ADDED TABLE ENTRIES
+            FOR EACH LEVEL ONE BY ONE.
+            The final level is already dealt separately
+
+            
+
+            # #Handle level 2 - this is the optimized code start
+            # elif i == 1:
+
+            #     #print("Entered 0")
+            #     #if it is to be added in the exact table
+            #     if addedNodeArray[i]!="*":
+            #         matchFields = convertedValue
+            #         currState = int(addedStateArray[i])
+            #         nxtState = int(addedStateArray[i+1])
+
+            #         if i == 2:
+            #             matchfields = int(matchFields , 16)
+            #         elif i in (3,4,5) :
+            #             matchfields = int(matchFields)
+            #         else :
+            #             matchfields = matchFields
+
+            #         ##dETH TABLE ENTRY
+            #         table_entry = p4info_helper.buildTableEntry(
+            #             table_name= "MyIngress.dMAC_exact",
+            #             match_fields={
+            #                 "meta.current_state": currState,
+            #                 "hdr.ethernet.dEth" : matchfields
+            #             },
+            #             action_name="MyIngress.ns_exact",
+            #             action_params={
+            #                 "next_state": nxtState,
+            #             })
+            #         s1.WriteTableEntry(table_entry)
+
+
+            #     #if it is to be added in the default table
+            #     else:
+
+            #         currState = int(addedStateArray[i])
+            #         nxtState = int(addedStateArray[i+1])
+            #         # print(currState)
+            #         # print(nxtState)
+
+            #         table_entry = p4info_helper.buildTableEntry(
+            #             table_name = "MyIngress.dMAC_default",
+            #             match_fields={
+            #                 "meta.current_state": currState
+            #             },
+            #             action_name="MyIngress.ns_default",
+            #             action_params={
+            #                 "next_state": nxtState,
+            #             })
+            #         s1.WriteTableEntry(table_entry)
+
+            # #Handle level 3
+            # elif i==2:
+            #     #print("Entered 0")
+            #     #if it is to be added in the exact table
+            #     if addedNodeArray[i]!="*":
+            #         matchFields = convertedValue
+            #         currState = int(addedStateArray[i])
+            #         nxtState = int(addedStateArray[i+1])
+            #         intconv = int(matchFields, 16)
+
+            #         ##dETH TABLE ENTRY
+            #         table_entry = p4info_helper.buildTableEntry(
+            #             table_name="MyIngress.typEth_exact",
+            #             match_fields={
+            #                 "meta.current_state": currState,
+            #                 "hdr.ethernet.typeEth": intconv
+            #             },
+            #             action_name="MyIngress.ns_exact",
+            #             action_params={
+            #                 "next_state": nxtState,
+            #             })
+            #         s1.WriteTableEntry(table_entry)
+            #     elif addedNodeArray[i]=="*":
+
+            #         currState = int(addedStateArray[i])
+            #         nxtState = int(addedStateArray[i+1])
+            #         # print(currState)
+            #         # print(nxtState)
+
+            #         table_entry = p4info_helper.buildTableEntry(
+            #             table_name="MyIngress.typEth_default",
+            #             match_fields={
+            #                 "meta.current_state": currState
+            #             },
+            #             action_name="MyIngress.ns_default",
+            #             action_params={
+            #                 "next_state": nxtState,
+            #             })
+            #         s1.WriteTableEntry(table_entry)
+
+
+            # #Handle level 4
+            # elif i==3:
+            #     #print("Entered 0")
+            #     #if it is to be added in the exact table
+            #     if addedNodeArray[i]!="*":
+            #         # print("Inside TYPE ETH")
+            #         matchFields = convertedValue
+            #         currState = int(addedStateArray[i])
+            #         nxtState = int(addedStateArray[i+1])
+            #         intconv = int(matchFields,10)
+            #         # print(matchFields)
+            #         # print(type(matchFields))
+            #         # print(intconv)
+
+            #         # print(addedNodeArray)
+            #         # print(addedStateArray)
+
+            #         # intconv = 17
+
+
+            #         table_entry = p4info_helper.buildTableEntry(
+            #             table_name="MyIngress.proto_exact",
+            #             match_fields={
+            #                 "meta.current_state": currState,
+            #                 "hdr.ipv4.protocol": intconv
+            #             },
+            #             action_name="MyIngress.ns_exact",
+            #             action_params={
+            #                 "next_state": nxtState,
+            #             })
+            #         s1.WriteTableEntry(table_entry)
+
+
+            #         # readTableRules(p4info_helper, s1)
+
+
+            #     #if it is to be added in the default table
+            #     elif addedNodeArray[i]=="*":
+
+            #         currState = int(addedStateArray[i])
+            #         nxtState = int(addedStateArray[i+1])
+            #         # print("Inside default")
+            #         # print(currState)
+            #         # print(nxtState)
+
+            #         table_entry = p4info_helper.buildTableEntry(
+            #             table_name="MyIngress.proto_default",
+            #             match_fields={
+            #                 "meta.current_state": currState
+            #             },
+            #             action_name="MyIngress.ns_default",
+            #             action_params={
+            #                 "next_state": nxtState,
+            #             })
+            #         s1.WriteTableEntry(table_entry)
+
+            # #Handle level 5
+            # elif i==4:
+            #     #print("Entered 0")
+            #     #if it is to be added in the exact table
+            #     if addedNodeArray[i]!="*":
+            #         matchFields = convertedValue
+            #         currState = int(addedStateArray[i])
+            #         nxtState = int(addedStateArray[i+1])
+            #         intconv = int(matchFields)
+            #         # print(matchFields)
+            #         # print(intconv)
+
+
+            #         # print(bytearray.fromhex(matchFields[2]))
+
+            #         ##dETH TABLE ENTRY
+            #         table_entry = p4info_helper.buildTableEntry(
+            #             table_name="MyIngress.sPort_exact",
+            #             match_fields={
+            #                 "meta.current_state": currState,
+            #                 "meta.sport": intconv
+            #             },
+            #             action_name="MyIngress.ns_exact",
+            #             action_params={
+            #                 "next_state": nxtState,
+            #             })
+            #         s1.WriteTableEntry(table_entry)
+            #     elif addedNodeArray[i]=="*":
+
+            #         currState = int(addedStateArray[i])
+            #         nxtState = int(addedStateArray[i+1])
+            #         # print(currState)
+            #         # print(nxtState)
+
+            #         table_entry = p4info_helper.buildTableEntry(
+            #             table_name="MyIngress.sPort_default",
+            #             match_fields={
+            #                 "meta.current_state": currState
+            #             },
+            #             action_name="MyIngress.ns_default",
+            #             action_params={
+            #                 "next_state": nxtState,
+            #             })
+            #         s1.WriteTableEntry(table_entry)
+
+            # #Handle level 6
+            # elif i==5:
+            #     #print("Entered 0")
+            #     #if it is to be added in the exact table
+            #     if addedNodeArray[i]!="*":
+            #         matchFields = convertedValue
+            #         currState = int(addedStateArray[i])
+            #         nxtState = int(addedStateArray[i+1])
+            #         intconv = int(matchFields)
+            #         # print(matchFields)
+            #         # print(intconv)
+
+
+            #         # print(bytearray.fromhex(matchFields[2]))
+
+            #         ##dETH TABLE ENTRY
+            #         table_entry = p4info_helper.buildTableEntry(
+            #             table_name="MyIngress.dPort_exact",
+            #             match_fields={
+            #                 "meta.current_state": currState,
+            #                 "meta.dport": intconv
+            #             },
+            #             action_name="MyIngress.ns_exact",
+            #             action_params={
+            #                 "next_state": nxtState,
+            #             })
+            #         s1.WriteTableEntry(table_entry)
+            #     elif addedNodeArray[i]=="*":
+
+            #         currState = int(addedStateArray[i])
+            #         nxtState = int(addedStateArray[i+1])
+            #         # print(currState)
+            #         # print(nxtState)
+
+            #         table_entry = p4info_helper.buildTableEntry(
+            #             table_name="MyIngress.dPort_default",
+            #             match_fields={
+            #                 "meta.current_state": currState
+            #             },
+            #             action_name="MyIngress.ns_default",
+            #             action_params={
+            #                 "next_state": nxtState,
+            #             })
+            #         s1.WriteTableEntry(table_entry)
+
+            # #Handle level 7
+            # elif i==6:
+            #     #print("Entered 0")
+            #     #if it is to be added in the exact table
+            #     if addedNodeArray[i]!="*":
+            #         matchFields = convertedValue
+            #         currState = int(addedStateArray[i])
+            #         nxtState = int(addedStateArray[i+1])
+            #         # print(matchFields)
+            #         # print(intconv)
+
+
+            #         # print(bytearray.fromhex(matchFields[2]))
+
+            #         ##dETH TABLE ENTRY
+            #         table_entry = p4info_helper.buildTableEntry(
+            #             table_name="MyIngress.srcIP_exact",
+            #             match_fields={
+            #                 "meta.current_state": currState,
+            #                 "hdr.ipv4.srcAddr": convertedValue
+            #             },
+            #             action_name="MyIngress.ns_exact",
+            #             action_params={
+            #                 "next_state": nxtState,
+            #             })
+            #         s1.WriteTableEntry(table_entry)
+            #     elif addedNodeArray[i]=="*":
+
+            #         currState = int(addedStateArray[i])
+            #         nxtState = int(addedStateArray[i+1])
+            #         # print(currState)
+            #         # print(nxtState)
+
+            #         table_entry = p4info_helper.buildTableEntry(
+            #             table_name="MyIngress.srcIP_default",
+            #             match_fields={
+            #                 "meta.current_state": currState
+            #             },
+            #             action_name="MyIngress.ns_default",
+            #             action_params={
+            #                 "next_state": nxtState,
+            #             })
+            #         s1.WriteTableEntry(table_entry)
+
+            ##LAST STAGE WHERE WE FORWARD
+            '''
+            
 
 
             #Handle other levels other than the first and last
@@ -511,7 +583,6 @@ def addSwitchCommand(addedNodeArray, addedStateArray, levelHeaders, p4info_helpe
             #Whatever the command is, it needs to be outputed on a file stream
 
 
-
 def convertDT(data, p4info_helper, s1, readTableRules):
 
     addSwitchCommand.cntr = 0;
@@ -525,7 +596,8 @@ def convertDT(data, p4info_helper, s1, readTableRules):
 
     #newDf = data[['typEth', 'proto', 'sPort', 'dPort', 'srcIP', 'dstIP', 'sMAC', 'dMAC', 'action']]
     #levelHeaders = ['typEth', 'proto', 'sPort', 'dPort', 'sMAC', 'dMAC', 'srcIP', 'dstIP', 'action']
-    ##Redundant conversion. Can be chnaged
+    ##Redundant conversion. Can be changed
+
     newDf = data[['sMAC', 'dMAC', 'typEth', 'proto', 'sPort', 'dPort', 'srcIP', 'dstIP',  'action']]
     levelHeaders = ['sMAC', 'dMAC', 'typEth', 'proto', 'sPort', 'dPort', 'srcIP', 'dstIP',  'action']
 
