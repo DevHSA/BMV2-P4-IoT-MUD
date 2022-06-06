@@ -164,10 +164,10 @@ class SwitchConnection(object):
             milliseconds1 = int(time.time() * 1000)
 
             pureACL = readMUDFile(rawMUDfile, IoTmacAddress)
-            milliseconds2 = int(time.time() * 1000)
+            milliseconds2 = int(time.time() * 1000) - milliseconds1
 
             resolvedACL = resolve(pureACL)
-            milliseconds3 = int(time.time() * 1000)
+            milliseconds3 = int(time.time() * 1000) - milliseconds1
 
             ##Save Resolved ACL
             resolvedACL.to_csv('template.csv', index=False);
@@ -176,7 +176,7 @@ class SwitchConnection(object):
             # milliseconds3 = int(time.time() * 1000)
 
             convertDT(resolvedACL, p4info_helper, s1, readTableRules)
-            milliseconds4 = int(time.time() * 1000)
+            milliseconds4 = int(time.time() * 1000) - milliseconds1
 
             '''
 
@@ -191,7 +191,7 @@ class SwitchConnection(object):
             print("Time in milliseconds after processMUD (Convert MUD file to ACL Rules)", milliseconds2)
             print("Time in milliseconds to resolve domain names", milliseconds3)
             print("Time in milliseconds after Convertion to Decision Tree ---> Send Table rules", milliseconds4)
-
+            
 
     #DeleteTableEntry is useful for deleting the table rules when device is removed
 
