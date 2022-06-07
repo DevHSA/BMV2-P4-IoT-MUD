@@ -103,15 +103,24 @@ are installed in the switch.
 
 ___
 
-**Instructions to run the code** :
+**Instructions to run the code and testing correctness** :
 
-1. Download and extract the zipped folder.
+1. Download and extract the zipped folder.  
 2. Execute **installations.sh**
 3. change the absolute location of MUD files in switch.py, (around lines 29, 115 and 138) and processMUD.py(line 32).
 4. To start MUD server, go to **MUDserver/webapp**, open in terminal and run **sudo python3 mudserver.py**
 5. Go to ScaleIoT folder, and run **make** in terminal. The mininet environment will be setup.
 6. Open new terminal in the ScaleIoT folder and type **./controller.py**.
-7. In the mininet environment, type xterm h1, and in node h1, type **python3 generatePackets.py**. This will generate and send  a DHCP packet from host h1(which is the IoT device) to the switch s1, and start the aforementioned circuit.
+7. **IMPORTANT** - Ensure that in generatePackets.py, send_DHCP(iface) (around line 272) is uncommented and  correctness_openFile(iface) is commented, when you want to send DHCP packets from the source h1. 
+8. In the mininet environment, type **xterm h1**, and in node h1, type **python3 generatePackets.py**. This will generate and send  a DHCP packet from host h1(which is the IoT device) to the switch s1, and start the aforementioned circuit. Now, according to the MUD URL specified in the DHCP packet, the MUD file will be downloaded and processed to flow rules which will be installed on the switch.
+9.  **IMPORTANT** - Once DHCP packets are sent, open **template.csv** and update the header fields according to the traffic that you would like to generate from the IoT device h1. Once changes are done, comment out **send_DHCP(iface)**, and uncomment correctness_openFile(iface) in the **generatePackets.py**.
+10.  To test the correctness of p4 logic, open two terminals, and type **sudo & wireshark** in both. Choose **s1-eth1** and **s2-eth2**. 
+11.  Now, in the mininet environment, type **xterm h1**, and in node h1, type **python3 generatePackets.py**. This will generate a stream of packets from host h1(which is the IoT device) to the switch s1, and based on the table rules, the switch will either forward it to h2, or drop it.
 
-    Now, according to the MUD URL specified in the DHCP packet, the MUD file will be downloaded and processed to flow rules which will be installed on the switch.
+**The packet that gets through the switch will be displayed in both the wireshark traces, while the one that gets dropped will be displayed only in s1-eth1 trace but not in s1-eth2.**
+
+For instance, here are the wireshark traces after testing for Amazon Echo: 
+
+![image](https://user-images.githubusercontent.com/42608920/172308787-8b9cb8ee-5f0c-4f7b-8007-d6d60900ddb4.png)
+
 ___
