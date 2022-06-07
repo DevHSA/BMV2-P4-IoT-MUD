@@ -33,7 +33,7 @@ ____
 
 **Flow of messages**
 
-![image](https://user-images.githubusercontent.com/42608920/165621064-0830df5d-2591-4235-821e-cf5d5d83e6b6.png)
+![image](https://user-images.githubusercontent.com/42608920/172326109-fbe5edd6-541b-4b56-a41f-ee6f00b7f887.png)
 
 Once the Mininet environment is set up, the host sends DHCP packets
 to the switch using **generatepackets.py**. To generate DHCP
