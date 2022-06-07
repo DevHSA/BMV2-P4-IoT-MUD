@@ -6,7 +6,7 @@ Flask is a micro web framework that is used to create web applications in Python
 the mud server is used to create a private MUD file server that advertises 
 the MUD files and their corresponding signatures.
 It is an HTTPS server that uses port 443.
-We need to invoke the mud server and fetch the 
+We need to invoke the mud server and fetch the desired MUD files
 
 ------------------------------------------------------
 
