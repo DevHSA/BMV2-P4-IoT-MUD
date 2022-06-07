@@ -559,7 +559,7 @@ def addSwitchCommand(addedNodeArray, addedStateArray, levelHeaders, p4info_helpe
             '''
 
 
-            print("Reached end");
+            # print("Reached end");
             #Handle other levels other than the first and last
 #             else:
 # #                 print("Entered ANY")

@@ -269,10 +269,10 @@ def correctness_openFile(iface):
 def main():
 
     iface = get_if()
-    # send_DHCP(iface)
+    send_DHCP(iface)
     # time.sleep(2)
     # send_test(iface)
-    correctness_openFile(iface)
+    # correctness_openFile(iface)
 
 
     '''
